@@ -1,0 +1,69 @@
+---
+layout: default
+---
+<div class="title">
+	<h1>Kaynaklar</h1>
+</div>
+<a class="ch-link" href="/">Ana sayfa</a>
+<h3>Çevre</h3>
+<ul>
+	{% for source in site.data.cevre %}
+		 <a class="ch-link kaynaklar" href="{{source.link}}" target="_blank">{{source.name}}</a>
+	{% endfor %}
+</ul>
+
+<h3>YouTube</h3>
+<ul>
+	{% for source in site.data.youtube %}
+		 <a class="ch-link kaynaklar" href="{{source.link}}" target="_blank">{{source.name}}</a>
+	{% endfor %}
+</ul>
+
+<h3>Bloglar</h3>
+<ul>
+	{% for source in site.data.bloglar %}
+		 <a class="ch-link kaynaklar" href="{{source.link}}" target="_blank">{{source.name}}</a>
+	{% endfor %}
+</ul>
+
+<h3>Bilim ve Teknoloji</h3>
+<ul>
+	{% for source in site.data.bilim-ve-teknoloji %}
+		 <a class="ch-link kaynaklar" href="{{source.link}}" target="_blank">{{source.name}}</a>
+	{% endfor %}
+</ul>
+
+<h3>Reddit</h3>
+<ul>
+	{% for source in site.data.reddit %}
+		 <a class="ch-link kaynaklar" href="{{source.link}}" target="_blank">{{source.name}}</a>
+	{% endfor %}
+</ul>
+
+<h3>Uzun Yazılar</h3>
+<ul>
+	{% for source in site.data.uzun-yazilar %}
+		 <a class="ch-link kaynaklar" href="{{source.link}}" target="_blank">{{source.name}}</a>
+	{% endfor %}
+</ul>
+
+<h3>Spor</h3>
+<ul>
+	{% for source in site.data.spor %}
+		 <a class="ch-link kaynaklar" href="{{source.link}}" target="_blank">{{source.name}}</a>
+	{% endfor %}
+</ul>
+
+<h3>Ekşi Sözlük</h3>
+<ul>
+	{% for source in site.data.eksisozluk %}
+		 <a class="ch-link kaynaklar" href="{{source.link}}" target="_blank">{{source.name}}</a>
+	{% endfor %}
+</ul>
+
+<h3>Genel</h3>
+<ul>
+	{% for source in site.data.genel %}
+		 <a class="ch-link kaynaklar" href="{{source.link}}" target="_blank">{{source.name}}</a>
+	{% endfor %}
+</ul>

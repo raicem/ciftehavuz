@@ -1,0 +1,31 @@
+- 
+  id: 2
+  name: "Aeon"
+  link: "http://aeon.co"
+  category: "Bilim ve Teknoloji"
+-
+  id: 4
+  name: "Fast Company"
+  link: "http://www.fastcompany.com/"
+  category: "Bilim ve Teknoloji"
+-
+  id: 5
+  name: "Arduino Blog"
+  link: "https://blog.arduino.cc/"
+  category: "Bilim ve Teknoloji"
+-
+  id: 48
+  name: "BBC Future"
+  link: "http://www.bbc.com/future"
+  category: "Bilim ve Teknoloji"
+-
+  id: 49
+  name: "Scientific American"
+  link: "http://www.scientificamerican.com/"
+  category: "Bilim ve Teknoloji"
+-
+  id: 51
+  name: "Teknolojinin Sessizleri"
+  link: "http://www.tknlj.com/"
+  category: "Bilim ve Teknoloji"
+-

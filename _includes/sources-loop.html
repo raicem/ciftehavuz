@@ -1,0 +1,7 @@
+<h3>{{include.title}}</h3>
+<ul>
+	{% for source in site.data.{{include.file}} %}
+		 <a class="ch-link kaynaklar" href="{{source.link}}" target="_blank">	{{ source.name }}
+		 </a>
+	{% endfor %}
+</ul>

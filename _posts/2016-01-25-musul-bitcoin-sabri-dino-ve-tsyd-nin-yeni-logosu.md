@@ -1,7 +1,7 @@
 ---
 layout: mail
-title: Kaç Yaşındasın? Dur Bi Bomba Patlatayım. 
-custom-date: 13 Ocak, 2016
+title: Musul, Bitcoin, Sabri Dino ve TSYD'nin Yeni Logosu
+custom-date: 25 Ocak, 2016
 ---
 1) Şengal, IŞİD'in elinden alındıktan sonra yaşananları, insanların şehre geri dönüşünü ve daha da büyük resimde Musul'un IŞİD'den kurtarılması üzerine bölgeden (hatta cepheden) yazılmış [sürükleyici bir yazı.](http://www.newyorker.com/magazine/2016/01/18/the-front-lines) Bununla ilişkili olarak, IŞİD'ın yayılma hızı, terör örgütü olmanın yanı sıra, devlet gibi davranmasının ardındaki planı deşifre etmeye çalışan [bir Der Spiegel araştırması](http://www.spiegel.de/international/world/islamic-state-files-show-structure-of-islamist-terror-group-a-1029274.html): "But apocalyptic visions alone are not enough to capture cities and take over countries. Terrorists don't establish countries. And a criminal cartel is unlikely to generate enthusiasm among supporters around the world, who are willing to give up their lives to travel to the "Caliphate" and potentially their deaths."  
 

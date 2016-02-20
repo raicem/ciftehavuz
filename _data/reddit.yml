@@ -1,0 +1,55 @@
+-  
+  id: 57
+  name: "/r/AskReddit/"
+  link: "https://www.reddit.com/r/AskReddit/"
+  category: "Reddit"
+-
+  id: 58
+  name: "/r/askscience/"
+  link: "https://www.reddit.com/r/askscience/"
+  category: "Reddit"
+-
+  id: 59
+  name: "/r/DepthHub/"
+  link: "https://www.reddit.com/r/DepthHub/"
+  category: "Reddit"
+-
+  id: 60
+  name: "/r/explainlikeimfive/"
+  link: "https://www.reddit.com/r/explainlikeimfive/"
+  category: "Reddit"
+-
+  id: 61
+  name: "/r/Foodforthought/"
+  link: "https://www.reddit.com/r/Foodforthought/"
+  category: "Reddit"
+-
+  id: 62
+  name: "/r/indepthstories/"
+  link: "https://www.reddit.com/r/indepthstories/"
+  category: "Reddit"
+-
+  id: 63
+  name: "/r/InternetIsBeautiful/"
+  link: "https://www.reddit.com/r/InternetIsBeautiful/"
+  category: "Reddit"
+-
+  id: 64
+  name: "/r/todayilearned/"
+  link: "https://www.reddit.com/r/todayilearned/"
+  category: "Reddit"
+-
+  id: 65
+  name: "/r/TrueReddit/"
+  link: "https://www.reddit.com/r/TrueReddit/"
+  category: "Reddit"
+-
+  id: 66
+  name: "/r/TrueTrueReddit"
+  link: "https://www.reddit.com/r/TrueTrueReddit"
+  category: "Reddit"
+-
+  id: 67
+  name: "/r/Vignettes"
+  link: "https://www.reddit.com/r/Vignettes"
+  category: "Reddit"

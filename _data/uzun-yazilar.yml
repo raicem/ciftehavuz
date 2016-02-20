@@ -1,0 +1,34 @@
+-
+  id: 28
+  name: "Longreads.com"
+  link: "https://longreads.com/"
+  category: "Uzun Yazılar"
+-
+  id: 29
+  name: "The Guardian - The Long Read"
+  link: "http://www.theguardian.com/news/series/the-long-read"
+  category: "Uzun Yazılar"
+-
+  id: 30
+  name: "The New Yorker"
+  link: "http://www.newyorker.com/"
+  category: "Uzun Yazılar"
+-
+  id: 31
+  name: "The Feature"
+  link: "http://thefeature.net/"
+  category: "Uzun Yazılar"
+-
+  id: 37
+  name: "The Electric Typewriter"
+  link: "http://tetw.org/"
+  category: "Uzun Yazılar"
+-
+  id: 50
+  name: "Wait But Why"
+  link: "http://waitbutwhy.com/"
+  category: "Uzun Yazılar"
+- 
+  name: Longform
+  link: http://longform.org/
+  category: Uzun Yazılar

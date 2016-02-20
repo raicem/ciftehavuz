@@ -1,6 +1,6 @@
 ---
 layout: mail
-title: Populer Science Türkiye Rahat Bir Nefes Aldı
+title: Popular Science Türkiye Rahat Bir Nefes Aldı
 custom-date: 15 Aralık, 2015
 ---
 Bu hafta izlediğim en iyi video, Derek Sivers'ın "kariyerimden anılar" tandanslı [konuşmasıydı](http://sivers.org/wds). Böyle birinin ve eskiden sahip olduğu CDBaby.com şirketinin varlığından bile haberdar değildim. İnternetin ilk dönemlerinde bağımsız sanatçıların CD'lerini satarak büyümüş bir şirketmiş. Epey eğlenceli ve komik bir konuşma. Blogu da enteresan (bu site gibi emekle, idare ederlerle, vanilla kod ile yazıldığı belli). Örneğin ["Steve Jobs'un benimle dalga geçtiği gün."](http://sivers.org/itunes)   
