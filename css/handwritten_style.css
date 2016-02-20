@@ -1,0 +1,96 @@
+html {
+	font-family: sans-serif;
+	color: #444;
+	background-color: #fbfbfb;
+}
+
+p {
+	line-height: 1.4;
+}
+
+a {
+	color: white;
+	background-color: black;
+}
+
+a.baslik {
+	font-size: 16pt;
+}
+
+a:hover {
+	color: black;
+	background-color: yellow;
+}
+
+.container {
+	width: 80%;
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul li {
+	margin-top: 1em;
+}
+
+h1 {
+	font-size: 30pt;
+	letter-spacing: -2px;
+}
+
+h3 span, h1 span, span.tarih {
+	font-size: 12pt;
+	font-weight: 400;
+	letter-spacing: -1px;
+}
+
+input:not([type=submit]), textarea {
+	box-sizing: border-box;
+	width: 100%;
+	border: 1px solid #444;
+	background-color: white;
+}
+
+form input:not([type=submit]) {
+	font-size: 20pt;
+	padding: 0.2em;
+	font-weight: 600;
+}
+
+form input:not([type=submit]):focus, textarea:focus {
+	outline: none;
+	border: 1px solid yellow;
+	color: #444;
+}
+
+form input[type=submit] {
+	margin-top: 1em;
+	border: 0 none;
+	padding: 1em;
+	border: 1px solid #444;
+}
+
+form input[type=submit]:focus {
+	outline: none;
+	border: 1px solid black;
+	color: #444;
+	background-color: yellow;
+}
+
+textarea {
+	font-size: 14pt;
+}
+
+.warning {
+	background-color: red;
+	margin-bottom: 1em;
+}
+
+.warning > p {
+	padding: 0.4em;
+}

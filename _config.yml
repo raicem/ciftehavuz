@@ -1,0 +1,3 @@
+baseurl: /ciftehavuz
+exclude: ['README.md']
+permalink: pretty

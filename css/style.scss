@@ -1,0 +1,131 @@
+$font-color: #444;
+$accent-color: #D0FFD6;
+
+::selection {
+	background-color: #D0FFD6;
+}
+
+html {
+	font-family: sans-serif;
+	color: $font-color;
+}
+
+.container {
+	width: 80%;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+p {
+	line-height: 1.4;
+}
+
+input + p {
+	margin-top: 0.3em;
+	font-size: 9pt;
+	font-style: italic;
+}
+
+a.ch-link {
+	padding: 0.2em 0.1em;
+	text-decoration: underline;
+	color: $font-color;
+	transition: 0.2s;
+
+	&:hover {
+		background-color: $accent-color;
+	}
+}
+
+a.kaynaklar {
+	margin: 1em 1em 1em 0em;
+	line-height: 2;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul li {
+	margin-top: 1em;
+}
+
+div.title {
+	border-bottom: 10px solid $accent-color;
+}
+
+h1 {
+	font-size: 40pt;
+	margin: 0 0 -10px 0;
+	letter-spacing: -2px;
+
+	&:hover {
+		color: black;
+	}
+}
+
+span.tarih {
+	text-decoration: none;
+	font-size: 10pt;
+	font-weight: 400;
+	font-style: italic;
+	letter-spacing: -1px;
+}
+
+input:not([type=submit]), textarea {
+	color: $font-color;
+	background-color: white;
+	box-sizing: border-box;
+	width: 100%;
+	border: 1px solid $font-color;
+
+	&:focus {
+		outline: none;
+		border: 1px solid red;
+	}
+}
+
+form input:not([type=submit]) {
+	font-size: 20pt;
+	padding: 0.2em;
+	font-weight: 600;
+}
+
+form input[type=submit] {
+	font-size: 10pt;
+	padding: 0.5em 1em;
+	border: none;
+	transition: 0.2s;
+	
+	&:hover {
+		background-color: $font-color;
+		color: white;
+	}
+
+	&:focus {
+		outline: 2px solid $accent-color;
+	}
+}
+
+textarea {
+	font-size: 14pt;
+}
+
+.warning {
+	background-color: red;
+	margin-bottom: 1em;
+
+	> p {
+		padding: 0.4em;
+	}
+}
+
+div.posts {
+	margin-top: 1em;
+}
+
+div.post {
+	margin-top: 1em;
+}
