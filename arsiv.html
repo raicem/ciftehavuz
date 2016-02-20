@@ -8,7 +8,7 @@ layout: default
 <a class="ch-link" href="/">Ana sayfa</a>
 	{% for post in site.posts %}
 		<div class="post">
-			<a class="ch-link" href="{{ post.url }}">{{post.title}}</a>
+			<a class="ch-link" href="{{site.baseurl}}{{ post.url }}">{{post.title}}</a>
 			<span class="tarih">{{ post.custom-date }}</span>
 		</div>
 	{% endfor %}
