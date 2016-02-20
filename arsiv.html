@@ -6,12 +6,11 @@ layout: default
 </div>
 <div class="posts">
 <a class="ch-link" href="index.php">Ana sayfa</a>
-	<?php foreach ($sonuclar as $sonuc): ?>
+	{% for post in site.posts %}
 		<div class="post">
-			<a class="ch-link" href="mail.php?id=<?php echo $sonuc['id']; ?>">
-				<?php echo $sonuc['title'];?></a>
-			<span class="tarih"><?php echo strftime("%B %d, %Y", $sonuc['date']); ?></span>
+			<a class="ch-link" href="{{ post.url }}">{{post.title}}</a>
+			<span class="tarih">{{ post.custom-date }}</span>
 		</div>
-	<?php endforeach ?>
+	{% endfor %}
 </div>
 
