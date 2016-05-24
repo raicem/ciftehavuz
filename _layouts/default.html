@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
+	<link rel="stylesheet" href="{{ site.baseurl }}/css/style.css">
+	<script>hljs.initHighlightingOnLoad();</script>
+	<title>Çiftehavuz Blog</title>
+</head>
+<body>
+	<header class="site-header">
+		<div class="header-titles">
+			<h1 class="header-title italic-title">
+				<a class="link header-link" href="{{ site.baseurl }}/">Çiftehavuz</a>
+			</h1>
+			<h4 class="header-title-small">Burası artık bir blog.</h4>
+		</div>
+	</header>
+	<div class="main">
+		<div class="content">
+			{{ content }}
+		</div>
+		<aside class="sidebar">
+			<div class="archive">
+				<h3>Menü</h3>
+				<ul class="posts-archive">
+					<li class="archive-item">
+						<a class="archive-link" href="{{ site.baseurl }}/hakkinda">
+							Hakkında
+						</a>
+					</li>
+					<li class="archive-item">
+						<a class="archive-link" href="{{ site.baseurl }}/categories/arduino-bisiklet-isigi">
+							Arduino Bisiklet Işığı
+						</a>
+					</li>
+					<li class="archive-item">
+						<a class="archive-link" href="{{ site.baseurl }}/categories/php">
+							PHP
+						</a>
+					</li>
+					<li class="archive-item">
+						<a class="archive-link" href="{{ site.baseurl }}/categories/diger">
+							Diğer Şeyler (Çok klişe oldu)
+						</a>
+					</li>
+				</ul>
+			</div>
+		</aside>
+	</div>
+	<footer>
+		<h3 class="italic-title">Çiftehavuz</h3>
+	</footer>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-11941941-3', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+</body>
+</html>

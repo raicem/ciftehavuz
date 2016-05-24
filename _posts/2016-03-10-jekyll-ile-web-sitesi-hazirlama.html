@@ -1,0 +1,27 @@
+---
+layout: post
+title: Jekyll İle Web Sitesi Hazırlama
+date: 2016-03-10 16:23:59.000000000 +02:00
+custom-date: 10 Mart 2016
+type: post
+published: true
+status: publish
+categories:
+- Jekyll
+---
+<p>Neden bilmiyorum, statik siteler geri gelmeye başladı. Sanırım ufak işler için PHP'nin veya Wordpress'in, CMS'lerin fazla olduğunu düşünenlerin sayısı arttı. Ayrıca statik siteleri GitHub ve Amazon gibi büyük şirketlerin bedava barındırdığını düşünürseniz, ciddi bir tasarruf yapmak mümkün statik sitelere geçiş yaparak. GitHub Pages'da beleş site barındırmaya yazının sonunda da değinelim.</p>
+<p>Statik siteden kastım sadece HTML, CSS ve JS. Yani kullanıcı tarafında çalışan her şey. Sunucunun talep edilen sayfaları göndermek dışında herhangi bi veritabanına erişme, sayfayı hazırlama, kullanıcıya göre değiştirme görevi yok.</p>
+<p>Basit bir wordpress blogunu düşünelim. Siz blogu ziyaret ettiğinizde veritabanında tutulan blog başlıkları, metinleri, etiketleri temayla birleştirilip size sunuluyor. Ama bu sayfayı her refresh ettiğinizde yapılıyor. Tekrar veritabanı, tekrar tema birleştirme, tekrar kullanıcıya gönderme. İçerik aynı olsa bile ve hatta içerik seneler boyunca aynı kalsa bile.</p>
+<p>Statik siteler burada öne çıkıyor. Sıklıkla güncellenmeyen bir portföy veya bir blog varsa, verileri her seferinde harıl harıl veritabanından çekmeyelim diyor. Site yöneticisi, siteye her yeni içerik eklediğinde, veritabanından verileri çekip temalarla birleştirme işini bir kere kendi bilgisayarında yapsın, sonucunu da site olarak yayınlasın diyor. Bence mantıklı. Hatta biraz zorlarsan çevreci bile.</p>
+<p>Statik sitelerin yükselişine destek olan araçlardan bir tanesi Jekyll. Bu aslında bir terminal programı ve Ruby yazılmış. Yarattığınız temaları, yazdığınız yazılarla ve içerikle birleştirerek statik sitenizi oluşturuyor. Elbette hem temaları hazırlamanın ve yazıları yazmanın belirli koşulları var.</p>
+<p>Statik sitelerin en büyük sorunu olan, sayfalar arası ortak elementleri (mesela menü ve footer) kopyalayıp yapıştırma derdinden kurtarıyor en önemlisi. Nasıl PHP'de include yapabiliyorsak Jekyll sayesinde çok benzer fonksiyonaliteye kavuşabiliyoruz.</p>
+<p>Jekyll'ı anlamak aslında o kadar zor değil. Ancak şu videoyu izlemenizi kesinlikle tavsiye ederim. Kelimelerle anlatmaya çalışana kadar, grafikleri ve resimleri kullanmak daha mantıklı.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/iWowJBRMtpc" frameborder="0" allowfullscreen></iframe>
+<p>Jekyll'ın en kötü yanı, Windows işletim sistemi için stabil bir çözümü olmaması. Eğer Mac veya Linux'te değilseniz nasıl bir ortamla karşılaşırsınız bilemiyorum.</p>
+<p>Jekyll'ı Mac'e yüklemek ve sonra da siteye yapmaya başlamak için 2016'nın başı itibarıyla en güzel kaynak Thomas Bradly'nin hazırladığı seri. 30 video olduğuna aldanmayın, hepsi kısa kısa. Tutorial'ı takip ederseniz bir haftasonunda bir kaç ücretli hosting'de bulunan sitenizi ücretsiz GitHub'a geçirebilirsiniz. FTP şifreleri ile uğraşmadan sadece bir git push ile site upload etmenin keyfi bir başka.</p>
+<p>Videolarda göreceğiniz üzere, Jekyll kullanmak için Ruby falan bilmenize gerek yok. Sadece temalarınızı oluştururken <a href="http://liquidmarkup.org" target="_blank">Liquid</a> denen templating engine'i ve içerikleri oluştururken de Markdown zımbırtısını öğrenmeniz gerekir. Öğrenmek doğru kelime bile değil aslında. O kadar kolaylar ki.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oiNVQ9Zjy4o" frameborder="0" allowfullscreen></iframe>
+<p>Dediğim gibi Jekyll'a komutu verdiğinizde temalarınızla içeriğinizi birbirine bağlıyor ve sitenizi oluşturuyor. Oluşturduğu çıktı, sizin server'a upload etmeniz gereken dosyalar. Yani hazırladığınız temalar ve içerik sadece sizin bilgisayarınızda kalabilir.</p>
+<p>İşte burada Jekyll ve GitHub ilişkisinin avantajları başlıyor. GitHub, tüm statik sitelere ücretsiz barındırma sağlamasının yanında, Jekyll ile hazırlanmış siteleri otomatik olarak işleyebiliyor. Yani siz temalarınızda veya içeriklerinizde bir değişiklik yaptığınızda, Jekyll'a komut verip tekrar process etmesini ve bir çıktı oluşturmasını beklemiyorsunuz. Normal statik çözümlerin askine Jekyll dosyalarınız GitHub tarafından *yine ücretsiz* bir şekilde host ediliyor. Bu gerçekten insanın üstünden yük alıyor.</p>
+<p>Jekyll'ın dezavantajı ise çok bariz. Normalde müşterinize hazırlayacağınız bloga veya içerik yönetim sistemine yine müşterinizin bizzat girip kolayca içerik girmesini sağlayabilirsiniz. Jekyll'da böyle şeyler elbette yok. Bu sebeple yazılımcılardan ya da meraklılardan başka kullanan sayısı artmayabilir. Buna çözümler arasında <a href="http://prose.io">Prose.io</a>'yu önerebilirim. GitHub'da barındırdığınız Jekyll sitelerine erişime izin veriyor ve yeni içerik ekleme olayını neredeyse blogspot, wordpress.com kolaylığına indirgiyor. Healthcare.gov'un blog bölümlerinin Jekyll ile çalıştığını ve o takımın bu Prose.io uygulamasını oraya kolayca içerik eklemek üzere hazırladığını belirtmem gerek.</p>
+<p>Çorba gibi post oldu valla. Sonra editlemek üzere.</p>

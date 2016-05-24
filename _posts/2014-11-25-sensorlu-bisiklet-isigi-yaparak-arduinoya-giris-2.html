@@ -1,0 +1,49 @@
+---
+layout: post
+title: Sensörlü Bisiklet Işığı Yaparak Arduino’ya Giriş -2
+date: 2014-11-25 21:15:45.000000000 +02:00
+custom-date: 25 Kasım 2015
+type: post
+published: true
+status: publish
+categories:
+- Arduino Bisiklet Işığı
+---
+<p><a href="{% post_url 2014-10-17-sensorlu-bisiklet-isigi-yaparak-arduinoya-giris-1 %}">1. Bölüm: Projenin amacı ve genel bir giriş</a></p>
+<p>- Bu yazıda Arduino'ya giriş mahiyetinde led'lerimizi bağlayıp ilk basit kodu upload edeceğiz. -</p>
+<p>Gerekli malzemeleri edindiysek, deneyselleşmeye başlayabiliriz demektir. İnternette inanılmaz boyutlara ulaşan Arduino kaynaklarını göz önüne alarak çok detaylı olarak "Arduino nedir?" kafasına girmek istemiyorum. Ancak blogun üstündeki yazıyı görüyorsunuz: "Eğer basitçe anlatamıyorsan, anlamamışsındır". Feynman'dan Einstein'a kadar geniş yelpazede bilim adamına atfedilen bu söze saygı duyalım ve açıklamaya çalışalım.</p>
+<p>Arduino, üzerinde bulunan mikrodenetleyiciyi programlamamızı sağlayan bir geliştirme platformudur. Neden bu kadar popülerdir? Çünkü bir mikrodenetleyicinin kodlanması aşamasında ortaya çıkan ayrı bir programlayıcı bulma (mikrodenetleyicileri direk bilgisayara takamazsınız, bağlantı için gereken programlayıcı Arduino kartının üzerinde hazırdır), onun sürücülerini yükleme,  denenmesi gereken bir prototip için uygun voltajı ayarlamaya uğraşma (Arduino'nun kendi gerilim düşürücüsü vardır), ya da karmaşık C kodlarıyla cebelleşme derdini ortadan kaldırır. Her ne kadar kullandığımız dil C olsa da, Arduino IDE yazılımını kullanarak oluşturacağımız programlarda, Arduino projesinde çalışan mühendislerin bizler için önceden hazırladığı, işimizi kolaylaştıracak fonksiyonlar bizim için yeterli olacak. Neyse, geri kalanları da ilerledikçe öğreniriz.</p>
+<p>Arduino'yu programlamadan önce bisiklet ışığını ışık yapacak LED'lerimizi takalım.  İçimden gelen sesi dinleyerek iki adet LED takmaya karar verdim bu ufak proje için, ama elbette bir tane LED de uygundur. Arduino'nun 13 adet dijital pininden herhangi iki tanesini kullanabiliriz ledlerimiz için. Sadece 13. çıkışı kullanmamalıyız, o çıkışın kendine has dahili direnci bizim kendi dirençlerimizi seçmemize engel olacaktır.</p>
+<p>Arduino'nun 5 voltluk çıkışı LED'lerin 2 veya 3 voltluk çalışma aralığına fazla geleceğinden dolayı, direnç kullanmamız gerekmekte. Şimdilik ledinizin zarar görmemesi açısından 560 ohm veya 1k ohm direnç takıp sadece kodumuzun çalıştığını kontrol edeceğiz ama ileride ucuz ledlerimizin kapasitesi olan 20 miliamperin tamamını kullanmak istiyorum. Çünkü bu bir bisiklet ışığı olacak ve parlaklık önemli. O aşamaya gelince kaçlık direnç kullanmamız gerektiğini Ohm yasasını kullanarak hesaplayacağız.</p>
+<p>Şimdilik LED'lerimizi şu şekilde bağlıyoruz. LED'lerin pozitif ve negatif uçlarına dikkat edin. Uzun olan bacak pozitif. Yukarıda dediğim gibi 1k ohm direnç yeterli olacaktır. <img class="aligncenter wp-image-32 size-large" src="{{ site.baseurl }}/assets/untitled-sketch_bb.jpg?w=660" alt="Untitled Sketch_bb" width="660" height="482" /></p>
+<p>İki led aynı pin çıkışına da bağlanabilirdi ancak bu durumda Arduino ve genel olarak AVR çiplerinin pin başına 40 mA sağlama sınırına oldukça yaklaşmış olurduk. Hatta beyaz led'lerin 25-30 mA'ya kadar çalışabileceğini varsayarsak iki tanesini aynı pinden çalıştırmak mümkün olmazdı. Arduino'dan fazla akım çekmeye çalışarak pinlere zarar verebiliriz.</p>
+<p>Şimdi LED'lerimizi bağladığımıza göre kendilerini yakabiliriz. Ardino IDE'nin içerisinde gelen örnek kodları açarsanız (File -&gt; Examples -&gt; Basics -&gt; Blink) zaten bizim yapmak istediğimiz tarzda bir kod olduğunu fark edeceksiniz. Bunu sadece programda tanımlanan led pinlerini değiştirerek kullanabilirsiniz ancak biz tekrar etmek amacıyla kendimiz bir tane yaratalım.</p>
+
+<pre><code class="c">
+// Ledlerimizi bağladığımız pinler ve isimleri burada tanımlanmalı.
+int led1 = 8;
+int led2 = 7;
+// Kullandığımız pinleri çıkış pini olarak atıyoruz.
+void setup() {
+  // initialize the digital pin as an output.
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+}
+// Arduino açık kaldığı sürece tekrarlanacak rutin:
+void loop() {
+  digitalWrite(led1, HIGH);  // led1 pinini yükselt (5V uygula)
+  digitalWrite(led2, HIGH);  // led2 pinini yükselt (5V uygula)
+  delay(100);                // bu şekilde 100 milisaniye bekle
+  digitalWrite(led1, LOW);   // led1 pinini düşür (Sıfır Volt)
+  digitalWrite(led2, LOW);    // led2 pinini düşür (Sıfır Volt)
+  delay(100);                // bu şekilde 100 milisaniye bekle
+}
+</code></pre>
+
+
+<p>Görüldüğü üzere programın üç ana bölümü var. İlk kısmında sadece Arduino'ya hangi pinleri kullanacağımızı ve bu pinlerin isimlerini söylüyoruz. Bu sayede daha sonra bu isimleri refere edebilceğiz. Daha sonra bağlayacağımız sensör veya tuşları da bu bölümde tanıtacağız.</p>
+<p>İkinci bölümde bulunan setup fonksiyonu Arduino açıldıktan sonra sadece bir kere çalışacak. Bu fonksiyon içerisinde pinlerin hangi amaçlarla kullanılacağını belirliyoruz. Ledlerimizi bağladığımız dijital pinler, sadece çıkış için değil, başka görevler için giriş olarak da kullanılabilmekte. Hatta Arduino'nun dijital pinleri varsayılan olarak giriş pini olarak ayarlanmıştır. Işık veya ses üretmek için gereken çıkış akımının verilebilmesi için, bu pinlerin özel olarak çıkış amaçlı kullanılacağının belirtilmesi gerekir. Bu nedenle pinMode fonskiyonu ile, isimlerini belirlediğimiz pinlerin OUTPUT olarak ayarlanmasını sağlıyoruz.</p>
+<p>Üçüncü bölüm loop fonksiyonu ve adından da anlaşılacağı üzere, setup fonksiyonundan sonra loop'a gelindiğinde sonsuz bir döngüye giriliyor. Bu sonsuz döngüde yapmak istediğimiz hareketleri Arduino'ya yaptırabiliyoruz.</p>
+<p>Örnek koda bakarsanız görebileceğiniz gibi burada iki adet fonksiyon var. İlki digitalWrite(), pinlerin bulunduğu durumu değiştirmemizi sağlıyor. Bu fonsiyon sayesinde bir pin'in 5 Volta yükseltip LED'in yanmasını sağlayabiliyoruz. Bu Arduino'da HIGH olarak tanımlı. O nedenle fonksiyona ilk olarak durumunu değiştirmek istediğimiz pini, daha sonra da istediğimiz durumu parametre olarak göndermemiz gereiyor. Led'i kapatmak istediğimizde ise, LOW parametresini gönderiyoruz ve pin, 0 volta düşüyor, LED sönüyor.</p>
+<p>Aralardaki delay() fonksiyonu ise, adından da belli olacak şekilde mikrokontrolörün tüm işlemlerini durduruyor. O esnada herhangi bir değişiklik yapmak mümkün değil. Bunu milisaniye mertebesinde yaptığı için 1 saniye için 1000 sayısını vermeniz gerekmekte. Ben 0.1 saniyelik bir fark istediğim için 100 verdim.</p>
+<p>-Bir sonraki postta bisiklet ışığımıza bir kaç sürekli açık, yanıp sönme veya flip-flop gibi bir kaç fonksiyon kazandıracağız. Bir tuşla bu fonksiyonlar arasında geçiş yapabileceğiz. Sensörlü ufak bir ışık yapma hedefine doğru atılmış bir adım olacak. -</p>

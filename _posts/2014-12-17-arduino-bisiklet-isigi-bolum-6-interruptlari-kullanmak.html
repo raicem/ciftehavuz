@@ -1,0 +1,96 @@
+---
+layout: post
+title: 'Arduino Bisiklet Işığı Bölüm 6: Interrupt''ları Kullanmak'
+date: 2014-12-17 23:09:02.000000000 +02:00
+custom-date: 17 Aralık 2014
+type: post
+published: true
+status: publish
+categories:
+- Arduino Bisiklet Işığı
+---
+<p>Önceki bölümlerde hatırlayacağınız üzere en önemli problemimiz tuşun delay fonksiyonu sebebiyle tepki vermemesiydi. O gün gelen açlık krizinin etkisiyle postu tamamlayamamıştım. Bugün ikinci çözüm yolunun ne olduğundan kısaca bahsedeceğim.</p>
+<p>Delay fonskiyonunun CPU işlemlerini tamamen durdurduğunu söylemiştim ancak o biraz yanlış bir tabir oldu. Delay fonksiyonu aslında bir anlamda vitesi boşa alıyor. Araba motoru çalışıyor olsa da ortaya herhangi bir iş çıkmıyor. CPU da delay fonksiyonu esnasında boşa döngülerini çevirmeye devam ediyor ancak portlara herhangi bir değişiklik yansımıyor. Fakat mikrodenetleyicimizi delay fonksiyonunun bu karanlığından kurtaracak çok ama çok önemli bir özellik mevcut: Interrupt'lar.</p>
+<p>Interrupt'lar tetiklendiği zaman CPU'nun o sırada ne yaptığına bakmaksızın kendi fonksiyonlarını çalıştırırlar ve Interrupt'lar delay melay dinlemeden CPU'yu rahatsız ederler. Bu sayede bir interrupt tetikleyerek delay fonksiyonu esnasında oluşan tuşları okumama durumunu yenebiliriz. Yani bir anlamda mikrodenetleyicimize "çalışmasına çalış ama ben bir interrupt tetiklediğimde o işini bırak ve interrupt ile gelen fonksiyonu hallet" diyebiliriz. Bu tek bir döngüde dönüp duracak programlarımız açısından önemli bir multitasking özelliği.</p>
+<p>İnternette, interrupt'ların ne kadar önemli bir şey olduğunu anlatan bir çok kaynak var. Aklıma şimdi güzel bir kaynak gelmese de herhangi bir Google araması aydınlatıcı açıklamalar getirecektir. Tavsiye ederim. Zira mikrodenetleyicilerin en önemli özellikleri olarak gösteriliyorlar.</p>
+<p>Interrupt'lar hem yazılımla hem de donanımla beraber tetiklenebilirler. Yazılımsal olarak interruptlar belirli süre aralıklarında (her 10 saniye ya da her 100 milisaniye gibi), mikrodenetleyiciye gelecek UART/USART komutlarında veya ADC işlemlerinin tamamlanmasıyla tetiklenebilir. Donanım interruptları ise, mikrodenetleyicinin belirli pinlerinde ölçülen gerilimlerin değişmesi suretiyle tetiklenebilir. Örneğin bir interrupt'ı pin'de ölçülen gerilim değişince tetikleyecek şekilde ayarlayabiliriz. Bunun üzerine, pin değişiminin yönünü bile belirtebiliriz. Örneğin, bir pin 1'den 0'a geçtiğinde tetiklenecek bir interrupt yaratabiliriz. Bu inanılmaz faydalı bir şey. Önceki postları hatırlarsanız, tuşun konumunu kaydetmek, karşılaştırmak için bir sürü değişken belirlemek zorundaydık.</p>
+<p>Biz de tuşa basıldığında lightmode değişkenimizi bir artıracak bir interrupt yapacağız. Bunun için hali hazırda kodumuzda bulunan bir sürü bölümden (tuşu okuma, kontrol etme, debounce etme gibi) kurtulmak zorundayız. Uyguladığımız debounce yöntemi, sadece tekrarlanan döngünün içinde bir işe yaradığı için maalesef yapacağımız interrupt türüne uygun değil. Ona başka bir çözüm bulmamız gerekecek.</p>
+<p>Interrupt eklemek Arduino'da oldukça basit. Void setup() bölümüne şu satırı yazın:</p>
+
+<pre><code class="c">
+    attachInterrupt(0, modDegistir, FALLING);
+</code></pre>
+
+<p>Kullandığımız fonksiyon attachInterrupt. Üç adet argüman kabul ediyor. İlki, hangi pinde interrupt için gerekli değişikliğin kontrol edileceği bilgisi. Sıfır rakamı kafanızı karıştırmasın. Evet, Arduino üzerinde sıfır numaralı bir analog pini var ama konuyla alakasız. Burada Arduino'nun temelini oluşturan Atmega328'in pin isimlerine göre hareket etmemiz gerekiyor.</p>
+<p><a href="http://arduino.cc/en/Hacking/PinMapping168">Bu sayfada</a> bulunan resme bakmanızı istiyorum. Bu bize Arduino'nun pinleri ile ona güç veren ATMega328'in pinlerini göstermekte. ATMega'nın fonksiyonlarla dolu pinlerini Arduinonun nasıl yalınlaştırdığını görebilirsiniz bu resimde. Biz ilgimizi INT0 pin'ine vermeliyiz. Bu donanımsal interrupt'ların sürekli olarak kontrol edileceği adanmış pinlerden bir tanesidir. Her ne kadar ATMega'nın PCINT yazan bütün pinlerini bu iş için adayabiliyor olsak da, 1'den 0'a, ya da 0'dan 1'e değişim yönünü ancak INT0 ile denetleyebiliriz. INT0 da gördüğünüz üzere PD2 portunda. attachInterrupt fonksiyonuna geçireceğimiz 2 değeri de buradna geliyor.</p>
+<p>Fonksiyonun ikinci parametresi, interrupt'ın tetiklenmesi durumunda hangi fonksiyonun çalıştırılacağı. Bu çok bariz ve bir önceki postta loop() dışarısında fonksiyonların nasıl oluşturulacağını gördüğümüz için oldukça basit. Bu durumda yazmamız gereken fonksiyon şu şekilde olmalı:</p>
+
+<pre><code class="c">
+  void modDegistir() {
+    ledmode++;
+    if (ledmode == 4) ledmode = 0;
+  }
+</code></pre>
+  
+
+<p>Gördüğünüz üzere fonksiyon oldukça basit. Sadece mod sayacını bir artırıyoruz. 4'e ulaşınca sıfırlıyoruz. if komutundan sonra gelecek emirlerin sadece tek satır olmasından ötürü, parantez sonrasına tekrardan {} bloğu açmadan kodumuzu koyabiliriz.</p>
+<p>Üçüncü parametremiz interrupt'ı neyin tetikleyeceği konusunda. Eğer pin'in herhangi bir gerilim değişime tepki vermesini isteseydik CHANGE, 0'dan 1'e yükseldiğinde tetiklenmesini isteseydik RISING, 1'den 0'a düştüğünde tetiklenmesini isteseydik FALLING dememiz gerekirdi. Biz pull-up resistor ile sürekli olarak 1'e çekilen pinimizin FALLING değişimini denetlemek istiyoruz.</p>
+<p>İnanması güç ama sadece bu kadarlık kod bizim modlar arasında rahatça dolaşmamızı sağlayacak. Aşağıda ekleyeceğim koddaki loop() fonksiyonunun nasıl kısaldığına dikkat edin. Döngümüz artık her turunda tuşu kontrol etmek zorunda kalmayacak. Bisiklet ışığının bir kaç saat boyunca aynı modda kalacağını düşünecek olursak sürekli tuş kontrol etmek epey gereksiz bir şey.</p>
+<p>Burada üzerinde durulması gereken bir nokta debounce ihtiyacı. Debounce yapmadığımız takdirde interrupt arka arkaya bir kaç kez tetiklenebilir ve istediğimiz modu seçmeye engel olabilir. Bunu interrupt içerisinde yapmak biraz zor ve aslında en iyi çözümlerden biri değil. Ancak şimdilik çok basit bir yöntem uyduracağız.</p>
+<p>Tuşumuzun salınımı yaklaşık 5 ms sürüyor ve bu esnada interrupt'ı tekrarlatacak sinyaller gönderebiliyor. Biz arka arkaya gelecek interrupt tetiklemelerini ciddiye almamak için interrupt fonksiyonu içerisinde mikrodenetleyiciyi boşta bekletebiliriz. Bunun için 5 veya 10 ms'lik delay fonksiyonu yeterli olacaktır.</p>
+<p><strong>Paradoks</strong>: Yukarıda delay fonksiyonuna bir tek interrupt'ların etki edebildiğini söylemiştim. Ancak şimdi de arka arkaya gelecek interrupt'ları okumamak için delay fonksiyonu kullanıyorum. Teorisini öğrenmem lazım çünkü pratikte işe yarayan bir çözüm oldu.</p>
+<p>Son önemli nokta, hem interrupt fonksiyonunda, hem de ana döngüde kullandığımız lightmode değişkeni. Bu değişkeni volatile olarak tanıtmamız Arduino dökümanları tarafından, interrupt tarafından değiştirilen değerin loop'ta da güncel kalabilmesi için tavsiye edilmiş. Açıkçası bunu yapmayı unuttuğumda da kod çalıştı, o yüzden önemini kavrayamadım.</p>
+<p>Tüm kod aşağıdaki gibi:</p>
+
+<pre><code class="c">
+  //degismeyecek degiskenler
+const int led1 = 5;
+const int led2 = 6;
+const int tus = 2;
+const int isiksensoru = A0;
+volatile int ledmode = 0;
+int okuma2;
+unsigned long oncekiMillis;
+boolean leddurumu = HIGH;
+void setup() {
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  digitalWrite(tus, HIGH); //Internal Pull-Up direnç
+  attachInterrupt(0, modDegistir, FALLING); //1'den 0'a tetiklenecek
+}
+void loop() {
+  if (ledmode == 3) { // Çakar Mod
+    ledBlink();       // Çağırılan fonksiyon aşağıda
+  }
+  else if (ledmode == 2) { // Sürekli Açık Mod
+    ledStable(HIGH);  // Çağırılan fonksiyon aşağıda
+  }
+  else if (ledmode == 1) {
+    okuma2 = analogRead(isiksensoru); //Sensörden okuma yapılır
+    if (okuma2 > 500) {
+      ledBlink();
+    }
+    else if (okuma2 < 500) {
+      ledStable(HIGH);
+    }
+  }
+}
+void modDegistir() { // Interrupt fonksiyonu
+  delay(10);       // Tuş debouncing için bekleme süresi
+  ledmode++;
+  if (ledmode == 4) ledmode = 0;
+}
+void ledBlink() {
+  if ((unsigned long)(millis() - oncekiMillis) >= 100){ //Fark 100 milisaniye olursa
+      oncekiMillis = millis();
+      digitalWrite(led1, leddurumu);
+      digitalWrite(led2, leddurumu);
+      leddurumu = !leddurumu; //HIGH ve LOW arasında dönüp durması için
+  }
+}
+void ledStable ( boolean stablePosition ) {
+  digitalWrite(led1, stablePosition);
+  digitalWrite(led2, stablePosition);
+}
+</code></pre>
+

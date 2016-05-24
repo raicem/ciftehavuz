@@ -1,0 +1,191 @@
+---
+layout: post
+title: 'Sensörlü Bisiklet Işığı Bölüm 4: Farklı Modlar ve Işık Sensörü'
+date: 2014-11-29 15:19:17.000000000 +02:00
+custom-date: 29 Kasım 2014
+type: post
+published: true
+status: publish
+categories:
+- Arduino Bisiklet Işığı
+---
+<p><a href="{% post_url 2014-10-17-sensorlu-bisiklet-isigi-yaparak-arduinoya-giris-1 %}">1. Bölüm: Projenin amacı ve genel bir giriş</a></p>
+<p><a href="{% post_url 2014-11-25-sensorlu-bisiklet-isigi-yaparak-arduinoya-giris-2 %}">2. Bölüm: LED yakma ve ilk program</a></p>
+<p><a href="{% post_url 2014-11-28-sensorlu-bisiklet-isigi-bolum-3-buton-debounce-pull-up-ve-pull-down-direncler %}">3. Bölüm: Tuş ekleme, Pull-Up ve Pull-Down dirençler, Button Debouncing</a></p>
+<p>- Şimdiye kadar ledleri taktık, tuş ile düzgün bir şekilde okuma yaparak ledleri açıp kapattık. Buraya kadar gelmek için önceki bölümleri takip edebilirsiniz. -</p>
+<p>Bundan sonra ışığa fonksiyonalite kazandırmaya başlayabiliriz. Bunun için ışığa öncelikle bazı çakma modları ekleyeceğiz. Şimdilik üç mod düşündüm, zaten arkasındaki mantığı anlayınca istediğiniz kadar ekleyebilirsiniz.</p>
+<p>İnternette daha güzel kodlar olduğuna eminim ama bu kendi kendine kullandığım modlar arasında gezinme yöntemim. Çok basit bir for loop ve ledmode diye bir değişken yeterli :)</p>
+<p>Önce kodu yapıştırayım her zaman yaptığım gibi.</p>
+
+<pre><code class="c">
+  // İlk bölümdeki ledlere ek olarak tuşu ve programda kullanacağımız değişkenleri tanımlıyoruz.
+int led1 = 8;
+int led2 = 7;
+int tus = 6;
+boolean okuma;
+boolean sontusdurumu = HIGH;
+boolean debounced;
+long int artirma = 0;
+int ledmode = 0;
+// Kullandığımız pinleri çıkış pini olarak atıyoruz.Input ayarlamaya gerek yok.
+// Setup aşamasında pin'e HIGH komutu yollarak Pull-Up direnci aktifleştiriyoruz.
+void setup() {
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  digitalWrite(tus, HIGH);
+  Serial.begin(9600);
+}
+// Arduino açık kaldığı sürece tekrarlanacak rutin:
+void loop() {
+  okuma = digitalRead(tus);
+  if (okuma == LOW){ //okuma LOW yani 0 ise
+    artirma++;       //Bu rakamı bir artır
+    if (artirma > 20) { //20 kere artırdıktan sonra
+      debounced = HIGH;
+    }
+  }
+  if (okuma == LOW && okuma != sontusdurumu && debounced == HIGH) {
+    ledmode++; //Burada direk ışıkları kontrol etmek yerine ledmode artırıyoruz.
+    if (ledmode > 2) {
+      ledmode = 0; //Programın başa dönmesi için bir noktadan sonra sıfıra dönmeli.
+    }              // Yoksa sonsuza kadar sayar gider.
+    artirma = 0;
+  }
+  //ledmode == 0 konumunu tanımlamaya gerek yok zaten orada ışıkları kapalı istiyoruz.
+  if (ledmode == 1) { // Işıklar tamamen açık
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, HIGH);
+  }
+  if (ledmode == 2) { // 75 Milisaniye aralıkla çakar mod
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, HIGH);
+    delay(75);
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, LOW);
+    delay(75);
+  }
+  sontusdurumu = okuma;
+  Serial.println(artirma);
+}
+</code></pre>
+
+<p>"leddurumu" boolean değişkenine ihtiyacımız kalmadığı için onu çıkartıyoruz. Onun yerine ledmode (neden bazı değişkenleri Türkçe bazılarını İngilizce yapıyorum ben de bilmiyorum, karışıklık oluyorsa kusuruma bakmayın) diye modlarımızı tanımlayacağımız bir integer ekliyoruz. Programın tanımlamalar ve setup bölümü bunun dışında aynı.</p>
+<p>Asıl farklılık loop bölümünde ancak o da çok büyük bir fark değil. önceden 3 koşulumuzun sağlanıp, leddurumu'nu değiştirdiğimiz bölümde artık sadece ledmode değişkenimizin sayısını bir artırıyoruz. Bu sayede ledmode'un farklı değerlerine karşılık gelen komutları çalıştırabileceğiz. Örneğin ledmode sayısı 1'e eşit olduğunda (tuşa bir kez basıldığında) ışıklarımız tamamen yanacak ancak 2'ye eşit olduğunda (yani tuşa bir kez daha basıldığında) çakar moda geçecek. 2'den fazla modumuz olmadığı için ledmode değişkeninin 3'e ve daha ilerisine gitmesini istemiyoruz. Onu sıfırlamak için, ledmode 3'ten büyük hale geldiği an onu sıfırlayacağız. Bu sayede her tuşa basıldığında modlar arasında dolaşabileceğiz.</p>
+<p>if koşullarından çıktıktan sonra loop bölümünün sonlarına doğru ledmode değişkenleri için istediğimiz işlevleri tanıtıyoruz. Yukarıda da dediğim gibi, sürekli açık kalmasını istiyorsak digitalWrite(ledx, HIGH) yazarak olayı bitirebiliriz. Çakar modda ise 2. bölümde yaptığımız gibi araya delay fonksiyonu ekleyerek açılma kapanma efekti koyabiliriz. Dikkat edilmesi gereken nokta, delay fonksiyonunun mikrodenetleyicimizin bütün fonksiyonlarını durduran çok katı bir fonksiyon olmasıdır. delay süresi devam ederken tuşa basmanız durumunda komut algılanmayacak ve mod değişmeyecektir. Bu da kodda düzeltilmesi gereken ufak pürüzlerden bir tanesi. delay süresini 75 milisaniye olarak ayarlama sebeplerinden birisi de tuşa basıldığında delay'e denk gelme ihtimalini azaltmaktı. Ancak bu sorunu ilerleyen bölümlerimizde çözmeye çalışacağız zaten.</p>
+<p>Eğer buraya kadar geldiyseniz sonraki adım, ve de en zevkli adım, ışık sensörümüzü takma aşamasına geçebiliriz :)</p>
+<p>Işık sensörleri ya da bilinen adıyla (Light Dependent Resistor / LDR) aslında bir dirençtir. Ancak bu direnç değişken olup üzerine düşen ışık miktarıyla ters orantılıdır. Üzerine gelen ışık miktarı arttıkça direnci azalır, ışık azaldıkça direnç artar. Dirençteki değişimin gerilime etkisini ölçerek ışık sensöründen veri toplayabiliriz. Akla öncelikle şöyle bir şekil geliyor:</p>
+<p><a href="https://dikendine.files.wordpress.com/2014/11/ekran-resmi-2014-11-29-15-01-17.png"><img class="alignnone size-medium wp-image-68" src="{{ site.baseurl }}/assets/ekran-resmi-2014-11-29-15-01-17.png?w=300" alt="Ekran Resmi 2014-11-29 15.01.17" width="300" height="147" /></a></p>
+<p>Ancak bu tarz bir devre ile ölçmek istediğimiz voltajı asla ölçmeyi başaramayız. Bir önceki paragrafta belirttiğim üzere, biz direnci değil, bu direncin oluşturacağı gerilim değişimlerini ölçmek istiyoruz. Yukarıdaki şematikte her ne kadar 5 voltluk gerilim uygulanıyormuş gibi gözükse de, aslında bunun pek azı akıma dönüşebiliyor. Bunun en önemli sebebi mikrokontrolör gibi cihazların içsel direnci, yani empedansı.</p>
+<p>Yüksek empedans, yani yüksek direnç bizim akım oluşturmamıza engel olan bir mikrokontrolör faktörü. Bu empedansı devreden çıkarabilmek ve devrede akım oluşturarak düzgün bir gerilim ölçümü yapabilmek için, bu mikrokontrolör empedansına paralel bir direnç eklememiz gerekmekte. Bu eklenen paralel direnç sayesinde empedansın etkisini azaltabiliriz (paralel direnç toplama formülünü hatırlayın) ve bir gerilim yaratmayı başarabiliriz. Bu gerilim oluşturan paralel direnç eklendiğinde, aslında ortaya bir gerilim bölücü (voltage divider) devre ortaya çıkıyor. Devremiz şu şekilde gözükür:<a href="https://dikendine.files.wordpress.com/2014/11/ekran-resmi-2014-11-29-15-03-10.png"><img class="alignnone size-medium wp-image-69" src="{{ site.baseurl }}/assets/ekran-resmi-2014-11-29-15-03-10.png?w=300" alt="Ekran Resmi 2014-11-29 15.03.10" width="300" height="155" /></a></p>
+<p>Bu anlaşılması kolay bir konsept değil. Empedens, gerilim bölücü, pull-down direnç gibi farklı terimlerin bir araya karıştığı bir durum bu. Benden kat kat daha iyi açıklayan bir sürü internet kaynağı mevcut. Onlarla vakit geçirmenizi tavsiye ederim.</p>
+<p><a href="http://electronics.stackexchange.com/a/70012">http://electronics.stackexchange.com/a/70012 (Bu en iyisi)</a></p>
+<p><a href="http://www.youtube.com/watch?v=XxLKfAZrhbM">http://www.youtube.com/watch?v=XxLKfAZrhbM (bu genel olarak gerilim bölücülerle alakalı)</a></p>
+<p><a href="http://electronics.stackexchange.com/a/28903">http://electronics.stackexchange.com/a/28903 (bu da genel bir özet gibi)</a></p>
+<p>Daha önceleri hep dijital pinlerimize veri girişi yapmıştık. Hatırlarsanız o girişlerin hepsi boolean değişkenlerdi. Yani ya HIGH (5 Volt) ya da LOW (0 Volt) durumu vardı. Şimdi o iş değişecek. Sensörümüzün değişken direnci sayesinde Arduino girişine 0 ila 5 volt arasında kalan bütün değeler gelebilir. Bu salınımlı, yani analog değerlerin düzgün bir şekilde ölçülebilmesi gerekir.</p>
+<p>Ölçümün yapılabilmesi için bu sensörün Arduino'ya bağlanacağı yer ADC girişi, yani Analog to Digital Converter. Mikrokontrolörün bu bölümü, sensör tarafından gönderilen verilen analog gerilim aralığını, dijitale dönüştürür. Örneğin 0 Volt rakam olarak 0'a denk gelirken 5 Volt 255 rakamına denk gelebilir. Bu 8-bit çözünürlükte yapılan ölçümdür (2^8 = 256).</p>
+<p>Arduino'da ise 2^10 çözünürlüğünde ADC vardır. Yani 0 ile 5 Volt arasındaki değerlere 256 değil, 1024 (2^10) tane değer atanabilir. Bu sayede birim voltaja düşen dilimler artarken (ya da dilimlerin boyu ufalırken) analog sinyale benzerlik artar, çözünürlük de artar (türev ve integralin ne olduğunu hatırlayın lise ve üniversiteden, onun kafasında bir şey).</p>
+<p>Bu durumda şu demektir, ışık sensörünü bağlayacağımız ADC, 0 ve 5 Volt arasındaki ölçümlerine karşılık bize 0 ila 1023 arasında bir rakam verecektir. Biz bu rakamı kullanarak belirli komutlar ayarlayabiliriz. Ancak şunu unutmamak gerekir ki, sensörden gerilim ölçebilmek için kullandığımız gerilim bölücü devre bizim 0 ila 5 V arasında salınmamızı engelleyecek. Yani Arduino'dan alacağımız veri de 0 ila 1023 arasında değişmeyecek. Bu bir problem değil, sadece devrenin gerektirdiği bir durum. Gelecek rakamlar, empedansa paralel olarak bağladığımız dirençle direkt bağlantılı olacaktır.</p>
+<p>Pratikte, 1 kOhm veya 10 kOhm gibi dirençler kafidir bu işlem için. Daha ufak veya daha büyük dirençler bizim ölçüm aralığımızı daraltabilir. Şimdilik sensörü cihaza nasıl bağlayacağımıza bakalım ve ölçümlerimizi kodla okuyalım:</p>
+<p><a href="https://dikendine.files.wordpress.com/2014/11/04_bb.png"><img class="alignnone size-large wp-image-70" src="{{ site.baseurl }}/assets/04_bb.png?w=656" alt="04_bb" width="656" height="485" /></a></p>
+<p>Sol üstte yeşil ve kırmızı kablolarla bağladığımız şey LDR. Bir ucu 5 Volta, diğer ucu hem GDN'ye hem de Analog 0 portuna bağlanıyor.</p>
+<p>Şimdi ışık sensörümüze fonksiyon kazandırmaya başlayabiliriz. Hemen yeni modlar eklemeden önce, ışık sensörlerimiz ne gibi değerler okuyor ona bakalım. Bunun için 3 yeni şey ekleyeceğiz.</p>
+
+<pre><code class="c">
+  int okuma2;
+  int isiksensoru = A0;
+
+  void setup() {
+   Serial.begin(9600);
+  }
+
+  void loop() {
+  okuma2 = analogRead(isiksensoru);
+  Serial.println(isiksensoru); 
+</code></pre>
+
+
+<p>Önceki programı silmeden, bu koddaki satırları void setup ve void loop içerisine yapıştırırsanız yine çalışacaktır. Ne yaptığını açıklayalım.<br />
+Öncelikle tepede "isiksensor"unu hangi pine atayacağımızı söyledik. Gördüğünüz üzere A0 numaralı pine atadık. Başına A yazmanız şart değil ancak onun Analog olduğunu anlamada işime yaradığı için bu şekilde kullanıyorum.<br />
+Daha sonra okuyacağımız değeri geçireceğimiz bir değişken atıyoruz. Adı "okuma2".</p>
+<p>Işık sensörünün okuma bilgilerini, daha doğrusu ADC okuması sonucu atadığı 0-1023 arasındaki rakamı görmek istiyoruz. Arduino bu değeri biliyor, ancak bize göstermesinin herhangi bir yolu yok dışarıdan ayrıca bir ekran eklemedikçe. Bunu kolayca aşmak için, Serial Monitor özelliğini kullanabiliriz. Burada Arduino'ya istediğimiz parametreleri bilgisayara Serial Monitor konsoluna yollamasını isteyebiliriz. Bu özellik büyük ihtimalle en kritik Arduino pratik bilgisi. Hata ayıklamadan, algoritmaların nasıl çalıştığını anlamaya kadar çok çeşitli alanlarda işimize yarıyor.</p>
+<p>Bu özelliği açmak için öncelikle bağlantıyı başlatmak gerekiyor. Bunu Serial.begin(9600) komutuyla yapıyoruz. Buradaki 9600 rakamı baud rate. Bit rate gibi bir şey ancak burada bitler yerine semboller var, şimdilik kafa yormamız gereken bir şey değil.</p>
+<p>Bağlantı kurulduktan sonra, okunan değeri sadece Serial Monitor'e göndermemiz yeterli. Bunun için "Serial.println(okuma2)" yazmamız gerek. "Serial.print" yerine "Serial.println" yazmamızın sebebi yeni satıra geçmek istememiz.</p>
+<p>Kodu Arduino'ya upload ettikten sonra sadece Arduino IDE'nin sağ üstünde bulunan büyüteç benzeri logodan Serial Monitor'u açmanız gerekiyor. Sensörün ölçtüğü datalar oraya aktarılıyor olmalı.</p>
+<p>10 kOhm'luk bir direnç taktığımda 100 ile 1000 arasında değişen değerler okudum sürekli olarak. Bu beklediğimden de geniş bir aralık ve olumlu bir gelişme. Sensöre fener veya lamba tutarak okumaların nasıl değiştiğini canlı olarak görebilirsiniz. Eğer düzgün bir şey okuyabildiyseniz sensörümüzden gelen veriyi değerlendirmeye başlayabilririz.</p>
+<p>Bu yazı dizisinin en başında dediğim gibi bu bisiklet ışığının normal durumda çakar konumda olmasını ancak çok karanlık bir yere girilmesi halinde çakma durumunun sona erip ışıkların tamamen yanar hale gelmesini istiyorum. Bunun için önceki yazıdaki gibi ek bir mod yaratalım. Bu varolan iki modumuza ek olarak bir otomatik modu olacak. Yeni mod eklemek için yapmamız gereken tek şey, lightmode değişkeninin sıfırlanma noktasını 2'den 3'e yükseltmek. Bunu yaparsak lightmode değişkenini 3'e eşitleyerek yeni bir işlev ekleyebiliriz.</p>
+<p>Bu işlev diğerlerinin aksine bir koşul daha barındıracak. Bu da ışık sensöründen gelen okuma2 değeri. Biz ortam çok karanlık olduğu takdirde, yani okuma2 değeri belli bir seviyeyi aştığında ışıkları sürekli yanar hale getireceğiz.</p>
+<p>Kodumuz:</p>
+
+<pre><code class="c">
+  / İlk bölümdeki ledlere ek olarak tuşu ve programda kullanacağımız değişkenleri tanımlıyoruz.
+int led1 = 8;
+int led2 = 7;
+int tus = 6;
+boolean okuma;
+boolean sontusdurumu = HIGH;
+boolean debounced;
+long int artirma = 0;
+int ledmode = 0;
+int okuma2;
+int isiksensoru = A0;
+// Kullandığımız pinleri çıkış pini olarak atıyoruz.Input ayarlamaya gerek yok.
+// Setup aşamasında pin'e HIGH komutu yollarak Pull-Up direnci aktifleştiriyoruz.
+void setup() {
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  digitalWrite(tus, HIGH);
+  Serial.begin(9600);
+}
+// Arduino açık kaldığı sürece tekrarlanacak rutin:
+void loop() {
+  okuma = digitalRead(tus);
+  Serial.println(okuma2);
+  if (okuma == LOW){ //okuma LOW yani 0 ise
+    artirma++;       //Bu rakamı bir artır
+    if (artirma > 20) { //20 kere artırdıktan sonra
+      debounced = HIGH;
+    }
+  }
+  if (okuma == LOW && okuma != sontusdurumu && debounced == HIGH) {
+    ledmode++; //Burada direk ışıkları kontrol etmek yerine ledmode artırıyoruz.
+    if (ledmode > 3) {
+      ledmode = 0; //Programın başa dönmesi için bir noktadan sonra sıfıra dönmeli.
+    }              // Yoksa sonsuza kadar sayar gider.
+    artirma = 0;
+  }
+  //ledmode == 0 konumunu tanımlamaya gerek yok zaten orada ışıkları kapalı istiyoruz.
+  if (ledmode == 1) { // Işıklar tamamen açık
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, HIGH);
+    delay(75);
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, LOW);
+    delay(75);
+  }
+  if (ledmode == 2) { // 75 Milisaniye aralıkla çakar mod
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, HIGH);
+  }
+  if (ledmode == 3){ // Otomatik Mod
+    okuma2 = analogRead(isiksensoru); //Analog okuma yapılır
+    if (okuma2 > 500) { // 500 eşik değeri olarak seçildi. Büyükse ve küçükse farklı şeyler yapılacak.
+      digitalWrite(led1, HIGH);
+      digitalWrite(led2, HIGH);
+      delay(75);
+      digitalWrite(led1, LOW);
+      digitalWrite(led2, LOW);
+      delay(75);
+    }
+    if (okuma2 > 500) {
+      digitalWrite(led1, HIGH);
+      digitalWrite(led2, HIGH);
+    }
+  }
+  sontusdurumu = okuma;
+}
+</code></pre>
+
+<p>Lightmode değişkenini en fazla 3 yapacak şekilde ayarlamak ek modun eklenmesi açısından önemli. Onu hallettikten sonra, loop bölümünün devamında 3. modda ne yapılacağını tanımlayabilirsiniz. Biz üçüncü modda sensörden ölçüm yapılacağını söyledik. Gördüğünüz üzere bu "digitalRead" fonskiyonu benzeri "analogRead". Bu ölçüm sonucu olan okuma2 parametresinin alacağı değere bağlı olarak da ledlerimizi ne şekilde kontrol edeceğimizi sadece if komutlarıyla sağlamayı başardık. Bu şimdiye kadar gördüklerimizden farklı bir kod değil ama nedense daha eğlenceli.</p>
+<p>Işığın eşik değerini şimdilik 500 olarak seçtik. Bu değer bisikletin kullanılacağı bölgelerde de ölçüm yapılarak daha da optimize edilebilir. Ya da arduino'ya bağlanacak bir potans veya trimmer ile ile bu değer bisiklet üzerinde de hızlıca ayarlanabilir. Bir kalibrasyon mekanizması olarak.</p>
+<p>Bisiklet ışığının ana iskeleti çıktı diyebiliriz. Şu anda elinizde basit de olsa çalışan bir örnek var. Ancak çalışıyor olması günlük hayatta kullanılabilir anlamına gelmiyor maalesef. Öncelikle programın bazı büyük kusurları var. Günlük kullanımda gerçekten deneyimin önüne geçebilecek bazı hatalar bunlar. Önce onları yavaş yavaş düzelteceğiz. Daha sonra Arduino'nun ufak varyasyonlarına bu programı nasıl uygulayabileceğimize bakacağız. Aklıma Arduino Pro Mini'ye uygulama fikri var ama henüz eBay'den aldığım Pro Mini'ler elime ulaşmadı.</p>
+<p>O nedenle bundan sonraki postta, koddaki kusurları gidermeye çalışacağım.</p>

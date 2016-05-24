@@ -1,0 +1,23 @@
+---
+layout: post
+title: AVR ile Sensörlü Bisiklet Işığı
+date: 2016-03-18 22:21:39.000000000 +02:00
+custom-date: 18 Mart 2016
+type: post
+published: true
+status: publish
+categories:
+- Arduino Bisiklet Işığı
+- AVR
+---
+<p>Bu yazıyı hazırlamışım ancak göndermemişim. Neden bilmiyorum. Kodu GitHub'a koyup fişekliyorum. Koda baktım da, bunu ben ne zaman yazmışım oldum. O yorumları boşuna yazın demiyorlar. Neyse, zaten buradaki Arduino ve AVR yazılarının üzerinden geçip düzenleme planım var. O esnada kodları hatırlarım heralde :)</p>
+<p>Daha önceki yazılarda anlattığım Arduino Bisiklet Işığının şimdi gerçekten kullanılabilecek bir versiyonunu yapmaya çalıştım. Arduino yerine direkt olarak AVR kullanarak hem boyutu ufalttım, hem de masraftan kısmış oldum. Zira Karaköy'de AVR çipler kolayca bulunabiliyor. Bu örnekte kullandığım ATtiny13 modeli Türkiye'de kolayca bulabileceğiniz iki ATtiny modelinden biri. Fiyatı 2 lira civarında. Bunu programlamak için ise eBay'den aldığım USBasp programlayıcısını kullandım. Aslında programlamak için Arduino da kullanılabilir.</p>
+<p>Işık yine yeterince aydınlık olan yerlerde çakıyor, çok karanlık olan yerlerde sürekli açık moda geçiyor. Ancak burada normal LED yerine 3w'lık power LED kullandım. Pil ömrünü baltalamaması için yanıp sönerken LED'in parlaklığını 20 miliamper olacak şekilde PWM yardımıyla sınırladım. Karanlık bölümde sürekli açık moda geçince ise PWM'i keserek (daha doğrusu 100% duty cycle yaptırarak) tam akımın geçmesine izin verdim. 2 tane kalem pil ile kullanıldığında 70-80 mA civarı bir şey çekiyor. 3W'lık LED için baya az bir değer ama pili bitirmemesi ve ısı sorunları yaratmaması bakımından iyi gibi. 1W ile denemek lazım. Bu LED işini ben de yeni öğreniyorum açıkçası.</p>
+<p>PWM ile parlaklığı kontrol ederken aynı zamanda pini açıp kapatmak oldukça garip olmak zorunda kaldı. Normalde PORT registeri ile kontrol edebildiğimiz açıp kapama işlemleri PWM aktif iken işe yaramıyor. Komple DDR registerinden kapatıp açmak gerekiyor. Doğru yöntemi bu mu bilmiyorum ama çalışıyor.</p>
+<p>Tuşa 5-10 saniye basılı tutulduğunda kalibrasyon moduna geçiyor ve ölçüm alıyor. Bu ölçüm daha sonra karanlığın belirlenmesi sırasında eşik değer olarak kullanılıyor. Sensörün her gelen değere cevap vermemesi bakımından, sensörün ölçüm sıklığını azalttım. Ayrıca rolling average yerine paketler halinde verinin alınıp değerlendirilmesinin daha faydalı ve etkili olacağını düşündüm. Sensör her saniyede bir 64 ölçüm yapıp bunların ortalamasını buluyor ve ona göre değerlendirme yapılıyor. Bir sonraki döngü geldiğinde tekrardan yeni bir 64 ölçüm alınıyor. Elbette 64'ün ortalamasını bölümle değil, bit kaydırarak alıyorum.</p>
+<p>AVR kullanmanın ve voltaj regülatörü kullanmamanın avantajlarından biri olarak, uyku modlarında tüketilen gücü inanılmaz düşürebildim. Burada da ışıklar kapandığında Attiny13 uyku moduna geçiyor ve dandik multimetre ile yaptığım ölçümler doğruysa (heralde değildir) 1 mikroamper akım çekiyor. Bu kadar az güç tüketimi için ayrıca ADC'yi manuel olarak kapatmanız sonra açmanız gerekiyor. Tekrar başlatmak için tuşa bir kere basmak yeterli.</p>
+<p>Yine Arduino bisiklet ışığında olduğu gibi, 3 tane mod var. İlki otomatik mod. İkincisi %100 akım ile sürekli açık mod, üçüncüsü kısık olarak ise yanıp sönme modu.</p>
+<p><a href="https://gist.github.com/raicem/6ace672297a581bb182b" target="_blank">İlgili kodu şurada bulabilirsiniz</a>. Gömme sistemlere dair kodlama tecrübem yok, bu ilklerden oldu.</p>
+<p>Burda da örnek video var:<br />
+<br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/c3a5C1AA4aU" frameborder="0" allowfullscreen></iframe>

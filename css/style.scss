@@ -1,0 +1,181 @@
+---
+---
+$bg: rgb(244, 243, 240);
+$link: #404040;
+$light: #808080;
+$a-link: #990000;
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+	margin: 1em 0;
+	color: $link;
+}
+
+a {
+	color: $a-link;
+}
+
+body {
+	margin: 0 auto;
+	font-family: sans-serif;
+}
+
+img {
+	max-width: 100%;
+}
+
+.site-header {
+	background-color: $bg;
+	padding: 1em 2em;
+}
+
+.header-titles {
+	display: flex;
+	align-items: baseline;
+}
+
+.italic-title {
+	font-family: serif;
+	font-style: italic;
+}
+
+.header-link {
+	font-weight: 600;
+}
+
+.header-title-small {
+	margin-left: 1em;
+	color: $light;
+	font: normal 300 12px sans-serif;
+}
+
+.link {
+	color: $link;
+	text-decoration: none;
+}
+
+.link-muted {
+	color: $light;
+}
+
+.main {
+	max-width: 70em;
+	margin: 0 auto;	
+	padding: 0 2em;
+	line-height: 1.5em;
+	display: flex;
+	flex-wrap: wrap;
+	min-height: 75vh;
+}
+
+.content {
+	margin-top: 2em;
+	margin-right: 2em;
+	flex: 3;
+
+}
+
+article {
+	margin-bottom: 2em;
+}
+
+.article-title {
+	color: $link;
+	padding: 0;
+	font-size: 2em;
+	padding-bottom: 0;
+	letter-spacing: -1px;
+	line-height: 1em;
+}
+
+.article-title-small {
+	margin: 0;
+	font-size: 16px;
+	color: $light;
+	letter-spacing: 0px;
+}
+
+.highlight {
+	max-width: 40em;
+}
+
+.sidebar {
+	margin-top: 2em;
+	flex: 1;
+}
+
+.category-list {
+	list-style-type: none;
+	margin-bottom: 0.1em;
+}
+
+.category-item {
+	display: inline-block;
+	background-color: $bg;
+	padding: 0.3em;
+	border-radius: 3px;
+}
+
+.category-item-sidebar {
+	margin-top: 0.2em;
+}
+
+.category-link {
+	text-decoration: none;
+}
+
+.category-link:before {
+	content: ('#');
+}
+
+.archive {
+}
+
+.posts-archive {
+	list-style-type: none;
+}
+
+.archive-item {
+	margin-top: 0.3em;
+}
+
+footer {
+	background-color: $link;
+	color: $bg;
+	margin-top: 2em;
+	padding: 1.5em;
+	text-align: center;
+}
+
+.footer-title {
+	font-family: serif;
+	font-style: italic;
+}
+
+@media (max-width: 500px) {
+	.header-titles {
+		text-align: center;
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+@media (max-width: 930px) {
+	.content {
+		flex-basis: 100%;
+		margin: 0 auto;
+	}
+	.sidebar {
+		flex-basis: 100%;
+	}
+}

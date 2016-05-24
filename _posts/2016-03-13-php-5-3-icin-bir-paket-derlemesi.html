@@ -1,0 +1,16 @@
+---
+layout: post
+title: PHP 5.3 İçin Bir Paket Derlemesi
+date: 2016-03-13 18:25:10.000000000 +02:00
+custom-date: 13 Mart 2016
+type: post
+published: true
+status: publish
+categories:
+- PHP
+---
+<p>Okulun sunucuları halen ve halen PHP 5.3 çalıştırdığı için buna uygun bir şeyler bulmak epey zor oldu. Hazırladığım site için yapmam gerekenleri önce kendim, tabiri caizse "vanilla PHP" kullanarak yapmaya başladım. Ancak PHP temaları arasında foreach, echo diye takılmak ortalığı baya çorba yaptı. Üstelik güzel tema motorlarında olduğu gibi block ve extend yapmak zordu. Tekrar kullanılabilirlik baya düşüktü.</p>
+<p>O yüzden ilk olarak <a href="http://twig.sensiolabs.org" target="_blank">Twig</a> paketini çektim muhteşem Composer sayesinde. İşlemin kolaylığının tadına varamayınca başka ne paketler bulurum da mümkün olduğunca standartlaşmış, kalitesi kanıtlanmış kod kullanırım diye bakınmaya başladım. Önce database ismi, şifreleri gibi konfigürasyon değişkenlerini çekmek için <a href="https://github.com/vlucas/phpdotenv" target="_blank">phpdotenv</a> paketini buldum. Bu paket Laravel'de de kullanılıyor. Daha sonra ActiveRecord tarzı kolay bir veritabanı soyutlaştırma katmanı (abstraciton layer) arayışına girdim. O alan çok hızlı gelişiyor değişiyor ve belki de bu yüzden PHP 5.3 destekleyen pek az paket bulabildim. Bulup da kolayca kullanabildiğim paket <a href="http://j4mie.github.io/idiormandparis/" target="_blank">Paris</a> oldu.</p>
+<p>Bunları birleştirdiğim zaman elime çok primitif bir framework çıktı aslında. Framework demeye bin şahit ister gerçi. Bunu da <a href="https://github.com/raicem/slimv2-paris-twig" target="_blank">GitHub'da yayınladım </a>Buradan ulaşabilirsiniz. Bazı sorunları var. Mesela güzel bir router ve controller bağlantısı olsa mis gibi olacaktı. Zamanla o da olur belki.</p>
+<p>Yüklemek için git reposunu kendi bilgisayarınıza clone edin. Daha sonra klasörün içinden composer install dediğiniz zaman gerekli paketler yüklenecektir. Veritabanı şifrelerini falan girdikten sonra modellerinizi ve route'larınızı girerek olaya dalabilirsiniz.</p>
+<p>Bu işlerde yeniyim, her türlü yorum beni mutlu eder.</p>

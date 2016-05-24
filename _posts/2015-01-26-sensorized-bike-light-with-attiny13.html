@@ -1,0 +1,24 @@
+---
+layout: post
+title: Sensorized Bike Light with Attiny13
+date: 2015-01-26 18:40:15.000000000 +02:00
+custom-date: 26 Ocak 2015
+type: post
+published: true
+status: publish
+categories:
+- Arduino Bisiklet Işığı
+---
+<p>This is a small project I've been working on for quite a while. I used it to learn more about the AVR's. It was helpful more than I thought. Made me learn calculation by bit-shifting, timers, pwm controlling devices such as LED's, timer interrupts (although I removed them at the final version), sleep modes for very little power consumption and other stuff.</p>
+<p><a href="https://dikendine.files.wordpress.com/2015/01/img_04821.jpg"><img class="aligncenter size-medium wp-image-149" src="{{ site.baseurl }}/assets/img_04821.jpg?w=300" alt="IMG_0482" width="300" height="238" /></a></p>
+<p>The idea came from a necessity of mine while using my bike around. Street and road illumination is not always constant on my general routes. Even though I'm not a believer of high-powered-12-hour-running-time-with-Li-ion-batteries bike lights, there were times that I needed a bright light.</p>
+<p>So the implementation makes it a sensorized bike light that responds to the environment via a simple photocell and an ATtiny13 mcu. It blinks when there is enough light that you can see where you are going and others around you can see you. So blinking is only for visibility so bike light does not draw full current (controlled by pwm of course). If went into a dark patch of road, blinking stops and bike light goes into full blast mode with full power.</p>
+<p>It uses a 3w led and it is not the best choice since I power it with two AA batteries. When batteries are full, I observed that it drains around 70-80 mA. It is not even close to the limits of the LED (350 ma), but it is restrained by the voltage provided by the battery. However, I'm cool with it since its more than enough for me. Putting in some normal 5 mm LED's or Superflux LED's provided no more than 10 mA current draw with same batteries.  I'll give it a shot with 1w and 0.5 w LED's.</p>
+<p>There is also a simple calibration function. You can press down a button for  ~5 seconds and bike light takes measurements for 1 second and uses that to set the threshold level between blinking and not blinking.</p>
+<p>Also I needed Attiny13 to not respond every little sensor measurement so I tried to add a little moving average. This was the most difficult to do in this projects since using arrays is not possible to store last 10 or 100 values etc. There is simply not enough RAM in this attiny13. Only viable way of doing it was with exponential moving averages but there are problems with floating points. You simply cannot do it in attiny13 with that amount of information coming from the sensor. However, You can turn those floating points to integers and do a division, but then there is another problem with the division too. You can do it, but it is not really fast. So the bike light becomes kind of unresponsive while blinking. However #2, you can do the division by bit-shifting and it works! So that was that.</p>
+<p>I needed a debouncer of course, and it detects it in every CPU cycle whether the button is pressed or not. That is kind of an overkill to detect buttons. Proper way of doing it would be, using the timer interrupts to detect the switch 100 timer per second (100 Hz). That was one part of the project that I failed. Even though my prototype on Arduino worked with timer interrupts I could'nt get it to work in Attiny13. It interfered with INT0 (which is used to wake up the device) or something else. I don't know.</p>
+<p>There are four modes in the code. Zeroth of them shuts down CPU and ADC to save power. First of them is automatic mode. Second of them is On for all the time with max current. Third of them is blink mode for all the time with 20mA of current.</p>
+<p>So that is it basically. I have the code below. You can check it out. Also if you want to see it in action, watch YouTube video:<br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/c3a5C1AA4aU" frameborder="0" allowfullscreen></iframe>
+<script src="https://gist.github.com/raicem/a64160d319da43ae16e2dc1df2509f89.js"></script>
+

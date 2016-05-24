@@ -1,0 +1,25 @@
+---
+layout: post
+title: 'Arduino Bisiklet Işığı Bölüm 10: Pro Mini''yi Bağlamak'
+date: 2015-03-09 11:28:29.000000000 +02:00
+custom-date: 9 Mart 2015
+type: post
+published: true
+status: publish
+categories:
+- Arduino Bisiklet Işığı
+---
+<p>Gereğinden fazla uzadı bu seri ancak güzel bir dizi oldu gibi geliyor bana. En azından oldukça fazla bilgiyi kontrol edip öğrenmek zorunda kaldım. Geçen aylardaki postlardan sonra C kodlamaya dair bir kaç kitaba göz gezdirdim. Şu anda geri dönüp o kodlara bakmak acı veriyor resmen. Neyse, geriye bakarak çok vakit kaybetmeden devam etmekte fayda var.</p>
+<p><a href="https://dikendine.wordpress.com/2015/01/08/arduino-bisiklet-isigi-bolum-9-hangi-arduino-modeli/">Hangi Arduino Modeli</a> ve <a href="https://dikendine.wordpress.com/2015/01/23/arduino-guc-tuketimi-ve-tasarrufu/">Arduino Güç tasarrufu</a> yazılarında değindiğim üzere Pro Mini kullanarak gereksiz masraf oluşturan, elektrik harcayan USB-to-Serial çipinden kurtulmamız en mantıklısı. Bu sayede hem C koduyla Arduino'yu uykuya yatırabiliriz ve ortalıkta boşa enerji harcayan bir Serial çipi olmadığından tasarruf konusunda bir fark yaratabiliriz. Pil konusunda ise, dikkatli olmak kaydıyla linear regülatörü pas geçerecek uygun voltajı Vcc pininden direkt Atmega328'e verebilirsiniz. Ancak kafaların rahat olması için direkt olarak 9V'luk pili regülatöre bağlamak da iyi seçenek.</p>
+<p>Peki bu Pro Mini'yi neyle programlayalım. Benim elimde CP2102 ve CH340G adında farklı iki USB-to-Serial çip var. Bunların ikisi aynı fonksiyonu görüyor. Pro Mini ile bağlantıları da tamamen aynı.Tek farkı CP2102 için özellikle bir sürücü indirip yüklemek gerekebiliyor. CH340G sürücüleri ise Windows tarafından otomatik olarak yükleniyor. Almayı düşünüyorsanız CH340G tercih edin.</p>
+<p>Bağlantı için bu videoyu izleyebilirsiniz:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Vawhrr4COjI" frameborder="0" allowfullscreen></iframe>
+<p>Bu videoda CH340G yok ancak CP2102 var. Ancak dediğim gibi hepsi neredeyse aynı. Ayrıca referans bakımından bağlantıları buraya da not ediyorum.</p>
+<p>USB-Serial Çip           Pro Mini</p>
+<p>GND                 -&gt;       GND</p>
+<p>VCC                 -&gt;       VCC</p>
+<p>TX                    -&gt;       RX</p>
+<p>RX                    -&gt;       TX</p>
+<p>DTR                 -&gt;       DTR</p>
+<p>İşte bu kadar. Bu pinleri birbirine bağlamanız yeterli. Bundan sonra sadece Arduino IDE ile doğru Arduino kartını ve serial portu seçmeniz yeterli. Bundan böyle yeni Arduino olmak isterseniz de daha ucuz ve ufak olan Pro Mini tercih edebilirsiniz. Böylece gereksiz yere bir sürü USB-Serial çipli Arduino'ya para dökmez, gereksiz yere gezegen kaynaklarını çip üretimine harcamaz ve küresel ısınmayla mücadele etmiş olursunuz. Neden olmasın.</p>
+<p>Artık bu bisiklet geyiği burada bitsin. Ben biraz sıkıldım bundan çünkü. Başka şeylere bakalım.</p>

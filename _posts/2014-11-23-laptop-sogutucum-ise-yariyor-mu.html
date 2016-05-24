@@ -1,0 +1,34 @@
+---
+layout: post
+title: Laptop Soğutucum İşe Yarıyor Mu?
+date: 2014-11-23 21:38:21.000000000 +02:00
+custom-date: 23 Kasım 2014
+type: post
+published: true
+status: publish
+categories:
+- Diğer
+---
+<p>Elimde kor gibi parlayan (laptopu sıcak bir şeylere benzeterek abartma girişimlerine bir tane daha) Asus X201 netbook/subnotebook olduğu için bu sorunun cevabını merak ediyordum. Ancak tüketimin rahatlığına kapılıp mağazadan markalı bir laptop soğutucu almak istemedim. Ben de edindiğim bi kaç parça ile kendime bir benzerini yapmaya ve sonuçları ölçmeye karar verdim.</p>
+<p>Edinilecek parçalar zaten iki adet. İlki bir adet fan olacak. Fan seçimi önemsiz bir konu değil. Piyasada satılan pek çok fan masaüstü bilgisayarlara göre ve 12 volt ile çalışıyorlar. Laptop'un USB çıkışlarından verilen akımın elektrik potansiyeli ise en fazla 5 volt. Bu durumda fan bazen çalışabilir, bazen çalışmayabilir (bilimseliz burada). Yaptığım araştırmaya göre markalara göre, ya da içinde bulunan mıknatısın gücüne göre değişmekte. Buna göre tasarlanmış 5 voltluk fanlardan kullanmakta fayda var. Ancak ben onları bulamadım ve en standardından Akasa marka bir masaüstü fanı aldım. 12 volt, 0.14 amper. Yani 1.68W.</p>
+<p>Gereken önemli ikinci parça kullanacağınız kasa. Artık tahtadan mı yaparsınız, aluminyumdan mı yaparsınız, yoksa kesmekle uğraşmayıp bir mangal ızgarası altına mı yerleştirirsiniz fanı, o kısmı size kalmış. Ben bir tahta plaka alıp elde olmayan imkanlarla kesmeye çalıştım kör bir testere ve bıçak yardımıyla. Oldukça uğraştırdı ve sonucun Jony Ive imzası taşımadığı açık. Ama bir delik ve içinden hava geçiyor. Bizim için yeterli.</p>
+<p>Diğer bir önemli nokta güç kaynağı. 12 voltluk fanı 5 voltluk USB çıkışına bağlamak bir anlamda "hayal kırıklığı" diye bağırıyor ama denemekte fayda var. Her zaman 12 voltluk bir adaptör edinip fanı oraya bağlayabilirsiniz. Şimdilik deneylerimizi 5 volt ile sürdüreceğiz.</p>
+<p>En önemsiz parça USB kablosu. Bilgisayar çıkışına uygun herhangi bir tanesi işe yarayacaktır. İşinize yarayacak uzunlukta kesin ve içinden çıkan dört farklı renkte kablodan sadece kırmızı ve siyah renkli olanlarını sıyırın. Geriye kalan iki tanesi data kablosu olduğu için kullanmayacağız.</p>
+<p>Sıyırdığımız kırmızı ve siyah kabloyu, fandan çıkan 3'lü fişe takacağız. Kırmızı kırmızıya, siyah da siyaha gidecek (bariz). Fişte bulunan sarı giriş ise boş kalabilir. O fan hızını kontrol etmek için sağlanan bir giriş.</p>
+<p>En nihayetinde bazı denemeler sonucu böyle bir sonuca ulaşıldı. Son derece ilkel.</p>
+<p><a href="https://dikendine.files.wordpress.com/2014/11/img_0344.jpg"><img class="alignnone size-medium wp-image-25" src="{{ site.baseurl }}/assets/img_0344.jpg?w=300" alt="IMG_0344" width="300" height="223" /></a> <a href="https://dikendine.files.wordpress.com/2014/11/img_0346.jpg"><img class="alignnone size-medium wp-image-26" src="{{ site.baseurl }}/assets/img_0346.jpg?w=300" alt="IMG_0346" width="300" height="223" /></a></p>
+<p>
+<p>Soğutucu Asus Netbooka bağlandığında kendi kendine dönmeye başlıyor. Ancak deneme amacıyla Macbook'a bağladığımda nedense kendi kendine dönmüyor, parmakla ilk hareketin verilmesi gerekiyor.</p>
+<p>Multimetre yardımıyla yapmaya çalıştığım ölçümlerde laptoptan çıkan voltajı 5.06, fana giden akımı ise 45 mA olarak ölçtüm. Yani fanın potansiyeli olan 1.68 W yerine 0.22 W kullanılıyor. Bu oldukça düşük.</p>
+<p>İşe yarayıp yaramadığını anlama amacıyla basit işlemci sıcaklığı karşılaştırması yapmak için, işlemcinin anlık sıcaklığının yanında belli bir süredeki ortalama sıcaklığını da ölçen bir yazılım gerekti. Görünüşe göre Real Temp, SpeedFan gibi popüler çözümlerin hiç biri böyle bir özelliğe sahip değil. Kıyıda köşede bulduğum <a href="http://www.hwinfo.com/">HWİNFO</a> adlı bu program ise tam dediğim özelliğe sahip. Ana menüde yer alan sensors seçeneği ile beraber belli bir zaman dilimindeki sensör sıcaklığının ortalamasını alabiliyorsunuz.</p>
+<p>Laptopun bulunacağı dört farklı pozisyon seçtim. İlki standart olarak masa üstünde sabit olacak. İkincisinde laptopun arkası iki kitap yardımıyla yükseltilecek ve fan bölümün daha rahat hava alması sağlanacak (ampiriğin dibi bir yaklaşım, ama işe yarıyor mu anlamak için kendimizi deneye adadık). Daha sonra yaptığım soğutucunun üzerinde, hem fan açık hem de fan kapalı olarak duracak.</p>
+<p>Bilgisayarın her pozisyonu için farklı iki işlem yürüttüm. İlkinde bilgisayar tamamen boştayken 15 dakika beklettim. Yaklaşık %2-3 işlemci yükünde sıcaklık derecelerini ölçtüm. Aynı bekletme işlemini bir de Google Chrome'da 360p bir Youtube videosu oynatırken yaptım. Yine 15 dakika boyunca ölçülen işlemci derecelerinin ortalamasını not ettim.</p>
+<p>İnternette dolaşma testine de niyetlendim ancak internette her sitenin farklı farklı JavaScript, Flash, HTML5 bölümleri içermesinden dolayı vazgeçtim. Belki bu test uzun bir süreçte, sitelerin tekil özelliklerini törpüleyecek şekilde 1-2 saatlik seanslar halinde yapılabilir. Asus ana bilgisayarım olmadığından böyle bir şey yapabilir miyim bilmiyorum.</p>
+<p>Test sonuçları aşağıdaki gibi.</p>
+<p><a href="https://dikendine.files.wordpress.com/2014/11/ekran-resmi-2014-11-23-23-08-18.png"><img class="alignnone  wp-image-28" src="{{ site.baseurl }}/assets/ekran-resmi-2014-11-23-23-08-18.png?w=300" alt="Ekran Resmi 2014-11-23 23.08.18" width="446" height="165" /></a></p>
+<p>Rakamların doğru olup olmadığı kestirmek zor ama göreceli olarak bir sonuca varılıyor sanırım. Bilgisayar boşta iken neredeyse hiç etki etmiyor soğutucu. Faydasını ancak işlemci kullanımı arttıkça görüyoruz ve 3 dereceye kadar değişim yaratıyor. Gücünün %12'siyle çalışan bir fan için fena değil.</p>
+<p>Başlıktaki sorunun cevabı; evet, kendi yaptığınız bir soğutucu için sonuç güzel. Ama böyle bir sonucu 50 liralık piyasa ürünlerinden alsaydım üzülürdüm.</p>
+<p>Bir şekilde fana 12 volt güç verip denemelerimi onunla da yapacağım ve buradaki bilgileri güncelleyeceğim. Ama gerçekten efektif bir çözüm olmasını beklemiyorum zira aklıma takılan sorular var.</p>
+<p>1- Laptopun içerisine yerleştirilmiş fanın görevi heatsink üzerinden mümkün olduğu kadar hava geçirmek. Bizim laptopun içindeki fana doğru hava üflememiz, ufak fanın kapasitesini artırmayacak, yani heatsink üzerinden geçen hava miktarı artış göstermeyecek. Ne kadar hava gönderirsek gönderelim, içeride çalışan küçük fanın yapabildiği ile sınırlandırılacağız.</p>
+<p>2- Eğer ek soğutucu bilgisayarın hava alma ızgaralarına tam denk gelmiyorsa, plastiğe veya aluminyuma hava çarptırarak soğutma yapmaya çalışmak ne kadar mantıklı?</p>
+<p>3- Laptop ve soğutucu arasındaki alanın darlığı nedeniyle maksimum akım (maximum flow) yerine daha stabil çalışan sabit basınç (static pressure) fanları daha mı faydalı olur? Bu sayede gerekli ekipmanla lapoptun alt kısmında pozitif basınç alanı oluşturursak (bilgisayar kasası gibi) nasıl etkiler görülür?</p>

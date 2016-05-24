@@ -1,0 +1,85 @@
+---
+layout: post
+title: Arduino ve AVR'de Güç Tasarrufu / Uyku Modları
+date: 2015-01-23 21:21:12.000000000 +02:00
+custom-date: 23 Ocak 2015
+type: post
+published: true
+status: publish
+categories:
+- Arduino Bisiklet Işığı
+- AVR
+---
+<p>Bisiklet ışığı ile ilgili yazdığım en post, gerçekten çok üzücü bitti. Prototipleme, geliştirme kartı olarak Arduino gerçekten ufak ve mobil bir şey olmaya çok elverişli değil. Yine de elinizden geldiğince güç tüketimini azaltmanın çok hoş yolları mevcut. Bu yazıda bunlardan bahsetmek istiyorum biraz.</p>
+<p>Önceki yazıda bahsettiğim gibi, ne yaparsanız yapın Arduino üzerindeki gerilim regülatörü belli bir miktar akım çekmeye devam edecek. Üstüne üstlük, Arduino üzerinde sadece bir tane gerilim düzenleyici yok. USB-Serial dönüştürücü de kendi regülatörüne sahip olabilir. Elimdeki Nano'dan örnek vereyim. Cihaz aktif durumda iken yaklaşık 60 mA akım çekiyor. 60! Bunun 40 mA'sı sadece FTDI USB-Serial çipi yüzünden kaynaklanıyor. O akıma 8 tane LED yakabilirsiniz. Nasıl bir elektrik israfı?!?!?</p>
+<p>Bu hasarı azaltmak için Nano veya Uno gibi kendi USB-Serial çipini barındıran bir kart yerine Pro Mini tercih edilebileceğini söylemiştim. Yine de geriye kalan 20 mA yapacağımız işler için çok fazla. Bunu düşürmenin pratik bir yolu var.</p>
+<p>Eğer Atmega 328p'nin 400 küsür sayfalalık dökümantasyonunu açarsanız güç yönetimine adanmış özel bir bölüm olduğunu göreceksiniz. Burada enerjiden tasarruf etmek için izleyebileceğiniz yöntemler anlatılıyor. Artık bundan sonra Arduino IDE'nin bize sunduğu hazır fonksiyonlardan biraz uzaklaşacağız. Bazı şeyleri kendi elimizle yapmamız gerekecek. Temel olarak 3 başlığa ayıralım:</p>
+<p><strong>1) İşlemcinin Saat Hızıyla Oynamak</strong></p>
+<p>Arduino'lar genelde 16 veya 12 mHz'lık osilatörlerle çalışıyorlar. Eğer sizin uygulamanız böyle bir hız gerektirmiyorsa, bu hızın fraksiyonları ile çalışarak güçten tasarruf edebilirsiniz. Örneğin 16'yı ikiye bölerek 8 mHz'de daha az elektrikle çalışan bir çip elde edebilirsiniz. Bunun için CLKPR (CLocK PRescale) registerlerıyla oynamanız yeterli. Bu registerin değerlerini değiştirerek bu mHz'ler arasında geçiş yapabilirsiniz. CLKPR registerina bit yazmak ise biraz garip. Bazı kuralları var. Örneğin ilk adımda 8. bite 1 yazıp, odan sonra gelecek 4 döngü içerisinde aynı bite 0 yazarak ayarlama yapabiliyorsunuz. Yani şöyle:</p>
+
+<pre>
+  <code class="c">
+  CLKPR = 0b10000000; //Ayarlamaya başlamak için 8. bite 1 yazılır
+  CLKPR = 0b00000001; //Ölçek oranını girmek için 8. bit 0 yapılır ve geri kalan bitlere
+//istenen değer girilebilir.
+  </code>
+</pre>
+
+
+<p>0b00000001 yazarak işlemcinin hızını ikiye böldük. Ancak 8, 16, 32 , 64, 256 gibi faktörler de mevcut. İyice çılgın atabilirsiniz yani. Bütün bu farklı değerler dökümantasyonun Clock Sources kısmında var. Hızı yarı yarıya düşürerek %30 civarı bir tasarruf sağlayabiliyorsunuz. En azından ben öyle ölçtüm.</p>
+<p><strong>2) Uyku Modları</strong></p>
+<p>Aynı bilgisayarlarda olduğu gibi Arduino'ya güç veren Atmega 328p çipini farklı modlarda beklemeye alabilirsiniz. Bu bütün AVR çipleri için geçerli. Bunu gerçekleştirmek için hep çipe göre farklı seçenekleriniz var. En yaygın olanı IDLE ve POWER DOWN. Tasarruf miktarı arttıkça çip bir o kadar derin uykuya geçiyor ve bir o kadar fazla komponentini kapatıyor. Bu nedenle POWER DOWN modundan çıkabilmek için ya bir zamanlayıcı kurmalısınız ya da bir tuşun LOW konumuyla interrupt oluşturmalısınız.</p>
+<p>Ancak mikrodenetleyiciyi uyutabilmek için assembly kodu girilmesi şart. Bununla uğraşmamak için önceden hazırlanmış kodlar var neyse ki. sleep.h kütüphanesiyle çok işe yarayan farklı fonksiyonlara erişebilirsiniz. Basit bir uygulamaya bakalım.</p>
+
+<pre>
+  <code class="c">
+    #include <avr/sleep.h> // Bunu dahil etmeyi unutmayın
+    int led = 2;
+    ISR(INT0_vect) {
+      // Boş olmasına rağmen bu interrupt fonksiyonu kaldırılmamaı
+    }
+    void setup() {
+      pinMode(led, OUTPUT);
+    }
+    void uykuModu(void){
+      EIMSK |= (1 << INT0); // Bir Interrupt ekle
+      set_sleep_mode(SLEEP_MODE_PWR_DOWN); // Hangi mod olduğunu seç
+      sleep_mode(); // Uyku moduna gir.
+      //Uyku modundan tuşa basılarak çıkıldıktan sonra kod
+      //Bu satırdan çalışmaya devam edecek.
+      EIMSK &= ~(1 << INT0); //Interruptın ard arda bi sürü kez
+      //Tetiklenmemesi için Interruptı kaldır.
+    }
+    void loop() {
+      for (int i = 0; i < 3; i++) {
+        digitalWrite(led, !digitalWrite);
+        delay(1000);
+      }
+      uykuModu();
+    }
+  </code>
+</pre>
+
+<p><strong>3) Komponentlerin elle kapatılması</strong></p>
+<p>Bazı çiplerde bazı komponentler POWER DOWN moduna rağmen kapanmıyor olabilir. Örneğin bütün AVR'lerde Brown Out Dedektörü sürekli olarak aktiftir ve ufak olsa da akım çeker. Bunun yanında Attiny 13 mikrodenetleyicisi POWER DOWN moduna geçilse bile Analog-Dijital dönüştürücüsünü kapatmaz. Daha fazla tasarruf için bu gibi bölümlerin elle kapatılması gerekebilir. Uyku modundan çıkılırken tekrar devreye almak kaydıyla elbette.</p>
+<p>Brown Out Denetleyicisi en basit anlamıyla çipe gelen gerilimi ölçer ve bu gerilim daha önceden belirlenen sınırların altındaysa, çipin ve pilin fonksiyonlarına zarar vermemek adına (mesela bir pilden çok fazla akım çekip gerilimini fazla düşürmek gibi) çipi kapatır. Eğer bu gibi bir durum sizi endişelendirmiyorsa bunu da kapatabilirsiniz. Ama kapatmak için sigorta bitlerini (Fuse bits) değiştirmeniz gerekebilir. Açıkçası ben yaptığım deneylerde bunun inanılmaz bir tasarruf sağladığını göremedim. Ya da ben beceremedim. Neyse, Attiny13 için kullandığım basit uyku fonsiyonu ise şu şekilde:</p>
+
+<pre>
+  <code class="c">
+  void uykuModu(void)
+  {
+    cli();
+    GIMSK |= (1 << INT0); //interruptı ayarlar
+    ADCSRA &= ~(1 << ADEN); //ADC kapat
+    set_sleep_mode(SLEEP_MODE_PWR_DOWN); //mod seçme (fonksiyon dışında kalsa daha iyi hatta bu)
+    sei();
+    sleep_mode(); //Uyku moduna geç
+    GIMSK &= ~(1 << INT0); //Uykudan çıkınca interruptı kapat
+    ADCSRA |= (1 << ADEN); //ADC'yi aç
+  }
+  </code>
+</pre>
+
+
+<p>Farklı uyku modlarını set_sleep_mode fonksiyonuna farkı değerler geçerek seçebilrisniz. Örneğin burada SLEEP_MODE_PWR_DOWN yerine IDLE yazarak yapabilirdik bunu. IDLE daha fazla akım çekecektir ancak tekrar uyandırmak amacıyla daha fazla seçeneğiniz olabilir. Örneğin UART'tan veya ADC'den gelecek verilerle mikrodenetleyiciyi uyandırabilirsiniz. PWR_DOWN'da bu mümkün değil.</p>
+<p>Uyku modları inanılmaz efektif. 15-20 mA çeken mikrodenetleyiciyi anında 2-3 mA seviyelerine düşürecek kadar başarılı. Bu değer Attiny serisinde mikroAmper bile görüyor çok rahatça. Zira benim danik multimetrem 2 mikroA gösteriyor uyku modunda.</p>

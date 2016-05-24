@@ -1,0 +1,20 @@
+---
+layout: post
+title: PHP 5.3 Frameworky Thingy
+date: 2016-03-13 18:42:24.000000000 +02:00
+custom-date: 13 Mart 2016
+type: post
+published: true
+status: publish
+categories:
+- PHP
+---
+<p>First of all, I'm a newbie. But I enjoy this so I will share it.</p>
+<p>I got the task of building a university website. But the thing is, university servers are still running PHP 5.3. Using any new framework was out of the question. Since I was a newbie, I said I'll do all of the things by myself. But the code got spaghetti fast. First I installed Twig templating engine to make templates nicer and code re-usable. Using composer to pull in packages was so much fun, that I started to look for other packages that I can use and streamline my code. I installed <a href="https://github.com/vlucas/phpdotenv" target="_blank">phpdotenv</a> and <a href="http://j4mie.github.io/idiormandparis/" target="_blank">Paris ORM</a> afterwards.</p>
+<p>Then I said to myself, I need prettier urls, better routing and proper MVC structure since I don't want 22 *.php files for 22 different pages in website. I used Slim framework v2 because it supports PHP 5.3. This may also help future developers for that website.</p>
+<p>I realized this turned into a small package that I can reuse in next projects. So I'm publishing this through my GitHub account.</p>
+<p><a href="https://github.com/raicem/slimv2-paris-twig">https://github.com/raicem/slimv2-paris-twig</a></p>
+<p>As you can see, this is fairly barebones and basic. There is Slim as the core, Twig for templating and Paris for accesing the database. There is no real controller package that points to specific contoller methods from the router. I do this manually here, but can be replaced by other packages out there. You can Google, Slim controllers.</p>
+<p>Also as you can see in start.php, I don't use Slim containers for connecting Paris. Because:</p>
+<p><a href="http://knowyourmeme.com/photos/234765-i-have-no-idea-what-i-m-doing"><img src="{{ site.baseurl }}/assets/b7e.jpg" alt="" /></a></p>
+<p>As I said, I'm a newbie so any comments are appreciated.</p>

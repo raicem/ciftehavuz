@@ -1,0 +1,47 @@
+---
+layout: post
+title: 'Arduino Bisiklet Işığı Bölüm 8: Ne Kadar Süre Tuşa Basıldığını Ölçme'
+date: 2015-01-03 17:22:24.000000000 +02:00
+custom-date: 3 Ocak 2015
+type: post
+published: true
+status: publish
+categories:
+- Arduino Bisiklet Işığı
+---
+<p>Fark ettim ki, programa ışığın aktive olması için belirli bir ölçüm değeri girmek mantıklı bir hareket değil. Her bindiğim yerde, istediğim şekilde tepki vermeyebilir. O nedenle, bisiklet ışığına basit bir kalibrasyon/ayarlama fonksiyonu eklemeye karar verdim.</p>
+<p>Çok basit çalışacak: otomatik modda iken tuşa uzun basıldığında ortamdaki ışık seviyesini ölçecek ve o değeri eşik değer olarak kaydedecek. Çok basit ancak tuşu nasıl denetlediğimizi değiştirmemiz gerekmekte.</p>
+<p>Şu zamana kadar tuş basıldığında saymaya başladık ve o sayaç belli bir değeri geçince ışık modunu değiştirdik. Şimdi bunu değiştirerek, tuşun ne kadar süreyle basıldığına bakıp ona göre işlemleri gerçekleştirmemiz gerek. Yapmak ise oldukça basit, tuş basılı iken sayacağız ve tuş bırakıldıktan sonra gelecek ilk HIGH komutuyla beraber sayacı sıfırlamadan ne kadar saydığımızı kontrol ederek işlemleri gerçekleştireceğiz.</p>
+
+<pre><code class="c">
+  if (digitalRead(tus) == LOW) {
+    sayac++; //Saymaya başla
+    if (sayac == 200 && ledmode == 1) //Otomatik modda yeterince basılı tutulduysa{
+      ledmode = 5; //Ledler sönsün diye tanımlanmamış bir ledmode
+      esikDeger = 0; //esik değeri sıfırla
+      for (int i = 0; i < 8; i++) { //Arka arkaya 8 kez ölçüm alınacak
+        esikDeger = esikDeger + analogRead(isiksensoru); //eşik değeri eklemeye başla
+        digitalWrite(led1, HIGH);
+        digitalWrite(led2, LOW);
+        delay(50);
+        digitalWrite(led1, LOW);
+        digitalWrite(led2, HIGH);
+        delay(50);
+      }
+      esikDeger = (esikDeger>>3); //8 ölçümün toplamını 8'e böl
+      ledmode = 1; // otomatik moda geri dön
+    }
+  }
+  else {
+    if (sayac > 2 && sayac < 500) { //Tuş bırakıldı
+      ledmode++; // mod değiştir
+      if (ledmode == 4) {
+        ledmode = 0; //başa dön
+      }
+    }
+    sayac = 0; //Bir sonraki ölçüm için sayacı sıfırla
+  }
+</code></pre>
+
+
+<p>Evet gördüğünüz gibi tuş bırakılana kadar mod değişmeyecek. Ancak otomatik modda elinizi basılı tutup bırakmazsanız sensör yeni ölçümü eşik değer olarak kaydedecek ve tekrar otomatik moda geri dönecek. Bir tuşun ne kadar süreyle basıldığını anlamak bu kadar kolay. Kesin olarak milisaniye cinsinden ölçmek istiyorsanız mikrodenetleyici içindeki millis fonksiyonunu kullanabilirsiniz aslında. Ancak burada gerek kalmadı.</p>

@@ -1,0 +1,157 @@
+---
+layout: post
+title: 'Arduino Bisiklet Işığı Bölüm 5: Hatalardan Ders Çıkarmak'
+date: 2014-12-03 19:03:57.000000000 +02:00
+custom-date: 3 Aralık 2014
+type: post
+published: true
+status: publish
+categories:
+- Arduino Bisiklet Işığı
+---
+<p>Eğer son kod ile vakit geçirdiyseniz, bazı kusurları olduğu göreceksiniz. Hem bir ufak kusuru, hem de iki tane baya büyük kusuru var. Onlara bakmaya çalışalım.</p>
+<p><strong>1- Ufak Kusur</strong></p>
+<p>Bazen modlar arasında dolaşırken ışıkların kapanmadığını farkettim. Her zaman değil de, sanki belli bir koşula bağlı olarak oluşuyordu bu durum. Sonra programdaki şu yorumu gördüm:</p>
+<p>//ledmode == 0 konumunu tanımlamaya gerek yok zaten orada ışıkları kapalı istiyoruz.</p>
+<p>Burada, ileride daha ufak mikrokontrolörlere geçildiğinde program hafızasından tasarruf etme çabası vardı. Ne kadar az kod, o kadar fazla kod mantığı yani. Ancak ledmode 0'ın tanımlı olmaması şöyle bir soruna yol açıyor. Sonuncu sırada olan modumuzda, sensörden gelen veriye göre ışıklar sürekli açık konumdaysa ve bu durumda mod değiştirilirse, ortada bir ledmode = 0 tanımı olmadığından dolayı ışıklar açık kalıyor. Bu esnada ledmode'un değeri olması gerektiği gibi 0 ancak ledler açık.</p>
+<p>Eğer sensörden gelen verilere göre çakar modda iken mod değiştirseydik, ledmode'da hem değerimiz 0 olacaktı hem de ledler sönecekti. Bunun sebebi çakar modda son komutun digitalWrite(LOW) olması. Mod değiştikten sonra ledlere yeniden bir komut göndermediğimiz için son hallerinde kalıyorlar. Eğer otomatik modda ışık çakıyorsa sorun yok, tuşa basıldığında ledler kapanacak ama sürekli açık modda isek, ledler kapanmayacak.</p>
+<p>Bu çözmek için ledmode == 0 durumu tanımlanıp, tekrardan digitalWrite(LOW) komutu gönderebiliriz. Bunu Arduino'da yapmamak için bizi kısıtlayan bir şey yok. Ancak ileride daha ufak hafızalı bir çiple çalıştığımızı hayal ederek çözelim bu sorunu.</p>
+<p>Dediğim gibi ışıklar yanıp sönüyorsa, ledmode = 0'ın tanımlı olmaması sorun yaratmıyor. Bunun için modlarımızın sırasını değiştirerek, sonuncu (yani 3. ) modun hep çakar mod olmasını sağlayabiliriz. Hatta ben modlarımızı şu şekilde değiştireceğim:</p>
+<p>ledmode 0- Kapalı</p>
+<p>ledmode 1- Otomatik</p>
+<p>ledmode 2- Sürekli Açık</p>
+<p>ledmode 3- Çakar</p>
+<p>Bu sıralamayı yaparsak bu ufak sorun çözülecektir.</p>
+<p><strong>2 - Baya Büyük İki Kusur</strong></p>
+<p>Bu kusurun adı delay(). Her ne kadar kullanışlı bir özellik olsa da, mikrokontrolörün işlevlerine büyük bir balta vurmakta oldukça başarılı. Önemli baltalarından bir tanesini, önceki postta da bahsettiğim üzere, tuşu tepksizleştirerek vuruyor. delay() fonksiyonu belirtilen zaman içerisinde tüm işlemleri durdururken, Arduino dışarıdan gelecek bütün müdahelelere tepkisiz kalıyor (tamam, tümü değil ama çoğunluğu). Buna bizim tuşumuz da dahil. Yani ledlerin sönük olduğu 75 milisaniye içerisinde tuşa basılırsa tepki alamıyoruz. Her ne kadar kısa bir süre aralığı gibi gözükse de sık sık başıma geldi.</p>
+<p>İkinci büyük kusuru ise, delay fonksiyonunun saniyede tamamlanan döngü sayısını değiştirmesi. Biliyorsunuz biz debounce yapmak için arka arkaya gelecek LOW sinyalleri sayıyoruz ve 20'ye ulaşınca tuşun salınımı bitti diyip komutlarımızı yerine getiriyoruz. LOW sinyalinin 20'ye ulaşması için döngünün 20 kere tamamlanması lazım. Bu döngünün süresi ışığın moduna göre değişiyor. Eğer ışık yanıp sönmüyorsa, işlemlerin tamamlanması anlık bir şey (yine bilimseliz). Ancak eğer yanıp sönme durumu varsa, yani delay fonksiyonları kullanılıyorsa döngünün tamamlanması "anlık bir şey + delay(75)*2". Bu bizim 20'ye kadar gelme süremizin farklı modlarda değiştiğini gösteriyor ki nereden baksan saçma. Böyle olmaması lazım.</p>
+<p><strong>Çözüm Yolu 1</strong></p>
+<p>delay()'den tamamen kurtulmak en güzel çözümlerden bir tanesi. Delay'de zaman biriminden işlemcinin neredeyse bütün özelliklerini donduruyoruz. Bunu durdurmadan zaman tutmanın bir yolunu bulabilirse ve döngüyü kesmeden akan giden zamanın farkında olmanın bir yolu varsa, bunu çözebiliriz.</p>
+<p>Güzel bir orta açtım kendime, bir kafa golüyle bitireyim. Bunların çözümü millis() fonksiyonu. millis() Arduino'daki kod çalışmaya başladıktan itibaren zaman tutmaya başlayan bir fonksiyon. Onu çağırdığınızda size başlangıçtan itibaren geçen zamanı milisaniye cinsinden söylüyor. Biz milisi bir değişkene kaydedip, daha sonra void loop döngüsünde değişkene kaydettiğimiz zaman ile milis()'in sürekli saydığı zamanı karşılaştırabiliriz. Bu karşılaştırmanın 100 milisaniyeyi aşması durumunda led ışıklarımızın durumlarını değiştirebiliriz. Bütün kodu değil sadece sayacı ve led'leri açması şu şekilde:</p>
+
+<pre><code class="c">
+if ((unsigned long)(millis() - oncekiMillis) >= 100) {
+  oncekiMillis = millis();
+  digitalWrite(led1, leddurumu);
+  digitalWrite(led2, leddurumu);
+  leddurumu = !leddurumu;
+}
+</code></pre>
+
+
+<p>öncelikle oncekiMillis adında bir değişken kaydetmeliyiz. Millis fonksiyonunun döndüreceği değerler inanılmaz büyük rakamlar olabildiğinden bunları sıradan int değişkeninde değil, long değişkeninde tutmalıyız. Long değişkeni, -2.147.483.648 ve 2.147.483.647 arasındaki rakamları hafızasında tutabilir. Ancak dikkat ederseniz negatif sayılar mevcut. Bu negatif sayılar millis fonksiyonu tarafından kullanılmayacağı için (elbette zaman geriye doğru akmaya başlamazsa) ziyan oluyor. Biz bu sayı tutma hacmini tamamen pozitif tarafa aktarmak adına long değişkenimizi de unsigned olarak belirleyebiliriz. Bu sayede 0'dan  4.294.967.294'a kadar rakamları tutabiliriz.</p>
+<p>Yukarıdaki işlemde millis fonskiyonunun çağrıldığı anda saydığı zamanı geri döndüreceği tahayyül edebilirsiniz. Döndürdüğü bu rakamı oncekiMillis ile kıyaslayacağız (program hiç çalışmamışsa 0'dan başlayacak). Koşulların sağlandığı yerde, yani millis() değeri ile oncekiMillis arasında 100 fark olduğu anda, led ışıklarımızı bulundukları durumun tersine çevireceğiz ve anında oncekiMillis değerimizi şimdiki millis() değeri ile güncelleyeceğiz. Bu sayede programın bir sonraki turunda ışıklarımızın durumu düzgün bir şekilde değişebilecek. Burada esneklik sağlamak adına led ışıkları tek tek HIGH ve LOW diye tarif etmek yerine yine bir boolean değer ile iki seçenek arasında adeta bir flip flop usülü değişim yapmayı tercih ettim. Yeni tanımlanan leddurumu boolean'ı ile kolayca flip flop yapabiliyoruz.</p>
+<p>Program akışına baktığımda ise, programın iki aşamasında (mod 1 ve otomatik modda) bu blink olayının kullanıldığını gördüm. Bu nedenle aynı kodu farklı yere iki kere koymak yerine bunu loop fonksiyonu dışında bağımsız bir fonksiyon olarak tanımlamayı, ihtiyaç duyulduğunda çağırmayı planladım.</p>
+<p>Arduino'da fonksiyon kullanmak oldukça basit. Görelim:</p>
+
+<pre><code class="c">
+void ledBlink() {
+  if ((unsigned long)(millis() - oncekiMillis) >= 100){
+      oncekiMillis = millis();
+      digitalWrite(led1, leddurumu);
+      digitalWrite(led2, leddurumu);
+      leddurumu = !leddurumu;
+  }
+}
+</code></pre>
+
+
+<p>Gördüğünüz gibi "void istediginizBirİsim" diyerek fonksiyon üretebiliyorsunuz. Buradaki void'in olayı, fonksiyonun herhangi bir değer geri döndürmediğini belirmemiz. Eğer matematiksel bir işlem yapıyor olsaydık ve sonucu "return sonuc" olarak yazmamız gerekseydi void yerine int yazmamız gerekirdi. Burada öyle bir amacımız yok ve void kullanıyoruz. Fonksiyonu ise gereken yerlerde şu şekilde çağırabiliyoruz.</p>
+
+<pre><code class="c">
+  if (ledmode == 1) {
+    Serial.println("");
+    okuma2 = analogRead(isiksensoru);
+    if (okuma2 > 500) {
+      ledBlink(); //Burada fonksiyon çağırılıyor
+    }
+  }
+</code></pre>
+  
+
+<p>Daha sonra led'lerin çakmadığı yani sabit bulunduğu bölümlerdeki kodu da tekrar tekrar yazmanın gereksiz olduğuna kanaat getirdim. Geçirilecek HIGH veya LOW değerine göre ledleri kontrol etmeyi sağlayak bir fonksiyon yazdım. O da şu şekilde görülüyor:</p>
+
+<pre><code class="c">
+void ledStable (boolean stablePosition) {
+  digitalWrite(led1, stablePosition);
+  digitalWrite(led2, stablePosition);
+}
+</code></pre>
+
+
+<p>Gördüğünüz üzere bu bir boolean kabul eden fonksiyon. ledStable(HIGH) veya ledStable(LOW) diyerek istediğimiz bölümde kendisini çağırabiliriz. Böylece orda burda digitalWrite fonksiyonunu tekrar etmekten kurtuluruz. Programın tamamı şu şekilde:</p>
+
+<pre><code class="c">
+  //degismeyecek degiskenler
+const int led1 = 5;
+const int led2 = 6;
+const int tus = 2;
+const int isiksensoru = A0;
+//debounce
+long artirma;
+boolean debounced;
+//mod degistirme
+boolean okuma = HIGH;
+boolean sontusdurumu = LOW;
+int ledmode = 0;
+int okuma2;
+//blinking
+unsigned long oncekiMillis;
+boolean leddurumu = HIGH;
+void setup() {
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  digitalWrite(tus, HIGH); //Internal Pull-Up direnç
+}
+void loop() {
+  okuma = digitalRead(tus);
+  if (okuma == LOW){ //okuma LOW yani 0 ise
+    artirma++;       //Bu rakamı bir artır
+    if (artirma > 20) { //20 kere artırdıktan sonra
+      debounced = true; //Koşul sağlanırsa debounced doğrulanır
+    }
+  }
+  if (okuma == LOW && okuma != sontusdurumu && debounced == true) {
+    ledmode++;
+    if (ledmode == 3) { //daha fazla mod eklemek istiyorsanız 3 rakamını artırabilirsiniz
+      ledmode = 0;
+      artirma = 0;
+    }
+  }
+  if (okuma == HIGH) { // 20'ye gelmeden duran serileri sıfırlar
+    artirma = 0;
+  }
+  sontusdurumu = okuma; 
+  if (ledmode == 3) { // Çakar Mod
+    ledBlink();       // Çağırılan fonksiyon aşağıda
+  }
+  if (ledmode == 2) { // Sürekli Açık Mod
+    ledStable(HIGH);  // Çağırılan fonksiyon aşağıda
+  }
+  if (ledmode == 1) {
+    okuma2 = analogRead(isiksensoru); //Sensörden okuma yapılır
+    if (okuma2 > 500) {
+      ledBlink();
+    }
+    if (okuma2 > 500) {
+      ledStable(HIGH);
+    }
+  }
+}
+void ledBlink() {
+  if ((unsigned long)(millis() - oncekiMillis) >= 100){ //Fark 100 milisaniye olursa
+      oncekiMillis = millis();
+      digitalWrite(led1, leddurumu);
+      digitalWrite(led2, leddurumu);
+      leddurumu = !leddurumu; //HIGH ve LOW arasında dönüp durması için
+  }
+}
+void ledStable (boolean stablePosition) {
+  digitalWrite(led1, stablePosition);
+  digitalWrite(led2, stablePosition);
+}
+</code></pre>
+
+<p>Bu kod genel olarak çalışıyormuş gibi gözüküyor. Tek bir hatasını gördüm, ilk çalıştırmada, başkta iki kez tuşa basmak gerekiyor. Ondan sonra da hemen normale dönüyor zaten. Nedenini çözemedim.</p>
+<p><strong>Çözüm Yolu 2 (Kısmen)</strong></p>
+<p>İkinci çözüm yolu, interrupt'lar ile olacaktı ancak şu anda inanılmaz bir açlıkla karşı karşıya kaldığımdan dolayı sonra devam etmeye karar verdim. Bölüm 6 olarak.</p>

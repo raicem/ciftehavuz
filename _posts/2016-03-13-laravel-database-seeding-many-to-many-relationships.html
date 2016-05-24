@@ -1,0 +1,52 @@
+---
+layout: post
+title: Laravel Database Seeding Many to Many Relationships
+date: 2016-03-13 19:49:27.000000000 +02:00
+custom-date: 13 Mart 2016
+type: post
+published: true
+status: publish
+categories:
+- Laravel
+- PHP
+---
+<p>I'm in love with the Laravel's database seeding facilities. I just found them out last week and they made me faster developer. Also gives you the ability to switch between different computers without worrying about your database. Just pull from GitHub and run your migrations along with the seeding.</p>
+<p>First let's look how you can complete a simple seeding. In order seed something, you have to first create a factory for that model. Laravel comes with a ModelFactory.php within the database / factories folder structure. As you know Laravel has pre-defined User class. (I guess) Starting from the Laravel 5.2, ModelFactory class contains a factory defined specifically for that User model. That's great when figuring these out. I'm not gonna use that for this example.</p>
+<p>Let's say we keep a list of shops in our database. For example, these can be shops in your neighbourhood. Lets say Shop model points to just two database columns, id and name. You can use the model factory below to create shops database table.</p>
+<pre>
+<code class="php">
+	$factory->define(App\Shop::class, function (Faker\Generator $faker) {
+	  return [
+	    'name' => $faker->company,
+	  ];
+	});
+</code>
+</pre>
+
+<p>Let's say you want to catalog these shops with their fields. Examples may be, barber shop, grocery store, coffee shop etc. You have Field model for this. Model factory for the Field model can be this with 5 different fields:</p>
+{% highlight php %}
+$factory->define(App\Field::class, function (Faker\Generator $faker) {
+  return [
+    'name' =>; $faker->randomElement($array = ['barber', 'grocery', 'coffee shop', 'market', '2nd hand store']),
+  ];
+});
+{% endhighlight %}
+
+<p>As you can see this creates a many-to-many relationship between Shop and Field models. <a href="https://laravel.com/docs/5.2/testing#model-factories" target="_blank">According to the documentation</a> when you are seeding many to many relationships you can do this:</p>
+{% highlight php %}
+factory(App\Shop::class, 50)->create()->each(function($a) {
+  $a->fields()->save(factory(App\Field::class)->make());
+});
+{% endhighlight %}
+
+<p>This will work. However, while this creates 50 shops, it does not respect the fact that we only have 5 fields of shops. It will create 50 rows in shops table and 50 rows fields table, even though most of the fields will be the same name (since we have 5 values to fill 50 places). That may be a problem for example, accesing the shops that are coffee shops. There will never be a result set more than one. Since every shop will be attached to a new field row with a unique id.</p>
+<p>As far as I can see, solution to this problem is not clear in the documentation. After calling the closure you are able to access any Eloquent functionality normally available to you. This means if you populate your fields database table first, then you can access them while populating your Shop class.</p>
+
+{% highlight php %}
+factory(App\Field::class, 5)->create();
+factory(App\Shop::class, 50)->create()->each(function($a) {
+  $a->fields()->attach(App\Field::all()->random(1));
+});
+{% endhighlight %}
+
+<p>So what you can do is above. First seed your Field model. Then attach from that model randomly to have desired relationships. This will make sure your Field model will only have 5 values you pass with the array (Dont't forget to call unique() in the faker method).</p>

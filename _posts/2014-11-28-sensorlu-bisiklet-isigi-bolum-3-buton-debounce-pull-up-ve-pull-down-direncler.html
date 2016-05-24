@@ -1,0 +1,136 @@
+---
+layout: post
+title: 'Sensörlü Bisiklet Işığı Bölüm 3: Tuş Debounce, Pull-Up ve Pull-Down Dirençler'
+date: 2014-11-28 21:03:33.000000000 +02:00
+custom-date: 28 Kasım 2014
+type: post
+published: true
+status: publish
+categories:
+- Arduino Bisiklet Işığı
+---
+<p><a href="{% post_url 2014-10-17-sensorlu-bisiklet-isigi-yaparak-arduinoya-giris-1 %}">1. Bölüm: Projenin amacı ve genel bir giriş</a></p>
+<p><a href="{% post_url 2014-11-25-sensorlu-bisiklet-isigi-yaparak-arduinoya-giris-2 %}">2. Bölüm: LED yakma ve ilk program</a></p>
+<p>- LED'lerimizi yakmayı başardıktan sonra, sonraki adıma geçiyoruz. Öncelikle ışıklarımızı açıp kapatmak için bir tuş ekleyeceğiz ve bu tuşun düzgün çalışması için tahmin edilenden çok fazla efor sarfedeceğiz (hatta mikrodenetleyici ortamında, tuşun düzgün çalışması için harcanılan efor hiç bitmez). -</p>
+<p>Tuşlar basit ve temel bir parça olarak gözükse de, mikrodenetleyicilere bağlanmaları aşamasında bazı temel sorunlarla zorluklar çıkarmakta oldukça başarılılar. Öncelikle temel olarak nasıl çalıştığına bir bakalım.</p>
+<p><a href="https://dikendine.files.wordpress.com/2014/11/ekran-resmi-2014-11-28-00-28-37.png"><img class="alignnone size-medium wp-image-59" src="{{ site.baseurl }}/assets/ekran-resmi-2014-11-28-00-28-37.png?w=300" alt="Ekran Resmi 2014-11-28 00.28.37" width="300" height="154" /></a></p>
+<p>Şekilde de görülebileceği üzere, tuş sayesinde (buton nedense saçma bi kelime gibi geliyor bana, anahtar da farklı bir anlama çıkıyor) Arduino'nun pini ile 5 V arasında bir bağlantı kurabiliyoruz. Tuşun basılması durumunda pin'e 5 V gönderiyoruz ve bu durumu Arduino ile okuyabiliyoruz. Tuşun basılı olmadığı durumda ise pine herhangi bir akım gitmiyor. Bu durumda pin tarafından okunan değerin  0 V olacağını düşünürsünüz değil mi? Maalesef değil. Çünkü A numaralı pinin bulunabileceği hallerin sayısı aslında iki değil, üçtür. HIGH (veya 1 veya 5V), LOW (veya 0 veya 0 V) ve de FLOAT. FLOAT, pinin boşta kalması sebebiyle oluşan, tabiri caizse osuruktan nem kapan, kararsız bir duruma verilen isimdir. Eğer pin boşta duruyorsa, hem çipin kendisinden hem de etrafta oluşan elektromanyetik gürültüden etkilenebilir ve rastgele sonuçlar okuyabilir. Bu sebeple karar vermek için kullanacağımız pinlerde bu durumun oluşmasını istemeyiz.</p>
+<p>Bunu önlemek için en basit yol, tuşun basılı olmadığı süre için pini 0'a çekecek bir bağlantı kurmaktır. O da şu şekilde gösterilebilir:</p>
+<p><a href="https://dikendine.files.wordpress.com/2014/11/ekran-resmi-2014-11-28-00-28-47.png"><img class="alignnone size-medium wp-image-60" src="{{ site.baseurl }}/assets/ekran-resmi-2014-11-28-00-28-47.png?w=300" alt="Ekran Resmi 2014-11-28 00.28.47" width="300" height="172" /></a></p>
+<p>Şimdi her şey güzel gözüküyor değil mi? YANLIŞ. Evet, tuş serbest iken osuruktan nem kapma durumu oluşmayacak ve pin sıfır volt okuayacak. Ancak tuşa basıldığı anda 5V ile 0V arasında kesintisiz bir bağlantı kurulacağı için kısa devre oluşacak.</p>
+<p>Bu sebeple, tuş ile GND arasında 10k veya benzeri boyutlarda bir direnç yerleştirilerek hem bu kısa devre engellenir, hem de FLOAT durumundan kaçınılır. Gördüğünüz bu şekil, pini sürekli olarak GND'ye, yani 0 Volt'a doğru çektiğinden dolayı, Pull-Down Resistor (Al aşağı, al, al, al) olarak adlandırılır. Şekil:</p>
+<p><a href="https://dikendine.files.wordpress.com/2014/11/ekran-resmi-2014-11-28-00-28-58.png"><img class="alignnone size-medium wp-image-61" src="{{ site.baseurl }}/assets/ekran-resmi-2014-11-28-00-28-58.png?w=300" alt="Ekran Resmi 2014-11-28 00.28.58" width="300" height="194" /></a></p>
+<p>Pull-Up resistor ise bunun tam tersi uygulamasıdır. Şekile bakarak daha net kavrayabilirsiniz.<a href="https://dikendine.files.wordpress.com/2014/11/ekran-resmi-2014-11-28-00-33-14.png"><img class="alignnone size-medium wp-image-63" src="{{ site.baseurl }}/assets/ekran-resmi-2014-11-28-00-33-14.png?w=300" alt="Ekran Resmi 2014-11-28 00.33.14" width="300" height="204" /></a></p>
+<p>Pull-Down dirençlerde tuş serbest bırakıldığında 0, tuşa basıldığında 1 okunur (kulağa da bu doğal geliyor). Ancak Pull-Up dirençte bu tamamen tersidir. Tuş serbestken 1, basıldığında 0 okunur.</p>
+<p>Biz kendi tuş örneğimiz için istersek pull-up veya istersek pull-down dirençlerden faydalanabiliriz. Ancak Atmel mühendislerinin bizlere bir armağanı olarak, ATMega ve daha bir çok mikrodenetleyici, pinlerinde kendi pull-up dirençleriyle beraber gelir. Bu bizi hem parça, hem ekstra lehim, hem ekstra kablo olayından kurtaran harika bir çözümdür. Biz de tuşumuzu GND ve pin arasında direkt olarak bağlayarak ve sadece yazılım aracılığı ile pull-up direnci aktifleştirebiliriz. Hemen devreye ait görseli paylaşayım:<a href="https://dikendine.files.wordpress.com/2014/11/02_bb.jpg"><img class="alignnone  wp-image-50" src="{{ site.baseurl }}/assets/02_bb.jpg?w=300" alt="02_bb" width="577" height="421" /></a></p>
+<p>Gördüğünüz üzere şimdilik yapmanız gereken şey sadece bir tuş eklemek. Şimdi bu butondan komutlarımızı okuyarak ışıklarımızı kapatıp açacağız. Sorun şu ki, eğer bir anahtar kullansaydık işimiz çok kolay olacaktı. Anahtarı açtığımızda Arduino'ya 5 volt gidecek, kapattığımızda ise gitmeyecekti. Bize de sadece bu değeri okumak zorunda kalacaktı. 5 Volt (yani 1) olduğunda LED'leri yak, 0 Volt olduğunda ise söndür diyecektik. Ancak bu bir anahtar değil. Anahtarları ufak elektroniklerde sevmiyoruz çünkü büyükler ve pahalılar. Bu çok basit bir tuş (gavurcası için: tactile button). Yani basıyoruz ve denetleyiciye sıfır komutunu sadece bir anlığına yollayabiliyoruz.</p>
+<p>// Sadece gelen komut HIGH'dan LOW'a döndüğünde LED'in durumunu değiştir</p>
+<p>Bu sayede gelen HIGH komut, LOW'a döndüğünde işlem yapacağız ancak sonrasında Arduino'nun okuyacağı yüzlerce LOW komutuna tepkisiz kalacağız. Neyse, ben de anlatacaklarımın sırasını karıştırdım şu anda. Koda bakalım.</p>
+
+<pre><code class="c">
+  // İlk bölümdeki ledlere ek olarak tuşu ve programda kullanacağımız değişkenleri tanımlıyoruz.
+int led1 = 8;
+int led2 = 7;
+int tus = 6;
+boolean okuma;
+boolean sontusdurumu = HIGH;
+boolean leddurumu = HIGH;
+// Kullandığımız pinleri çıkış pini olarak atıyoruz. Input ayarlamaya gerek yok.
+// Setup aşamasında pin'e HIGH komutu yollarak Pull-Up direnci aktifleştiriyoruz.
+void setup() {
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  digitalWrite(tus, HIGH);
+}
+// Arduino açık kaldığı sürece tekrarlanacak rutin:
+void loop() {
+  okuma = digitalRead(tus);
+  if (okuma == LOW && okuma != sontusdurumu) {
+    digitalWrite(led1, leddurumu);
+    digitalWrite(led2, leddurumu);
+    leddurumu = !leddurumu;
+  }
+  sontusdurumu = okuma;
+}
+</code></pre>
+
+<p>İlk kodun üzerine birden fazla ekleme yaptık, farklılıkların üzerinden geçmeye çalışalım.<br />
+Öncelikle en tepede LED'lerimizle beraber tuşumuzu tanımladık ve 6. dijital pine bağlayacağımızı söyledik. Onun yanında, kodumuzda kullanmak için bazı değişkenler belirledik. Bu değişkenler gördüğünüz üzere diğerleri gibi int değil, boolean. Boolean, integerların aksine büyük rakamları değil, sadece HIGH ve LOW durumlarını kaydetmek için kullanılabilir. Bizim yapacağımız gibi bir dijital programda bunlar işimize yarayacak.</p>
+<p>Setup bölümüne gelirsek, burada adeta loop fonksiyonu içerisinde bir led yakar gibi, button pinine HIGH komutu gönderiyoruz. Bu sayede Arduino'nun içinde bütünleşik bulunan pull-up direnci aktif hale getiriyoruz. Ayrıca dikkat edeceksiniz ki, setup bölümünde OUTPUT'ları belirlemiş olmamıza rağmen, tuşumuzun pinini INPUT olarak özellikle belirtmedik. Önceden de dediğim gibi Arduino'nun pinleri aksi belirtilmedikçe INPUT pini olarak varsayılır.</p>
+<p>Loop bölümüne daha önceden tanımladığımız okuma boolean değişkenine bir değer atayarak başlıyoruz. digitalRead fonskiyonu ile, bir pin üzerindeki değeri okutup bunu okuma değişkenimize geçiriyoruz. Bu pin elbette bizim tuşumuzun bağlı olduğu pin. Buradaki değer pull-up direnç kullandığımızdan dolayı tuş basılıyken LOW, tuşa basılmazken HIGH olacak.</p>
+<p>Değerimizi kaydettikten sonra asıl karar verme bölümüne geçebiliriz. Yukarıda da kısaca anlatmaya çalıştığım gibi, LOW sinyali alındığından itibaren ışıkları açmamız ya da kapatmamız gerekiyor. Bir if (eğer) fonksiyonu ile bunu kontrol edebiliriz ve ışıklarımızın durumunu değiştirebiliriz. Ancak, kullanıcı elini tuştan ne kadar çabuk çekerse çeksin, Arduino o zaman aralığında onlarca ve belki yüzlerce LOW ölçümü yapacak. Yani okunan veriler şu şekle benzeyecek:</p>
+<p>HHHHHHHHHHHHHLLLLLLLHHHHHHHHHHHHHHHHHHHHHH</p>
+<p>Biz tam olarak ilk LOW değerini okuduktan sonra işlemimizi gerçekleştirmek ve diğer L değerlerinde herhangi bir şey yapmak istemiyoruz. Yani sadece HIGH'dan LOW'a geçerken işlem yapmak istiyoruz. O halde şu şekide bir kod yazabiliriz.</p>
+<p>/*<br />
+Eğer gelen sinyal LOW ise ve ondan hemen önce gelen sinyal LOW değilse,<br />
+Işıkların durumunu değiştir (kapalıysa aç, açıksa kapa)<br />
+*/</p>
+<p>Kodumuzun bunu yapması yeterli. Ancak Arduino'ya "bundan önce gelen sinyal neydi hatırla bakıyim" diyemiyoruz. Onu da ayrıca bir değişkene atamalıyız. Özetle, HIGH'dan LOW'a geçildiğinde ışıklarımızı yakacağız ancak son tuş durumunun da LOW olduğunu hatırlayacak bir değişken belirleyeceğiz. İşte bu değişkenin adı sontusdurumu.</p>
+<p>"okuma == LOW" bölümünden sonra gelen "okuma != sontusdurumu" (okuma sontusdurumu'na eşit değilse demektir) şartı da işte tam olarak bunu sağlıyor. Eğer okuma tuş durumuna eşit değilse, if fonksiyonunun içerisi yürütülüyor. Yürütme sonrası loop sonuna gelindiğinde tuştan son okuduğumuz reading değerini tuş durumuna eşitliyoruz. Böylece sonraki turda tekrar LOW sinyali geldiğinde tuş durumu da LOW oluyor ve okuma != tusdurumu sağlanmamış oluyor. Led ışıklarımızın durumu değişemiyor.</p>
+<p>If koşulu sağlandığı takdirde led ışıklarımızın bulundukları durumu tam tersine çevirmesi işlemini ise yine bir boolean değişken ile yapabiliriz. Boolean değişken leddurumu, programın başında HIGH olarak tanımlı. Bu sebeple, if koşulu ilk kez çalıştığında ışıklara HIGH komutu geçirilecek. Ancak bu komut geçirildikten ve işi bittikten hemen sonra boolean değişkenin durumu "leddurumu = !leddurumu" satırıyla tam tersine döndürülecek. Yani HIGH ise LOW, LOW ise HIGH olacak. Bu sayede bir if koşulunu sağlayan bir sonraki seferde (yani sonraki tuşa basışta) önceki durumun tam tersi geçirilmiş olacak.</p>
+<p>Arduino üzerinde devreyi tamamlayıp kodu başarıyla çalıştırdıysanız, tuşlarla alakalı başka bir sorunun varlığı dikkatinizi çekmiş olmalı. Tuşa bir kere bassanız bile, bazen iki kere ve hatta üç kere basılmış etkisi görebiliyorsunuz. Bunun sebebi, button debounce (tuş sekmesi?!) denen fenomen. Bir tuşa bastığınızda, tuş direkt olarak akımı geçirmeye başlamak yerine çok kısa bir süreliğine dans ediyor ve HIGH - LOW arasında hızlıca gidip gelebiliyor. Şu görsel açıklayıcı olacaktır:<a href="https://dikendine.files.wordpress.com/2014/11/switch_debounce_04_lrg.jpg"><img class="alignnone size-large wp-image-54" src="{{ site.baseurl }}/assets/switch_debounce_04_lrg.jpg?w=656" alt="switch_debounce_04_lrg" width="656" height="461" /></a></p>
+<p>Bounce ile belirtilen bölgelerdeki komutları görmezden gelmemiz gerekmekte. Çünkü eğer onları da okursak ışıklarımız girilen tek komuta karşılık birden fazla aç-kapa yapabilir. Bunun önüne geçmek için hem yazılımsal, hem de donanımsal bazı yöntemler var.</p>
+<p><strong>1-Donanım</strong></p>
+<p>En basit çözüm yöntemi bu. Ufak bir kondansatörü tuşun iki ucu arasına paralel olarak bağlıyoruz. Bu kadar. Bitti. Finito.</p>
+<p>Ancak bu <a href="http://www.youtube.com/watch?v=Iby888ZXpZ8&amp;index=11&amp;list=PLE72E4CFE73BD1DE1">şu harika video serisinde</a> anlatıldığı üzere "Poor Man's Button Debouncing". Friztzing resmini paylaşırsam şöyle bir şey olacak. O mavi cücük gibi şey bir kondansatör, idare ediverin :)</p>
+<p><a href="https://dikendine.files.wordpress.com/2014/11/02a_bb.jpg"><img class="alignnone size-large wp-image-55" src="{{ site.baseurl }}/assets/02a_bb.jpg?w=656" alt="02a_bb" width="656" height="485" /></a>
+<p>Bu şekilde tuş tarafından yaratılan debouce pürüzlerinin çoğunu törpüleyebiliriz. Bunun için kondansatörün elektrik yük tutma kapasitesinin yani Farad'ın doğru seçilmesi gerekir. Yüksek boyutlu bir kondansatör, elektrik yüküyle dolana kodar çok vakit gerektireceği için tuşunuzun uzun bir süre tepki vermemesine sebep olabilir. Ufak boyutlusu ise, hemen şarj olarak istediğimiz dengeleme etkisini gösteremeyip, debounce olayına yeterince yardımcı olmayabilir. En uygunu tuş devremizde bir pull-up resistorun da bulunduğunu varsayarak bunun bir Resistor Capacitor (RC) devresi olduğunu anlamak ve tuş için gereken tepkiselliği direncin ve kondansatörün büyüklüğü ile hesaplamak. Bunun için pull-up resistorun bilinmesi gerekmekte. Şimdilik araştırmaya üşendiğimden ve 22 nanoFaradlık kondansatör gayet iyi çalıştığından dolayı burayı geçiyorum.</p>
+<p>RC devrelerinde daha fazla bilgi ve hesaplamalar için <a href="http://www.electronics-tutorials.ws/rc/rc_1.html">bu linke</a> tıklayabilirsiniz. Hesaplamak için pull-up direncin boyutuna bakmak isterseniz Arduino'nun çipi ATMega 328P'nin datasheet'lerine bakabiliriniz <a href="http://www.atmel.com/Images/doc8161.pdf">buradan</a> (dikkat, 12 mb'lık pdf dosyası).</p>
+<p>Benim için 22 nF'lık kondansatör gayet başarılı sonuç verdi. 10 microFarad ise tuşun tepkisizleşmesine sebep oldu.</p>
+<p><strong>2- Yazılım </strong></p>
+<p>Nasıl tuş için ekstra pull-up veya pull-down direnci gerekliliğinden ATMega'yla bütünleşik gelen pull-up dirençleri sayesinde sadece yazılımla kurtulduk, bu debounce olayında da sadece yazılım yardımıyla kurtulabiliriz. Bunu yapmanın pek çok farklı yolu var. Sadece bir delay() koyma ile, apayrı bir debounce fonksiyonu koymaya kadar giden farklı çözümler internette mevcut. Kendi programınıza uyarladığınız sürece, hepsini kullanabilirsiniz. Ben burada sıklıkla kullanılan bir metodu (kendi basit uyarlamamla beraber) göstermek istiyorum.</p>
+<p>Yukarıda tuşun basıldığını anlamak için bazı koşullarımız vardı. O koşula yeni bir ekleme yapmamız yetecek.</p>
+<p>/*<br />
+Eğer gelen sinyal LOW ise ve ondan hemen önce gelen sinyal LOW değilse ve <strong>20 tane LOW sinyali arka arkaya geldiyse</strong>;<br />
+Işıkların durumunu değiştir (kapalıysa aç, açıksa kapa)<br />
+*/</p>
+<p>Deboucing ya da zıplama olayının Arduino tarafından okunuşu bir bakıma şu şekilde diyebiliriz:</p>
+<p>1111111111111111111111111010101010000000000000000000000001010101001111111111111111</p>
+<p>1 ve 0'lar arasında kalan bölümde bazı karışıklıklar olduğu görüyorsunuz. Biz bu karışıklıkları göz ardı etmek, arka arkaya gelen 0'lar bütününü okumak istiyoruz. Bunun için koştuğumuz şart da 20 tane sıfırın arka arkaya gelmesi. 20 tane sıfır arka arkaya geldiyse, biz tuş zıplamasının bittiğini tahmin ediyor ve işlemimizi yürütebiliyoruz. Bu 20 rakamını azaltıp artırabilirsiniz size kalmış. Azaltmak tuş zıplamalarının artmasına, artırmak da tuşun tepkisizleşmesine sebep olabilir.</p>
+<p>Kodumuz şu şekilde:</p>
+
+<pre><code class="c">
+  // İlk bölümdeki ledlere ek olarak tuşu ve programda kullanacağımız değişkenleri tanımlıyoruz.
+int led1 = 8;
+int led2 = 7;
+int tus = 6;
+boolean okuma;
+boolean sontusdurumu = HIGH;
+boolean leddurumu = HIGH;
+boolean debounced;
+long int artirma = 0;
+// Kullandığımız pinleri çıkış pini olarak atıyoruz.Input ayarlamaya gerek yok.
+// Setup aşamasında pin'e HIGH komutu yollarak Pull-Up direnci aktifleştiriyoruz.
+void setup() {
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  digitalWrite(tus, HIGH);
+  Serial.begin(9600);
+}
+// Arduino açık kaldığı sürece tekrarlanacak rutin:
+void loop() {
+  okuma = digitalRead(tus);
+  if (okuma == LOW){ //okuma LOW yani 0 ise
+    artirma++;       //Bu rakamı bir artır
+    if (artirma > 20) { //20 kere artırdıktan sonra
+      debounced = HIGH;
+    }
+  }
+  if (okuma == LOW && okuma != sontusdurumu && debounced == HIGH) {
+    digitalWrite(led1, leddurumu);
+    digitalWrite(led2, leddurumu);
+    leddurumu = !leddurumu;
+    artirma = 0;
+  }
+  sontusdurumu = okuma;
+  Serial.println(artirma);
+}
+</code></pre>
+
+
+<p>Programın ilk bölümünde bir boolean değişken olan debounced'ı tanıttık. Bunu debounce önleme işleminin yapılıp yapılmadığına karar vermek için kullanacağız.<br />
+Daha sonra 20 tane LOW sinyalinin arka arkaya gelip gelmediğini saymak üzere integer olarak artirma parametremiz tanıttık. Başlangıç olarak sıfır verdik. Burda farklı olan şu, int kelimesinin başında bulunan long. Long çok büyük boyuttaki (mesela 6-7 basamaklı) sayıları tutabilmek için atanmış bir değişken türü. Tuşun basılı kalması durumunda, artirma parametremiz büyüdükçe büyüyeceği için, içerisinde daha fazla bit tutabilen bu değişkene ihtiyacımız olabilir.</p>
+<p>Setup bölümü tamamen aynı.</p>
+<p>Loop bölümünde, digitalRead ile okumamızı yaptıktan sonra, debounce işlemine başlıyoruz. okuma parametresine gelen her LOW değeri için, artirma değişkenimizi bir artırıyoruz ("artirma ++" tamamen "artirma = artirma + 1" koduyla aynı). Bu kod 20'ye gelene kadar saymaya devam ediyor ve 20'ye geldiğinde debounce boolean değişkenini HIGH yapıyor. Bu değişkenin HIGH olmasıyla beraber üçlü koşulumuz sağlanıyor ve ışıklarımızın durumu değişiyor. Bundan sonra yapmamız gereken tek şey tekrar kullanmak üzere artırma parametremizi sıfırlamak.</p>
+<p>Bu başarılı bir debouncing kodu değil elbette. Sadece kendime uyarladığım pratik bir çözüm. Örneğin artirma parametresinin 19'da kalması ve tuşun HIGH konumuna geçmesi durumunda artirma parametresini sıfırlayacak bir komutumuz yok. O halde debouncing halinde gelecek ilk LOW kodunda 20'yi aşacağız ve tuş daha stabil hale gelmeden ışıklarımızı yakmaya çalışacağız. Bu ideal bir durum değil. Ancak şimdilik idare edecektir.</p>
+<p>- Bu yazıya modlar arasında değişiklik yapmayı ekleyecektim ama fazla uzaması nedeniyle onu sonraki bölümümüze bırakmaya karar verdim. -</p>

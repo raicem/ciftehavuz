@@ -1,0 +1,169 @@
+---
+layout: post
+title: 'Arduino Bisiklet Işığı Bölüm 7: Sensör Verilerini Yumuşatmak'
+date: 2015-01-01 14:12:12.000000000 +02:00
+custom-date: 1 Ocak 2015
+type: post
+published: true
+status: publish
+categories:
+- Arduino Bisiklet Işığı
+---
+<p>- Bisiklet ışığımızın girdiği her gölgede çılgın atmaması için, sensörden gelen verilerin ortalamasının alınması, yumuşatılması, düzene sokulması gibi konulardan bahsedeceğiz. -</p>
+<p>Yetişkin bir analog sensör, saniyede milyonlarca veri toplayabilir, bunları umarsızca direkt olarak Arduino'ya gönderebilir, gördüğü her şeyi iletmek suretiyle kullanıcı deneyimini baltayabilir. Bizim bisiklet ışığımızda bu istemeyeceğimiz bir olay. Geceleri iyi aydınlatılmış bir bölgede bir ağacın gölgesinden geçerken ışığımızın buna tepki vermesini istemeyiz. Yani tamam, verse umrumuzda olmayabilir belki ama konuya girdik bi kere, anlatacağız.</p>
+<p>Neyse, dediğim gibi gördüğü kısa süreli değişikliklere göre tepki veren bir cihaz istemeyiz. Dikkatimizi dağıtabilir. Biz bisikletimizi sürerken gidonun üzerinde kafasına göre takılıp sürekli mod değiştirebilir. Biz ışığımız daha ağır kanlı, daha sakin, 3 saniye önce okuduğu değerleri unutmayan, nereden geldiği bilen bir cihaz olsun istiyoruz. Bunun en basit yolu da şu: hareket eden ortalamalar.</p>
+<p>İngilizcesi moving veya rolling average diye geçiyor. Hesaplanması açısından bir sürü güzel kaynak mevcut. <a href="http://en.wikipedia.org/wiki/Moving_average">Özellikle wikipedia sayfası.</a> Biz hem bu sayfadan hem de <a href="http://arduino.cc/en/Tutorial/Smoothing">Arduino sayfasından </a>yararlanarak 3 adet çözüm yöntemine bakacağız.</p>
+<p>Büyük ihtimalle tahmin ettiniz. Sensörün ölçtüğü anlık verilerle karar vermemek adına, son 10 veriyi veya son 100 veriyi hafızasında tutup, onların sürekli ortalamasını alan bir çözüm getireceğiz. Bu çözümde belirlediğimiz sayıdaki ölçüm bir dizide toplanacak ve her yeni gelen ölçüm sonucu, en eski ölçüm sonucunu diziden atacak. Ölçüm sonuçlarını sallıyorum, ama örnek olarak şöyle bir şey.</p>
+<p>543 543 542 544 <span style="text-decoration:underline;">546 543 556 578 590 574 556 550 544 543</span></p>
+<p>Altı çizili kısım bizim ortalamasını alacağımız kısım. Yeni veri geldiğinde ise şu şekilde bir kaydırma yapacağız. Rakamlara dikkat:</p>
+<p>543 543 542 544 546 <span style="text-decoration:underline;">543 556 578 590 574 556 550 544 543 680</span></p>
+<p>Gördüğünüz gibi yeni gelen 680 verisiyle beraber, dizide bulunan en eski veriyi, yani 546'yı ocak dışında bıraktık. Burada şu önemli; 680, diğer ölçümlere göre çok yüksek kalan bir rakam. Buna rağmen Arduino, ortalama aldığımızdan dolayı derhal bu rakama tepki vermeyecek. Ancak 600'lü rakamların gelmeye devam etmesiyle ortalamamız yükselebilir ve belki yanma modu değişebilir. Bu Arduino'nun sayfasında anlatılan güzel bir metod. <a href="http://arduino.cc/en/Tutorial/Smoothing">Ardino sayfasında da paylaşılan </a>kodu görelim:</p>
+
+<pre><code class="c">
+  //Rolling Average için gerekli değişkenler
+  const int okumaSayisi = 20;
+  int okumalar[okumaSayisi];
+  int indeks = 0;
+  int toplam = 0;
+  int ortalama = 0;
+</code></pre>
+
+<pre><code class="c">
+  if (ledmode == 1) {
+    //tanımlanan dizinin indeks pozisyonunda duran degeri çıkar
+    toplam = toplam - okumalar[indeks];
+    //onun yerine yeni bir ölçüm al ve kaydet
+    okumalar[indeks] = analogRead(isiksensoru);
+    //toplama yeni ölçümü ekle
+    toplam = toplam + okumalar[indeks];
+    //dizinin farklı bir pozisyonuna ilerle
+    indeks++;
+    //dizinin boyutunu berirlemek için okumaSayisi'nı sınırla
+    if (indeks == okumaSayisi) indeks = 0;
+    //dizinin içindeki değerlerin ortalamasını al
+    ortalama = toplam / (okumaSayisi-1);
+    //bu ortalamaya göre karar ver
+    if (ortalama > esikDeger) {
+      ledBlink();
+    }
+    if (ortalama < esikDeger) {
+      ledStable(HIGH);
+    }
+  }
+</code></pre>
+
+<p>Bu metod Ardunio ve onu Arduino yapan ATmega328p mikrodenetleyicisiyle birlikte güzelce çalışacaktır. Ancak bisiklet ışığımızı hem daha az yer kaplayan, hem daha az güç tüketen hem de daha ucuz bir mikrodenetleyiciyle yapmak istersek içerisinde 10 veya 100 tane ölçüm barındıran bir dizi tanımlamak, derhal mikrodenetleyicinin az olan RAM'ini dolduracak ve kod direkt olarak çalışmayacaktır.</p>
+<p>O nedenle bu sürekli ortalama alma fikrinin mikrodenetleyicilere uygun bazı farklı hesaplama yöntemleri var. Bu yöntemlerin hepsi Wikipedia'da anlatılmış. Ben <a href="http://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average">özellikle üslü hareketli ortalamalara</a> (berbat Türkçe'ye çevirdim. Aslında Exponential Moving Averages) değinmek istiyorum.</p>
+<p>Wikipedia'da verilen fonksiyonlar kafa karıştırıcı olabiliyor. Ben şöyle özetlemeye çalışayim. Sensörün ölçtüğü değeri sakladığımız bir değişkenimiz olsun:</p>
+
+<pre><code class="c">
+  okuma = analogRead(isiksensoru);
+  if (okuma < 500) {
+    ledStable(HIGH);
+  }
+</code></pre>
+  
+
+<p>Gördüğünüz gibi burada bir okuma yapıyoruz ve okumanın sonucu direkt olarak karar verme aşamamızda kullanıyoruz. Önceki turda ölçülen değerin herhangi bir önemi yok. Bir dizi tanımlamadan önceki serileri hatırlamanın çok güzel bir yolu var.</p>
+
+<pre><code class="c">
+  okuma = analogRead(isiksensoru);
+  gecmisiHatirlayanOkuma = gecmisiHatirlayanOkuma*0.9 + okuma*0.1;
+  if (gecmisiHatirlayanOkuma < 500) {
+    ledStable(HIGH);
+  }
+</code></pre>
+  
+
+<p>Burada yine okumamızı yapıyoruz. Ancak bunu direkt olarak karar vermede kullanmıyoruz. İkinci bir değişken tanımlayarak önceki ölçümlerimizden gelen verileri de hesaba dahil ediyoruz. Dikkat ederseniz, gecmisiHatirlayanOkuma degiskenimizin karşısında, gecmisiHatirlayanOkuma * 0,9 gibi bir ibare var. Yani değişkene yeni bir değer atarken, önceki turda ölçülen sonucun %90'ını aktarıyoruz. Yani ona bir nevi hafıza kazandırıyoruz. Değişkenin geri kalan %10'luk kısmı ise yeni yaptığımız okuma değerinden geliyor. Yani bir nevi önceki okumaları 100 tam sayıyı bir dizide tanıtmadan, RAM'de aşırı yer kaplamadan kaydetmiş oluyoruz. Bu %90-%10'luk oranlar sizin hassasiyetinizi belirliyor ve istediğiniz şekilde değiştirebilirsiniz. Örneğin yeni gelen okuma sonucunun %10 değil de %1 etkilemesini isterseniz, her gelen yeni sonuç, gecmisiHatirlayanOkuma değerinizi daha az etkilemeye başlayacak. Bu sayede daha yavaş tepki veren bir sensöre sahip olacaksnız. Ya da tam tersi.</p>
+<p>Gördüğünüz gibi burada array kullanmaktan kaçındık ve belki de kısıtlı RAM'imize sığdırmayı başardık programı. Ancak sorunlar burada bitmiyor. Önceki örnekte olduğu gibi ATmega 328P bu işlemlerin üstünden kolaylıkla gelebilir ancak daha ufak bir çip küsüratlı sayılarla yapılan işlemlerde oldukça zorlanabilir. AVR mikrodenetleyiciler her ne kadar saniyede milyonlarca kez sensörden veri alabilseler de küsüratlı sayı işlemlerinde zorlanmaktadırlar. Bu nedenle mümkün olan her fırsatta küsüratlı sayı kullanmaktan kaçının. Özellikle bizim rakamları göremeyeceğimizi, sadece sensör ölçümünde kullanacağımızı göz önünde bulundurursanız küsüratlı sayılara bulaşmamak en iyisi. Eğer virgüllü sayılardan uzak durmak istiyorsanız şöyle bir çözüm uydurabilirsiniz:</p>
+
+<pre><code class="c">
+  okuma = analogRead(isiksensoru);
+  gecmisiHatirlayanOkuma = (gecmisiHatirlayanOkuma*9)/10 + okuma/10;
+  if (gecmisiHatirlayanOkuma &lt; 500) {
+    ledStable(HIGH);
+  }
+</code></pre>
+  
+
+<p>Ancak burada da başka (hatta belki daha büyük) bir sorun var. Her ne kadar AVR çipler çarpma işlemini kolaylıkla yapabilselerde, bölme işlemlerinde de düşük performans göstermektedirler. Burada tam sayılarla işlem yapabilmek adına 10 ile bölüm yaptık. Peki hangisi daha kötü? Tam sayılar ile bölme işlemi yapmak mı? Yoksa virgüllü sayılarla çarpma işlemi yapmak mı? Bunu kolaylıkla test edebiliriz. Aşağıdaki kod, Arduino'nun içindeki kronometreyi kullanarak 10.000 adet tam sayı bölme ve 10.000 adet virgüllü sayı çarpma işlemleri için geçen süreyi hesaplıyor. Gördüğünüz micros fonksiyonu, çağırıldığı zaman sadece programın başından itibaren ne kadar zaman geçtiğini söyleyen faydalı bir fonksiyon. İşlemlerin başında ve sonunda iki ölçüm yapıp bu rakamları kıyaslarsak, geçen zamanı da hesaplayabiliriz. Oldukça faydalı. Kod aşağıda:</p>
+
+<pre><code class="c">
+int i;
+int okuma = 400;
+unsigned long baslangic;
+unsigned long gecenZaman;
+void setup() {
+  Serial.begin(9600);
+}
+void loop() {
+  // Floating Point ile
+  baslangic = micros();
+  for (i = 0; i < 10001; i++)
+  {
+    okuma = okuma*0.9 + okuma*0.1;
+  }
+  gecenZaman = micros() - baslangic;
+  Serial.print(&amp;quot;float: &amp;quot;);
+  Serial.println(gecenZaman);
+  /
+  //Tam sayı bölümü ile
+  baslangic = micros();
+  for (i = 0; i < 10001; i++)
+  {
+    okuma = okuma*9/10 + okuma/10;
+  }
+  gecenZaman = micros() - baslangic;
+  Serial.print(&amp;quot;integer: &amp;quot;);
+  Serial.println(gecenZaman);
+}
+</code></pre>
+
+
+<p>Aslında çok önemli değil ama işlemlerin ne kadar hızlı tamamlandığına dair ufak bir bilgi vermesi açısından faydalı bir uygulama. Göreceğimiz üzere ortalama adında sabit bir değerimiz var ve bunun üzerinden hem virgüllü sayılar ile hem de tam sayı bölümü ile işlem yapıyoruz. Elbette tek işlemin süresini ölçmek zor olacağından bu işlemi 10000 kez tekrarlatıyoruz for loop ile. Başında ve sonunda ölçtüğümüz micros değerlerinin farkı ile de geçen zamanı buluyoruz kabaca. 10000 işlem için benim gördüğüm sonuçlar bu şekilde:</p>
+<p>Virgüllü Sayılar ile: 343360 mikrosaniye</p>
+<p>Tam Sayı bölümü ile: 289400 mikrosaniye</p>
+<p>Gördüğünüz gibi yaklaşık %15'lik bir iyileşme var kodun çalışma hızında. Bu güzel bir ilerleme. Ancak burada durmamamız lazım. Tam sayıları entegre etresek de, ileride kullanmak isteyeceğimiz ufak mikrodenetleyiciler için bu bile fazla gelebilir. Peki float kullanmadan ve bölme yapmadan bölme yapabilmek mümkün mü?</p>
+<p>Elbette mümkün. Adı bit kaydırma (bit shifting).</p>
+<p>Bu benim her zaman kafamı karıştıran bir konsept. O yüzden anlatmaya 10'luk sayma sisteminden başlamak istiyorum. Şimdi önce 8 slotu olan bir bölüm hayal edelim. Her slotun bir rakam tutabilme kapasitesi var. Eğer 68 rakamını yazmak istersek şu şekilde gösterebiliriz.</p>
+<p>00000068</p>
+<p>Bu bizim rakamımız. Bunu 10 ile çarpmak istersek bunu konvansiyonel olarak 68 x 10 şeklinde yapabiliriz. Ancak dikkatinizi çekmek istediğim bir nokta var, eğer tüm rakamları bir basamak sola kaydırırsak elde edeceğimiz sonuç:</p>
+<p>(00000068 &lt;&lt; 1) = 00000680 (C kodunda bit kaydırma notasyonu bu şekilde)</p>
+<p>Baştan bir sıfır düştü ve sona bir sıfır eklendi diyebiliriz aslında. Önemli olan şey, bu kaydırma işleminin sonucunda sayımız 10'la çarpılmış oldu. Bunu istediğimiz sayıya istediğimiz kadar yapabiliriz. Her zaman bir basamak kaydırdığımızda bir rakamı 10 ile çarpmış oluyoruz.</p>
+<p>İşin güzel yanı aynısı bölme işlemi için de geçerli. Bu sefer 687 rakamını ters yöne, yani bir basamak sağa kaydıralım.</p>
+<p>(00000687 &gt;&gt; 1) = 00000068</p>
+<p>Başa bir sıfır geldi ve sondaki 7 aşağı düştü diye düşünebiliriz. Bölme işlemi yapmadan bir rakamı 10'a bölmüş olduk. Ancak bir şey dikkatinizi çekecektir, eğer 687'i konvansiyonel bir şekilde 10'a bölseydik elimizde 68,7 kalacaktı ve virgüllü sayılarla uğraşmak istemediğimizden dolayı bunu 69 olarak yuvarlayacaktık. Bunu bit kaydırmalı yöntemle yapmamız mümkün değil. Sondaki rakam ne olursa olsun slottan aşağı atılacak ve elde kalan iki rakam değerlendirilecek.</p>
+<p>Bunu çözümü kolay. Sadece bit kaydırma yapmadan önce rakama 10 ekleyin. O zaman her zaman yukarı yuvarlanan sayılar elde edersiniz. Ya da aynı mantıkla her zaman aşağı yuvarlanan sayılar elde etmek istiyorsanız 10 çıkarın.</p>
+<p>Buraya kadar açıklayabildiysem, şimdi de makine koduna bakalım. Bildiğiniz üzere makina kodu 0 ve 1'lerden, yani ikili sayma (binary) sisteminden oluşuyor. Bizim kodumuzda verdiğimiz sayı her zaman binary sisteme dönüştürülüyor. 22'nin binary karşılığına bakalım. Tekrardan 8 slotla çalıştığımızı unutmayın:</p>
+<p>00010110 (10'lu sistemde 22)</p>
+<p>Eğer bu rakamı bir kez sola kaydırırsak, aynı 10'lu sistemde olduğu gibi sonuna bir sıfır eklenecek:</p>
+<p>(00010110 &lt;&lt; 1) = 00101100 (Onlu sistemde 44)</p>
+<p>Bu rakamın karşılığına baktığınızda ise şu sonucu görüyorsunuz: 44. Tanıdık geldi mi? Hadi bir kez daha yapalım ve sona bir sıfır ekleyelim:</p>
+<p>(00101100 &lt;&lt; 1) = 01011000 (88!)</p>
+<p>Bu binary rakamın karşılığı ise 88. Şimdi biraz daha netleşmiştir sanırım. 22 - 44 -88. Binary sistemde rakamları sola kaydırdığımız her seferde, sayımız 2 ile çarpılıyor. Yani mikrodenetleyici üzerinde bir rakamı iki ile çarpmak yerine bitlerini kaydırabiliriz. İşin güzel yanı, bu bölme işlemi için de geçerli. Rakamları sağa kaydırıp sondan bir basamak atarsanız, elinizdeki sayıyı ikiye bölmüş olursunuz.</p>
+<p>Bununla oynamak, nasıl bir şey olduğunu görmek için şu linki takip edin:</p>
+<p>http://www.mathsisfun.com/binary-decimal-hexadecimal-converter.html</p>
+<p>Hem binary hem de onlu sayıları değiştirip kurcalayabilirsiniz. Sona basamak ekledikçe veya çıkardıkça nasıl 2'yle çarpılıp 2'yle bölündüğüne bakabilirsiniz.</p>
+<p>Tabii şöyle bir sorun çıkıyor ortaya. Biz sayılarımızı 10'a bölmek ve 9 ile çarpmak istiyoruz. Binary'de sağa sola kaydırarak 9 veya 10 ile işlem yapamayız. Sadece 2 ve 2’nin üstleriyle hareket edebiliriz. Ya da başka bir yolu var mı?</p>
+<p>Sanırım var (yarattığı beklentiyi karşılayamadı). Sanırım var diyorum çünkü internette bunun üzerine yazılmış pek fazla kaynak bulamadım. Kendim bir yöntem düşündüğümde ise sistematik bir çözüme ulaşamadım. Ben de pratik yoldan 2 ve 2’nin üsleriyle işlem yapmaya razı oldum şimdilik. Yani %1 yerine 1/128 gibi yakın değerlerde çalışmaya karar verdim. Bunu yapmak oldukça basit. Şöyle düşünelim:</p>
+<p>Ortalama = okuma/128 + ortalama*127/128</p>
+<p>Ortalama’nin 128 parçasından 127 tanesi, önceki döngüde hesaplanmış ortalama değerinden gelecek. 1/128’i yeni okuduğumuz değerden vereceğiz. Buradaki 128’e bölüm işlemlerini kolayca yapabiliriz. Daha düzenli gözükmesi açısından iki tarafı da 128 ile çarpabiliriz.</p>
+<p>128 * Ortalama = okuma + ortalama * 127</p>
+<p>Ancak bulduğumuz ortalama değerini kullanırken onu 128’e bölmemiz gerek. Yani 7 kez sağa kaydırmamız gerek.</p>
+<p>Ortalama = okuma + ortalama * 127</p>
+<p>Ortalama = ortalama &gt;&gt; 7</p>
+<p>En nihayetinde kodumuz bu şekilde gözükecek:</p>
+
+<pre><code class="c">
+  okuma = analogRead(isiksensoru);
+  ortalama = okuma + ortalama * 127;
+  ortalama = ortalama >> 7;
+  if (ortalama > 500) {
+  ....
+  }
+</code></pre>
+  
+
+<p>Bu sayede mikrodenetleyiciye fazla yük bindirmeden sensörden gelen bilgiyi düzene sokmuş olduk.</p>
+<p>Bir sonraki yazıda kullanıcının, ışığın hangi karanlık seviyesinde yanıp hangi karanlık seviyesinde çakmaya başlayacağını ayarlayabilmesi için bir kalibrasyon özelliği ekleyeceğiz.</p>
