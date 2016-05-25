@@ -70,7 +70,7 @@ img {
 
 .main {
 	max-width: 70em;
-	margin: 0 auto;	
+	margin: 2em auto;	
 	padding: 0 2em;
 	line-height: 1.5em;
 	display: flex;
@@ -79,10 +79,8 @@ img {
 }
 
 .content {
-	margin-top: 2em;
 	margin-right: 2em;
 	flex: 3;
-
 }
 
 article {
@@ -171,6 +169,9 @@ footer {
 }
 
 @media (max-width: 930px) {
+	.main {
+		padding: 0 5em;
+	}
 	.content {
 		flex-basis: 100%;
 		margin: 0 auto;
