@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Yeni Uğraşım: parandus.com
-custom-date: 1 Ağustos 2016
+custom-date: 31 Temmuz, 2016
 categories: 
 - Web
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Bu Blogu Jekyll'a Taşıdım
-custom-date: 25 Mayıs 2016
+custom-date: 25 Mayıs, 2016
 categories: 
 - Diğer
 ---
