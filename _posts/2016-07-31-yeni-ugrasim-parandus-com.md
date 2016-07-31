@@ -3,7 +3,7 @@ layout: post
 title: Yeni Uğraşım: parandus.com
 custom-date: 31 Temmuz, 2016
 categories: 
-- Web
+- PHP
 ---
 
 PHP ve [Laravel](https://laravel.com) ile daha haşır neşir olmaya başladıktan sonra bir şeyler yapmalıyım hissiyatına kapıldım. [Just Build Websites mentalitesini](https://github.com/melanierichards/just-build-websites) de görünce böyle bir şeye kalkıştım. 
