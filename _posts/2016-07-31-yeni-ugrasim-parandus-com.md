@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Yeni Uğraşım: parandus.com
+title: 'Yeni Uğraşım: parandus.com'
 custom-date: 31 Temmuz, 2016
 categories: 
 - PHP
