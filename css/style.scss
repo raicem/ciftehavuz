@@ -161,6 +161,11 @@ footer {
 }
 
 @media (max-width: 500px) {
+	
+	.main {
+
+	}
+
 	.header-titles {
 		text-align: center;
 		flex-direction: column;
@@ -170,7 +175,7 @@ footer {
 
 @media (max-width: 930px) {
 	.main {
-		padding: 0 5em;
+		padding: 0 2em;
 	}
 	.content {
 		flex-basis: 100%;
