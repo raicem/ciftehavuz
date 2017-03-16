@@ -160,6 +160,14 @@ footer {
 	font-style: italic;
 }
 
+blockquote {
+	padding: 0 1em;
+	color: #6a737d;
+	border-left: 0.25em solid #dfe2e5;
+	margin-top: 0;
+	margin-bottom: 16px
+}
+
 @media (max-width: 500px) {
 	
 	.main {
