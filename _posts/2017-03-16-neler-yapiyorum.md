@@ -30,9 +30,9 @@ Oyun tarafından haberler bu kadardı. İş alanında ise ilgilendiğim alanlar�
 
 Bu arada kitaptan bir egzersiz örneği:
 
-> "Between 1928 and 2013, Turkish law forbade the use of the letters Q, W, and X in official documents. This was part of a wider initiative to stifle Kurdish culture—those letters occur in the language used by Kurdish people but not in Istanbul Turkish.
+> Between 1928 and 2013, Turkish law forbade the use of the letters Q, W, and X in official documents. This was part of a wider initiative to stifle Kurdish culture—those letters occur in the language used by Kurdish people but not in Istanbul Turkish.
 
-> As an exercise in doing ridiculous things with technology, I’m asking you to program a text field that these letters cannot be typed into."
+> As an exercise in doing ridiculous things with technology, I’m asking you to program a text field that these letters cannot be typed into.
 
 Açıkçası daha sonra JavaScript ile ne yapacağımı bilemeden biraz blog post okuyarak, haberleri ve gündemi takip ederek takıldım. Laracasts'teki [VueJs](https://laracasts.com/series/learn-vue-2-step-by-step) videolarını izledim ancak bir noktadan sonra takip edemedim. Two way binding neden var ki? Bu komponentler de ne böyle? Model nedir? Bütün bunlar hangi sorunları çözüyor aşamasında kaldım. O noktada radikal bir karar alarak sıkı bir takipçisi olduğum Jeffrey Way'in [jQuery serisini](https://code.tutsplus.com/courses/30-days-to-learn-jquery) izlemeye karar verdim. 
 
@@ -40,7 +40,7 @@ Evet, 2017'de jQuery öğrenmek acayip bir durum gibi geliyor kulağa. Ancak old
 
 Bu esnada işten de yoğun JavaScript kullanacağım bir proje geldi. Buna jQuery ile giriştim ve biraz biraz aydınlanmaya başladım. Açıkçası zordu. Berbat kodlar yazdım ve iş büyüdükçe jQuery ile çalışmanın nasıl bir bela olacağını görür gibi oldum. Denemek ve problemleri görmek gerekiyordu bence ve bunu yaşadım. Şimdi o kodu refactor etmeye çalışıyorum.
 
-Yeni programlama dilleri ve paradigmaları öğrenme ile ilgili de güzel deneyimler edindim. Şunu rahatlıkla söyleyebilirim, nasıl yabancı bir dil öğrenmek artık [immersion](https://en.wikipedia.org/wiki/Language_immersion) meselesi ise, programlama dünyasında da yöntem aynı. Ekosisteme adım atmak, Twitter'da kazara güzel bir iki posta denk gelmek, reddit'te tartışmaları okumak zamanla çok acayip şeyler öğretebiliyor insana. 
+Yeni programlama dilleri ve paradigmaları öğrenme ile ilgili de güzel deneyimler edindim. Şunu rahatlıkla söyleyebilirim, nasıl yabancı bir dil öğrenmek artık [immersion](https://en.wikipedia.org/wiki/Language_immersion) meselesi ise, yazılımda da yöntem aynı. Ekosisteme adım atmak, Twitter'da kazara güzel bir iki posta denk gelmek, reddit'te tartışmaları okumak zamanla çok acayip şeyler öğretebiliyor insana. 
 
 Örneğin, daha geçen gün [Derek Banas'ın](https://www.youtube.com/user/derekbanas) [JavaScript OOP](https://www.youtube.com/watch?v=O8wwnhdkPE4) dersini izlerken getter ve setterlardan haberdar oldum. Daha sonra bu konuda okunacak bir şeyler var mıdır Google'da arattım ve zaten uzaktan tanıdığım Reginald Braithwaite'ın şu [mükemmel ötesi](http://raganwald.com/2015/08/24/ready-get-set-go.html) yazısına denk geldim. Ve şu anda two way binding çok mantıklı ve gerekli bir şeymiş gibi geliyor. Tamamen tesadüfi, tamamen immersion. 
 
