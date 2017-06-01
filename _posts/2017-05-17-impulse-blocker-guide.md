@@ -19,5 +19,5 @@ From the extension manager, locate Impulse Blocker and then click Preferences.
 In this page, you can add whatever website you want the block by input box. You can omit the http:// as the extension handles it. You can also omit .com as the extension will add it as a default. Also if you add example.com, www.example.com will also be blocked, so you don't have to repeat domains.
 <img class="box-shadow img-padding" src="{{site.url}}/assets/step_3.png" alt="Add any website you like"/>
 
-After listing the domains you don't want to visit, you can enjoy browsing. You can turn of the extension by the toolbar icon.
+After listing the domains you don't want to visit, you can enjoy browsing. You can turn the extension on or off by the toolbar icon. Also you add websites to block right from this menu.
 <img class="box-shadow img-padding" src="{{site.url}}/assets/step_4.png" alt="Turn extension on or off"/>
