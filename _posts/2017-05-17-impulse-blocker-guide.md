@@ -8,7 +8,7 @@ categories:
 
 This is a simple guide to show how to install and configure the [Impulse Blocker Extension](https://addons.mozilla.org/en-US/firefox/addon/impulse-blocker/). 
 
-You can install the extension from [here](https://addons.mozilla.org/en-US/firefox/addon/impulse-blocker/) like any other Firefox extension. In order to add the websites you want to block follow there steps.
+You can install the extension from [here](https://addons.mozilla.org/en-US/firefox/addon/impulse-blocker/) like any other Firefox extension. In order to add the websites you want to block follow these steps.
 
 After installing the extension, open the extension manager from the menu.
 <img class="box-shadow img-padding" src="{{site.url}}/assets/step_1.png" alt="Open the extension manager from the menu"/>
