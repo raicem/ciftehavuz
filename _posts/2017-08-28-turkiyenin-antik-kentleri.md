@@ -50,6 +50,6 @@ Bu kitap da özenle hazırlanmış, bakanlığa bağlı olsun olmasın tüm anti
 Şu anda haritada 83 tane nokta tanımlı. Yukarıda bahsettiğim Türkiye'nin Antik Kentleri kitabına göre, Türkiye'de 118 antik kent var. Ben höyükleri ve tek kalmış yapıları da dahil etmek istediğimden dolayı, ulaşabileceğim maksimum rakamın 140 civarı olacağını tahmin ediyorum. Yani daha %60 kadarı tamamlanmış durumda. Bunun yanında, şu ana kadar tek cümlelik bilgi ekleyebildiğim antik kent sayısı 32. 
 
 ### Gelecek
-Hedefim tahmini 140 rakamına, veya ulaşılabilecek en yüksek rakama ulaşmak. Siteyi açarken ki gösterdiğim ilk efordan sonra geri kalan yerleri zamanla, yavaş yavaş eklemeyi hedefliyorum. Siteye yeni bir özellik eklemeyi henüz düşünmüyorum. Öncelikli amaç verileri tamamlamak. Öte yandan, bu noktaları ayrı bir formatta (Excel, SQL veya başka bir format) başka bir yerde tutmak istiyorum. Böylece harita yerine ham dataya da isteyen ulaşabilir.
+Hedefim tahmini 140 sayısına veya ulaşılabilecek en yüksek rakama ulaşmak. Siteyi açarken ki gösterdiğim ilk efordan sonra geri kalan yerleri zamanla, yavaş yavaş eklemeyi hedefliyorum. Siteye yeni bir özellik eklemeyi henüz düşünmüyorum. Öncelikli amaç verileri tamamlamak. Öte yandan, bu noktaları ayrı bir formatta (Excel, SQL veya başka bir format) başka bir yerde tutmak istiyorum. Böylece harita yerine ham dataya da isteyen ulaşabilir.
 
 Projeyi takip etmek istiyorsanız [GitHub repositorysine](https://github.com/raicem/ancient-cities-turkey/) bakabilirsiniz.
