@@ -4,7 +4,7 @@ title: Türkiye'nin Antik Kentleri
 custom-date: 28 Ağustos 2017
 published: true
 categories: 
-- Diğer
+- Ancient Cities of Turkey
 ---
 
 Türkiye'nin antik kentlerini, yıkıntılarını, höyüklerini, tek kalmış antik yapılarını görebileceğiniz, keşfedebileceğiniz ve hakkında bilgi alabileceğiniz bir haritasını yaptım. 
