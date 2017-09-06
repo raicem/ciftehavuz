@@ -2,7 +2,7 @@
 layout: post
 title: Türkiye'nin Antik Kentleri ve Sonrasında Yaşananlar
 custom-date: 5 Eylül 2017
-published: true
+published: false
 categories: 
 - Ancient Cities of Turkey
 ---
@@ -13,8 +13,6 @@ Herşeyi başlatan kadim dostum İnan Özdemir'in tweeti oldu. O tweet şu ana d
 <blockquote class="twitter-tweet" data-lang="tr"><p lang="tr" dir="ltr">Çok faydalı bir site. Arkadaşım Cem Ünalan, Türkiye&#39;nin antik kentlerini harita üzerinde topladı. İlginizi çekerse: <a href="https://t.co/fng6hdFh2I">https://t.co/fng6hdFh2I</a> <a href="https://t.co/lnQXH0fgab">pic.twitter.com/lnQXH0fgab</a></p>&mdash; İnan Özdemir (@inanozdemir) <a href="https://twitter.com/inanozdemir/status/903961271300710400">2 Eylül 2017</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 Bu RT'ler arasında [Kaan Sezyum](https://twitter.com/kaansezyum), [Mert Fırat](https://twitter.com/mert__firat), [Kaan Kural](https://twitter.com/kaankural), [Mine Tugay](https://twitter.com/Minetugay) ve [Ayşe Arman](https://twitter.com/ArmanAyse) gibi yüksek takipçi sayısına sahip kişiler vardı. 
-
-(Tam Ayşe Arman RT yaptığı sırada Google Analytics'i canlı takip ediyordum ve kullanıcıların sayısında ciddi bir artış olmadı. Acaba 2.4 milyon takipçisi organik değil mi diye düşündüm ama bilmiyorum)
 
 2 ve 5 Eylül arasındaki 4 günde, siteyi toplamda 24.492 kişi, 26.994 kez ziyaret etti. 98.078 kere sayfa görüntülendi. 
 
@@ -48,12 +46,9 @@ Bu süreçte en büyük golü Mapbox'tan yedim. Mapbox'ın 50 bin harita göster
 <img class="box-shadow img-padding" src="{{site.url}}/assets/ancientcitiesturkey/mapbox.jpg" alt="Turkey Ancient Cities Map"/> 
 
 ### Ekslikler
-Twitter üzerinden İnan Özdemir'e ve bana gönderilen tüm cevapları ve bana gelen tüm e-postaları okudum. Ekşi Sözlük'ten ve GitHub'dan da bazı eksik yerler bildirildi. Kimin nereyi eksik olarak bildirdiği bilgisiyle birlikte bunların hepsini kaydettim. Herkese açık olan [bu Trello panosunda](https://trello.com/b/3HLV5QDp/ancientcitiesturkeycom) panosunda görüntüleyebilirsiniz.
+Twitter üzerinden gönderilen tüm cevapları ve bana gelen tüm e-postaları okudum. Ekşi Sözlük'ten ve GitHub'dan da bazı eksik yerler bildirildi. Kimin nereyi eksik olarak bildirdiği bilgisiyle birlikte bunların hepsini kaydettim. Herkese açık olan [bu Trello panosunda](https://trello.com/b/3HLV5QDp/ancientcitiesturkeycom) panosunda görüntüleyebilirsiniz.
 
 Hepsinin üzerinde sıra ile çalışacağım ve ekledikçe bu bildirim yapan kişilere haber vereceğim. 
-
-### Teşekkürler
-Öncelikle [İnan Özdemir](https://twitter.com/inanozdemir)'e ve sosyal medya hesaplarında paylaşan herkese teşekkür ederim. Pek çok mesaj ve e-posta aldım. Eksik yerlerin fotoğrafları ve koordinatlarıyla yardımcı olmak isteyen de çok kişi oldu. Bunlar bu konularla ilgili çok fazla kişinin olduğunu gösterdi bana ve motive etti.
 
 ### Sonuç
 Bu siteye öncelikli olarak bir şeyler öğrenmek istediğim için başladım ve belki birilerinin de işine yarar diye düşündüm. Şimdi biraz kapsamı değişmiş durumda. Artık bu sitenin güncel kalmasını kendime bir görev biçtim ve oflamadan poflamadan çalışmaya devam edeceğim. Hedefim uzun soluklu, her zaman güvenebileceğiniz bir kaynak haline gelmesi. 
