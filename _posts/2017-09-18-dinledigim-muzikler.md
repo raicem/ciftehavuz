@@ -9,7 +9,7 @@ categories:
 
 Uzun dönem bir veriyi saklayıp daha sonra onu didiklemeye bayılıyorum. Google Photos arşivinde kaybolmak, eski Ekşi Sözlük entrylerimi ve günlüklerimi okumak bana büyük keyif veriyor. Gurur duyduklarımdan biri de [last.fm skroplamalarım](https://www.last.fm/user/raicem). Aşağıda göreceğiniz gibi 2009'dan beri bir şekilde buraya bir şekilde veri kaydedebilmişim. Tahminen kaydettiklerimle, kaydetmeyi unuttuklarımın sayısı eşittir ancak yine de mana çıkaracak kadar şey var. 
 
-<img class="box-shadow img-padding is-half" src="{{site.url}}/assets/last-fm-total.png" alt="Last.fm Yıllara Göre Skroplarım"/> 
+<img class="box-shadow img-padding" src="{{site.url}}/assets/last-fm-total.png" alt="Last.fm Yıllara Göre Skroplarım"/> 
 
 Eğer hafızam beni yanıltmıyorsa 2010'dan itibaren bilgisyarda iTunes üzerinden, mobilde de Nokia Xpress music tarzı bir telefon üzerinden last.fm'e skrop yapmaya başladım. Hayatımın en çok müzik dinlediğim ve keşfettiğim dönemine geldiği için hızlı bir başlangıç oldu.
 
@@ -21,7 +21,7 @@ Bu durum, okulun ağırlaşması, mezun olmak istemem, okul bittikten sonra haya
 
 Şimdi tek tek en çok dinlediğim grupları anlatayım. 
 
-<img class="box-shadow img-padding is-half" src="{{site.url}}/assets/last-fm-sanatcilar.png" alt="Last.fm En çok dinlediğim on sanatçı"/> 
+<img class="box-shadow img-padding" src="{{site.url}}/assets/last-fm-sanatcilar.png" alt="Last.fm En çok dinlediğim on sanatçı"/> 
 
 ### Radiohead
 ----
@@ -51,9 +51,7 @@ Yine de Metacritic tarafından tarihin en başarılı grubu [seçilmiştir](http
 
 Elbette Radiohead ile Interpol'ü aynı sepete koyamıyorum. Hiç durmadan Interpol dinlediğim günlerden sonra hiç ciddi bir dönüş yapamadım. Interpol'ün külliyatında kaybolacak bir derinlik bulamadım. Yeni albümlerin gelmesi de bu durumu değiştirmedi. Eskiden kabul edemezdim bunu büyük bir hayran olarak. Şimdi bununla yüzleşebiliyorum.
 
-Sanırım Interpol'ü bu tweet çok güzel özetliyor:
-
-<blockquote class="twitter-tweet" data-lang="tr"><p lang="en" dir="ltr">1. TURN ON THE BRIGHT LIGHTS<br>2. TURN ON THE BRIGHT LIGHTS 10th Anniversary Edition<br>3. TURN ON THE BRIGHT LIGHTS 15th Anniversary Edition <a href="https://t.co/RImfA5Wcut">pic.twitter.com/RImfA5Wcut</a></p>&mdash; Steven Hyden (@Steven_Hyden) <a href="https://twitter.com/Steven_Hyden/status/894673365713158144">7 Ağustos 2017</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+Sanırım Interpol'ü [bu tweet](https://twitter.com/Steven_Hyden/status/894673365713158144) çok güzel özetliyor.
 
 ### The Walkmen
 ----
@@ -70,9 +68,7 @@ Daha sonra [You & Me](https://en.wikipedia.org/wiki/You_%26_Me_(The_Walkmen_albu
 ----
 [Elliott Smith](https://en.wikipedia.org/wiki/Elliott_Smith) buraya oldukça sinsice yükselmiş. Eğer bu listeyi aklımdan yapıyor olsaydım ilk 10'a bile koymazdım. Hiç o kadar dinlemişim gibi gelmiyor.
 
-Elliott Smith'i ilk olarak [The Royal Tenenbaums](https://en.wikipedia.org/wiki/The_Royal_Tenenbaums)'un heralde en ikonik sahnelerinden birinde çalan şarkıyla keşfettim.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/9pyBB7y8fDU?rel=0" frameborder="0" allowfullscreen></iframe>
+Elliott Smith'i ilk olarak [The Royal Tenenbaums](https://en.wikipedia.org/wiki/The_Royal_Tenenbaums)'un heralde en ikonik [sahnelerinden birinde](https://www.youtube.com/embed/9pyBB7y8fDU) çalan şarkıyla keşfettim.
 
 Elliot Smith hakkında daha önce bu blogda bir yazı yazmıştım. Dolayısı ile onu linkleyip bırakacağım.
 
@@ -81,9 +77,7 @@ Elliot Smith hakkında daha önce bu blogda bir yazı yazmıştım. Dolayısı i
 - En iyi albüm: [Either/Or](https://en.wikipedia.org/wiki/Either/Or_(album))
 - En iyi şarkı: [Son of Sam](https://www.youtube.com/watch?v=afeAUndotas) 
 
-Öte yandan şu aşağıdaki akustik kaydın da ayrı bir yeri vardır bende. 
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/PK4okHerWeI?rel=0" frameborder="0" allowfullscreen></iframe>
+Öte yandan şu aşağıdaki [akustik kaydın](https://www.youtube.com/embed/PK4okHerWeI) da ayrı bir yeri vardır bende. 
 
 ### Steven Malkmus and the Jicks
 ----
@@ -100,9 +94,7 @@ Kafamda Interpol ile benzer klasmana koyduğum bir grup oldu [Editors](https://e
 
 Editors, Interpol'ün aksine daha cesur ve farklı albümler yapmayı denedi ([In This Light and on This Evening](https://en.wikipedia.org/wiki/In_This_Light_and_on_This_Evening)). Ne kadar başarılı olduğunu zaman gösterecek. Ancak son dönem albümleri biraz 2005 yılı müziklerinin tekrar paketlenmiş hali gibi duruyor ve bu durum hoşuma gitmiyor.
 
-Ancak Editors'un akustik damarını hiç kaybetmemesini çok takdir ediyorum. Hatta yaptıkları müziklerden bağımsız olarak, akustik performans vermeye devam grupların acayip bir özgüvene sahip olduğunu düşünüyorum. Editors'un 2006 yılında verdiği 4 şarkılık performans izlenmelidir. Bu performansları taklit etmeye çalışarak ilk gitar çalma çabalarımı göstermiştim.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/MNsQ3dlsBvs?rel=0" frameborder="0" allowfullscreen></iframe>
+Ancak Editors'un akustik damarını hiç kaybetmemesini çok takdir ediyorum. Hatta yaptıkları müziklerden bağımsız olarak, akustik performans vermeye devam grupların acayip bir özgüvene sahip olduğunu düşünüyorum. Editors'un 2006 yılında verdiği [dört şarkılık performans](https://www.youtube.com/embed/MNsQ3dlsBvs) izlenmelidir. Bu performansları taklit etmeye çalışarak ilk gitar çalma çabalarımı göstermiştim.
 
 - En iyi albüm: [The Back Room](https://en.wikipedia.org/wiki/The_Back_Room)
 - En iyi şarkı: [Fingers in Factories](https://www.youtube.com/watch?v=fRB8uhcoNMA)
@@ -121,8 +113,6 @@ En iyi şarkı: [How to Fight Loneliness](https://www.youtube.com/watch?v=7CAYFI
 Erken dönem albümleri büyüleyicidir. Bence 90'lar benzeri Pop/Rock'ını 2000'lerde harika temsil eden bir yanları vardı. Ancak daha sonraları iyice Fifa müziği tarzı şeylere sardırdılar. İtiraf edeyim son albümü dinlemedim bile. Emily Haines'in yeteneği ve sesi o albümlerde biraz geride kaldı bence. Ancak ne zaman sakin bir şey yapsa tekrar ortaya çıkıyor (örneğin solo albümleri).
 
 Dediğim gibi ilk iki albümleri güzeldir. Ancak hayranlarının ısrarı sonrası 2007'de tekrar piyasaya sürdükleri gerçek ilk albümleri Grow Up and Blow away hepsinden daha iyidir. Çok yalın, çok catchy, ideal bir pop-rock albümüdür bana göre.
-
-https://www.youtube.com/watch?v=yM5kCRrZ2ZE
 
 - En iyi albüm: [Grow Up and Blow Away](https://en.wikipedia.org/wiki/Grow_Up_and_Blow_Away)
 - En iyi şarkı: [text](https://www.youtube.com/watch?v=PN_fmalxS3M)
