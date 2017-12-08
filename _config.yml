@@ -1,4 +1,4 @@
-baseurl: 
+baseurl: https://raicem.github.io
 permalink: /:year/:month/:day/:title/
 sass: 
   style: compressed
