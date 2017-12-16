@@ -4,7 +4,7 @@ title: Antik Kentler Haritasındaki Gelişmeler
 custom-date: 25 Kasım, 2017
 published: true
 categories: 
-- Diğer
+- Ancient Cities of Turkey
 ---
 
 Haritayı yayınlayalı neredeyse 3 ay oldu. Daha önceki blog [yazısında](https://raicem.github.io/2017/08/28/turkiyenin-antik-kentleri/) bahsettiğim üzere, haritayı yayınladıktan sonra yeni özellikler geliştirmeyi pek planlamıyordum. Ancak elbette projenin çok tutması, 25 bin kişinin ziyaret etmesi, bir kaç gazetede haber olması ve Twitter'da 1 milyonun üzerinde kişi tarafından görüntülenmesi olayı bambaşka bir seviyeye taşıdı. Bu yayınladıktan sonra unutacağım, ilgilenmeyeceğim bir proje olmaktan çıktı benim gözümde. Uzun süreler yayında kalması ve ulaşılabilir olması artık benim bir sorumluluğum.
