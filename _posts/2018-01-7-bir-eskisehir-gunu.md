@@ -7,7 +7,7 @@ categories:
 - Diğer
 ---
 
-Uzun zamandır Eskişehir'e gitmek istiyordum ancak hem annemle hem de arkadaşlarımla çabalarımız organizasyonsuzluktan ve vakitsizlikten boşa çıktı. Üstelik söylenene göre İstanbul'dan ulaşım YHT'ye göre oldukça kolay olmasına rağmen. Nasip 6 Ocak 2018 gününeymiş. Kız arkadaşımın Eskişehirli olması, bu hafta sonu burayı ziyaret edecek olması etkenleri beni bu şehre getirdi. Elbette üşengeçliğim bir sürtünme oluşturdu başlarda. Ocak'ta Eskişehir soğuk olur ben üşürüm gibi argümanlarım mesela... (Öyle acayip soğuk değildi).
+Uzun zamandır Eskişehir'e gitmek istiyordum ancak hem annemle hem de arkadaşlarımla çabalarımız organizasyonsuzluktan ve vakitsizlikten boşa çıktı. Üstelik İstanbul'dan YHT ile ulaşımın söylenene göre oldukça kolay olmasına rağmen. Nasip 6 Ocak 2018 gününeymiş. Kız arkadaşımın Eskişehirli olması, bu hafta sonu burayı ziyaret edecek olması etkenleri beni bu şehre getirdi. Elbette üşengeçliğim bir sürtünme oluşturdu başlarda. Ocak'ta Eskişehir soğuk olur ben üşürüm gibi argümanlarım mesela... (Öyle acayip soğuk değildi).
 
 Gece 1'de İzmir'den kalkan, sabah 7 gibi Eskişehir'e varan otobüsle vardım şehre. Eskişehir tramvayı otogara kadar gidiyor, dolayısı ile otogardan şehir merkezine ulaşım kolay. Ben tramvayın A ile B noktaları arasında seyahat ettiğini düşünüyordum nedense. Eskişehir'de böyle bir durum geçerli değil. Farklı ilk ve son duraklar, farklı rotalar var. Pek çok yere tramvay ile gidilebiliyor anladığım kadarıyla.
 
