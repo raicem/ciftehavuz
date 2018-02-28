@@ -46,7 +46,7 @@ function renderSetup(data, selector) {
     valueTd.textContent = value;
 
     if (selector === "second_setup") {
-      if (value > setups.first_setup[key]) {
+      if (value > setups.first_setup.hash[key]) {
         row.classList.add("higher");
       } else if (value < setups.first_setup.hash[key]) {
         row.classList.add("lower");
