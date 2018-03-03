@@ -7,7 +7,7 @@ categories:
 - Diğer
 ---
 
-İlk kez Efes Antik Kenti'ne annemle Temmuz ayının sıcağında gittim. Evet hava korkunç sıcaktı ancak keyifle gezdim. Gerçi öncesinde gerekli okumaları yapmadığım için biraz eksik kaldım. Ancak yine de güzel bir deneyimdi.
+İlk kez Efes Antik Kenti'ne annemle Temmuz ayının sıcağında gittim. Evet, hava korkunç sıcaktı ancak keyifle gezdim. Gerçi öncesinde gerekli okumaları yapmadığım için biraz eksik kaldım. Ancak yine de güzel bir deneyimdi.
 
 Artık İzmir'de bir arabam olduğu için daha özgürüm ve İzmir'in çevresindeki görülecek yerlere daha sık gidebilirim. 28 Ocak günü de Gülşah, kardeşi ve arkadaşıyla beraber Efes Antik Kenti'ni ziyaret etmek için yola çıktık. Önceki gün arabaya yeni lastikler aldığım için benim için ayrı bir zevkli yolculuktu (8 senelik, aşırı aşınmış, büyük ihtimalle içindeki çelik telleri kırılmış lastiklerden sonra takılan yeni Falken lastiklerin yarattığı değişime hala inanamıyorum, ayrı bir yazı konusu bile olabilir).
 
