@@ -1,54 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Assetto Corsa Setup Diff Tool</title>
-    <style>
-        table {
-            min-width: 400px;
-            display: inline-block;
-        }
-
-        .higher {
-            color: green;
-        }
-
-        .lower {
-            color: red;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Assetto Corsa Setup Diff Tool</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="container">
+    <header>
+      <h1 class="heading">Assetto Corsa Setup Diff Tool</h1>
+      <p>Build to quickly compare two setups. Setups are not uploaded anywhere. All the calculations are made in the browser. You can test that by disconnecting from the internet and then loading your setups in the web page.</p>
+    </header>
     <div>
-        <h1>Assetto Corsa Setup Diff Tool</h1>
-        <h3>Built to quickly compare two setups. This is a work in progress as you can see. If you upload setups from two different cars with different parameters it may not work properly.</h3>
-        <p>Setups are not uploaded anywhere. All evaluations and comparisons are done in your browser. You can inspect the network activity and verify.</p>
-        <h4 style="margin-bottom: 0;">Todo List</h4>
-        <ul style="margin-top: 0;">
-            <li>Better Design</li>
-            <li>Ability to and drop files</li>
-            <li>Align setup parameters</li>
-            <li>More readable parameters (Right Front instead of RF)</li>
-        </ul>
+      <form>
+        <label for="first_setup">First Setup</label>
+        <input type="file" name="first_setup" id="first_setup">
+        <label for="second_setup">Second Setup</label>
+        <input type="file" name="second_setup" id="second_setup">
+      </form>
     </div>
-    <div>
-        <form>
-            <label for="first_setup">First Setup</label>
-            <input type="file" name="first_setup" id="first_setup">
-            <label for="second_setup">Second Setup</label>
-            <input type="file" name="second_setup" id="second_setup">
-        </form>
+    <div class="result-tables">
+      <div class="result-table">
+        <table id="first_setup" data-setup="first_setup">
+          <h4 id="car_name_first_setup"></h4>
+        </table>
+      </div>
+      <div class="result-table">
+        <table id="second_setup" data-setup="second_setup">
+          <h4 id="car_name_second_setup"></h4>          
+        </table>
+      </div>
     </div>
-    <div class="results">
-        <div style="width: 500px; float: left;">
-            <table id="first_setup" data-setup="first_setup"></table>
-        </div>
-        <div style="width: 500px; float: left;">
-            <table id="second_setup" data-setup="second_setup"></table>
-        </div>
-    </div>
-    <script src="index.js"></script>
+  </div>
+  <script src="index.js"></script>
 </body>
 </html>

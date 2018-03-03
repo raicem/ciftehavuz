@@ -21,22 +21,28 @@ function parseSetup(event) {
   reader.onload = function(e) {
     var text = reader.result;
     setups[setupName] = parseIni(text);
-    setups[setupName].hash = {};
+
+    parsedSetups = {};
+    parsedSetups[setupName] = {};
 
     for (const key in setups[setupName]) {
-      setups[setupName].hash[key] =
+      parsedSetups[setupName][key] =
         setups[setupName][key].VALUE || setups[setupName][key].MODEL;
     }
 
-    render(setups);
+    render(parsedSetups);
   };
 
   reader.readAsText(document.querySelector(`#` + setupName).files[0]);
 }
 
 function renderSetup(data, selector) {
-  document.querySelector(`table#` + selector).innerHTML = "";
+  document.querySelector("table#" + selector).innerHTML = "";
   for (const key in data) {
+    if (key === "CAR") {
+      document.getElementById("car_name_" + selector).innerHTML = data[key];
+    }
+
     var row = document.createElement("tr");
     var info = key;
     var value = data[key];
@@ -61,11 +67,11 @@ function renderSetup(data, selector) {
 
 function render(setups) {
   if (setups.first_setup) {
-    renderSetup(setups.first_setup.hash, "first_setup");
+    renderSetup(setups.first_setup, "first_setup");
   }
 
   if (setups.second_setup) {
-    renderSetup(setups.second_setup.hash, "second_setup");
+    renderSetup(setups.second_setup, "second_setup");
   }
 }
 

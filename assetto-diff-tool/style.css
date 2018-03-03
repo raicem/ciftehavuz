@@ -1,0 +1,35 @@
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.heading {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.result-tables {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.result-table {
+  flex: 1;
+}
+
+table {
+  min-width: 400px;
+  display: inline-block;
+}
+
+.higher {
+  color: green;
+}
+
+.lower {
+  color: red;
+}
