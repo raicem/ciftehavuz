@@ -22,7 +22,6 @@ function parseSetup(event) {
     var text = reader.result;
     setups[setupName] = parseIni(text);
 
-    parsedSetups = {};
     parsedSetups[setupName] = {};
 
     for (const key in setups[setupName]) {
@@ -38,23 +37,24 @@ function parseSetup(event) {
 
 function renderSetup(data, selector) {
   document.querySelector("table#" + selector).innerHTML = "";
-  for (const key in data) {
+  for (const key in data[selector]) {
     if (key === "CAR") {
-      document.getElementById("car_name_" + selector).innerHTML = data[key];
+      document.getElementById("car_name_" + selector).innerHTML =
+        data[selector][key];
     }
 
     var row = document.createElement("tr");
     var info = key;
-    var value = data[key];
+    var value = data[selector][key];
     var infoTd = document.createElement("td");
     var valueTd = document.createElement("td");
     infoTd.textContent = info;
     valueTd.textContent = value;
 
     if (selector === "second_setup") {
-      if (value > setups.first_setup.hash[key]) {
+      if (value > data["first_setup"][key]) {
         row.classList.add("higher");
-      } else if (value < setups.first_setup.hash[key]) {
+      } else if (value < data["first_setup"][key]) {
         row.classList.add("lower");
       }
     }
@@ -66,18 +66,20 @@ function renderSetup(data, selector) {
 }
 
 function render(setups) {
+  console.log(setups);
   if (setups.first_setup) {
-    renderSetup(setups.first_setup, "first_setup");
+    renderSetup(setups, "first_setup");
   }
 
   if (setups.second_setup) {
-    renderSetup(setups.second_setup, "second_setup");
+    renderSetup(setups, "second_setup");
   }
 }
 
 var firstUpload = document.querySelector("#first_setup");
 var secondUpload = document.querySelector("#second_setup");
 var setups = {};
+var parsedSetups = {};
 
 firstUpload = addEventListener("change", parseSetup);
 secondUpload = addEventListener("change", parseSetup);

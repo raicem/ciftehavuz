@@ -13,26 +13,34 @@
       <h1 class="heading">Assetto Corsa Setup Diff Tool</h1>
       <p>Build to quickly compare two setups. Setups are not uploaded anywhere. All the calculations are made in the browser. You can test that by disconnecting from the internet and then loading your setups in the web page.</p>
     </header>
-    <div>
-      <form>
-        <label for="first_setup">First Setup</label>
-        <input type="file" name="first_setup" id="first_setup">
-        <label for="second_setup">Second Setup</label>
-        <input type="file" name="second_setup" id="second_setup">
+    <div class="content">
+      <form class="setup-form">
+        <div class="form-group">
+          <label for="first_setup">First Setup</label>
+          <input type="file" name="first_setup" id="first_setup">
+        </div>
+        <div class="form-group">
+          <label for="second_setup">Second Setup</label>
+          <input type="file" name="second_setup" id="second_setup">
+        </div>
       </form>
-    </div>
-    <div class="result-tables">
-      <div class="result-table">
-        <table id="first_setup" data-setup="first_setup">
-          <h4 id="car_name_first_setup"></h4>
-        </table>
+      <div class="result-tables">
+        <div class="result-table">
+          <table id="first_setup" data-setup="first_setup">
+            <h4 id="car_name_first_setup"></h4>
+          </table>
+        </div>
+        <div class="result-table">
+          <table id="second_setup" data-setup="second_setup">
+            <h4 id="car_name_second_setup"></h4>          
+          </table>
+        </div>
       </div>
-      <div class="result-table">
-        <table id="second_setup" data-setup="second_setup">
-          <h4 id="car_name_second_setup"></h4>          
-        </table>
-      </div>
     </div>
+    <footer>
+      <p>Built by <a href="https://github.com/raicem">raicem</a> in couple of hours.</p>
+      <p>If you want to see the source code, click <a href="https://github.com/raicem/raicem.github.io/tree/master/assetto-diff-tool">here.</a></p>
+    </footer>
   </div>
   <script src="index.js"></script>
 </body>
