@@ -12,7 +12,7 @@ Motorsporları çocukluğumdan beri en çok ilgimi çeken spor branşı oldu. WR
 
 Daha önceki bir yazımda bahsetmiştim geçmişte oynadığım oyunları. Şimdi detaylıca bir daha yazmak istiyorum.
 
-Çok uzun seneler mütevazı bilgisayarımda ve Casper marka direksiyonumla [F1 Challenge 99-02](https://en.wikipedia.org/wiki/EA_Sports_F1_series) oynadım. Pek çok sezon bitirdim, pek çok mod kurdum ve oynadım. Daha sonra Playstation 2 ve [Driving Force](https://commons.wikimedia.org/wiki/File:Logitech-Driving-Force-PS3.jpg) direksiyona geçtim. Çipli Playstation 2'mde mahallede sahte oyuncudan aldığım [Toca](<https://en.wikipedia.org/wiki/TOCA_(series)>), Grand Turismo gibi Simcade oyunlarla vaktimin çoğunu geçirdim.
+Çok uzun seneler mütevazı bilgisayarımda ve Casper marka direksiyonumla [F1 Challenge 99-02](https://en.wikipedia.org/wiki/EA_Sports_F1_series) oynadım. Pek çok sezon bitirdim, pek çok mod kurdum ve oynadım. Daha sonra Playstation 2 ve [Driving Force](https://commons.wikimedia.org/wiki/File:Logitech-Driving-Force-PS3.jpg) direksiyona geçtim. Çipli Playstation 2'mde mahallede sahte oyuncudan aldığım [Toca](<https://en.wikipedia.org/wiki/TOCA_(series)>), [Gran Turismo](<https://en.wikipedia.org/wiki/Gran_Turismo_(series)>) gibi Simcade oyunlarla vaktimin çoğunu geçirdim.
 
 2009 civarı bir Playstation 3 aldım. Motivasyonu hatırlamıyorum ama direksiyonumu da değiştirdim ve bir [Driving Force GT](https://www.logitechg.com/en-sg/product/driving-force-gt-gaming-wheel) aldım (ekşi sözlükteki başlığını da ben açmışımdır). Gran Turismo 5 ana oyunumdu. Uzun aralar vererek (aylar ve seneler) bu oyunu oldukça fazla oynadım.
 
@@ -24,7 +24,7 @@ Assetto Corsa'yı ve o zaman yeni çıkan Ferrari SF15-T aracını çok sevdim. 
 
 Ufak ufak online odalara da girmeye başladım. İlk dönem tecrübesizliği ve heyecanı diye heralde en önemsiz yarış startına bile kalbim deli gibi çarpıyordu. Yarışlarda fena değildim ama çoğu zaman birinci olamıyordum. Hem tecrübesizlik hem de setup bilgim sıfıra yakın olduğu içindi.
 
-Yine online odalarda gezerken bir gün Simracerstr.net sunucusuna denk geldim. Herkese açık, şifresiz bir sunucuda yarış düzenliyorlardı. O odayı gördükten sonra simracerstr.net forumundan haberdar oldum. Hayatta pek az defa yaptığım üzere foruma üye oldum, kendimi tanıttım ve Newbie şampiyonasına katıldım.
+Yine online odalarda gezerken bir gün [simracerstr.net](http://www.simracerstr.net) sunucusuna denk geldim. Herkese açık, şifresiz bir sunucuda yarış düzenliyorlardı. O odayı gördükten sonra simracerstr.net forumundan haberdar oldum. Hayatta pek az defa yaptığım üzere foruma üye oldum, kendimi tanıttım ve Newbie şampiyonasına katıldım.
 
 Rekabetçi bir newbie sezonunu şampiyon olarak tamamladım. Yarışmaktan çok büyük keyif aldığımı düşünmeye başladım. Maalesef 6 ay yarıştıktan sonra evden ayrılmak zorunda kaldım. 2 ay yurtdışı, sonra İzmir'e yerleşmek derken 6 ay ara verdim.
 
