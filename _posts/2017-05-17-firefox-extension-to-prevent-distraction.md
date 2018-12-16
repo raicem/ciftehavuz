@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2017/5/17/a-firefox-extension-to-prevent-distraction"
 layout: post
 title: A Firefox Extension to Prevent Distraction
 custom-date: 17 Mayıs, 2017

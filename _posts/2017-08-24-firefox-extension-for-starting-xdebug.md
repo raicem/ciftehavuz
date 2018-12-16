@@ -1,4 +1,5 @@
 ---
+redirecto_to: "https://blog.cemunalan.com.tr/2017/08/24/firefox-extension-for-starting-xdebug/"
 layout: post
 title: Firefox Extension for Starting Xdebug
 custom-date: 24 Ağustos, 2017

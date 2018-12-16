@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2016/12/15/popular-science-turkiye-rahat-bir-nefes-aldi"
 layout: post
 title: Popular Science Türkiye Rahat Bir Nefes Aldı
 custom-date: 15 Aralık, 2015

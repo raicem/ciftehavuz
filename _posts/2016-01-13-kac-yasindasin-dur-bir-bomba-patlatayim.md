@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2016/1/13/kac-yasindasin-dur-bi-bomba-patlatayim"
 layout: post
 title: Kaç Yaşındasın? Dur Bi Bomba Patlatayım. 
 custom-date: 13 Ocak, 2016

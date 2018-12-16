@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2018/10/22/bir-bergama-gunu"
 layout: post
 title: Bir Bergama Günü
 custom-date: 22 Ekim, 2018

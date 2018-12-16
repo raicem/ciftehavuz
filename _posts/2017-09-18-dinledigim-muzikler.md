@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2017/9/30/dinledigim-muzikler"
 layout: post
 title: Dinlediğim Müzikler
 custom-date: 30 Eylül, 2017

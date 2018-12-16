@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2018/3/3/assetto-corsa-setup-difference-tool"
 layout: post
 title: Assetto Corsa Setup Difference Tool
 custom-date: 3 Mart, 2018

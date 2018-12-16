@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2016/1/25/musul-bitcoin-sabri-dino-ve-tsydnin-yeni-logosu"
 layout: post
 title: Musul, Bitcoin, Sabri Dino ve TSYD'nin Yeni Logosu
 custom-date: 25 Ocak, 2016

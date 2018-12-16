@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2017/11/25/antik-kentler-haritasindaki-gelismeler"
 layout: post
 title: Antik Kentler Haritasındaki Gelişmeler
 custom-date: 25 Kasım, 2017

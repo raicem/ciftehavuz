@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2018/2/4/bir-selcuk-gunu"
 layout: post
 title: Bir Selçuk Günü
 custom-date: 4 Şubat, 2018

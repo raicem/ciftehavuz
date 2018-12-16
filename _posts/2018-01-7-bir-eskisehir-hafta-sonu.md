@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2018/1/7/bir-eskisehir-hafta-sonu"
 layout: post
 title: Bir Eskişehir Hafta Sonu
 custom-date: 7 Ocak, 2018

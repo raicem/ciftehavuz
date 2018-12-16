@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2015/11/11/ucuz-komur-ucuz-bilgisayar-ve-diger-ucuzluklar"
 layout: post
 title: Ucuz Kömür, Ucuz Bilgisayar ve Diğer Ucuzluklar
 custom-date: 11 Kasım, 2015

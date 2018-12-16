@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2017/5/17/impulse-blocker-guide"
 layout: post
 title: Impulse Blocker Guide
 custom-date: 17 Mayıs, 2017

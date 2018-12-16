@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2017/12/16/bir-izmir-gunu"
 layout: post
 title: Bir İzmir Günü
 custom-date: 16 Aralık, 2017

@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2017/8/28/turkiyenin-antik-kentleri"
 layout: post
 title: Türkiye'nin Antik Kentleri
 custom-date: 28 Ağustos 2017

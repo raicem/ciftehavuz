@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2017/10/2/yeni-bilgisayar-ile-ssdnin-cosmasi"
 layout: post
 title: Yeni Bilgisayar ile SSD'nin Coşması
 custom-date: 02 Ekim, 2016

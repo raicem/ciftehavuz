@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2017/8/28/ancient-cities-of-turkey"
 layout: post
 title: Ancient Cities of Turkey
 custom-date: 28 Ağustos 2017

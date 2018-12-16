@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2015/11/30/paris-iklim-degisikligi-konferansi-turkiye-ve-diger-seyler"
 layout: post
 title: Paris İklim Değişikliği Konferansı, Türkiye ve Diğer Şeyler
 custom-date: 30 Kasım, 2015

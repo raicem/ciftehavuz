@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2017/3/16/nelerle-ugrasiyorum"
 layout: post
 title: Nelerle Uğraşıyorum
 custom-date: 16 Mart, 2017

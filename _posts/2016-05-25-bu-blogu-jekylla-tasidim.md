@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2016/5/25/bu-blogu-jekylla-tasidim"
 layout: post
 title: Bu Blogu Jekyll'a Taşıdım
 custom-date: 25 Mayıs, 2016

@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2018/4/23/simracing"
 layout: post
 title: Simracing
 custom-date: 23 Nisan, 2018

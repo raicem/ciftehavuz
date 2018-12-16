@@ -1,4 +1,5 @@
 ---
+redirect_to: "https://blog.cemunalan.com.tr/2016/12/6/dogal-gazimiz-iklimimiz-yine-pop-muzik"
 layout: post
 title: Doğal Gazımız, İklimimiz (yine), Pop Müzik
 custom-date: 6 Aralık, 2015
